@@ -5,6 +5,7 @@
 
 var React = require('react');
 var StudentStore = require('../stores/studentStore');
+var Link = require('react-router').Link;
 
 var HomePage = React.createClass({
 
@@ -14,7 +15,7 @@ var HomePage = React.createClass({
         };
     },
 
-    componentWillMount: function() {
+    componentDidMount: function() {
         StudentStore.addChangeListener(this._onChange);
     },
 
@@ -43,6 +44,7 @@ var HomePage = React.createClass({
         return (
             <div className="container">
                 <h1>Hello!!</h1>
+                <Link to="/student" className="btn btn-primary">Add Student</Link>
                 <table className="table">
                     <thead>
                         <tr>

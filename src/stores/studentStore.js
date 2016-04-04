@@ -3,7 +3,7 @@
  */
 'use strict';
 
-var assign = require('object-assign');
+//var assign = require('object-assign');
 var EventEmitter = require('events').EventEmitter;
 var Dispatcher = require('../dispatcher/appDispatcher');
 var ActionTypes = require('../actions/actionTypes');
@@ -11,13 +11,15 @@ var ActionTypes = require('../actions/actionTypes');
 var CHANGE_EVENT = 'change';
 var _students = [];
 
-var StudentStore = assign({}, EventEmitter.prototype, {
+var _ = require('lodash');
+
+var StudentStore = _.extend({}, EventEmitter.prototype, {
     addChangeListener: function (callback) {
-        this.on(CHANGE_EVENT, callback);
+        this.addListener(CHANGE_EVENT, callback);
     },
 
     removeChangeListener: function (callback) {
-        this.removeChangeListener(CHANGE_EVENT, callback);
+        this.removeListener(CHANGE_EVENT,callback);
     },
 
     emitChange: function () {

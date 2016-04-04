@@ -10,18 +10,19 @@ var Route = require('react-router').Route;
 var Link = require('react-router').Link;
 var browserHistory = require('react-router').browserHistory;
 var Nav = require('./components/partials/nav');
+var Router1 = require('./components/router');
 
 
 var StudentActions = require('./actions/studentActions');
+
+var StudentManager = require('./components/student/studentManager');
 
 StudentActions.getAllStudents();
 
 ReactDOM.render((
     <div>
         <Nav />
-        <Router history={browserHistory}>
-            <Route path="/" component={require('./components/homePage')} />
-        </Router>
+        <Router1 />
     </div>
 
 ), document.getElementById('app'));

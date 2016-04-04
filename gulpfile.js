@@ -79,7 +79,7 @@ gulp.task('lint', function(){
 
 gulp.task('watch', function(){
     gulp.watch(config.path.html, ['minify-html']);
-    gulp.watch(config.path.js, ['js', 'lint']);
+    gulp.watch(config.path.js, ['js']);
 });
 
 gulp.task('default', ['connect', 'minify-html', 'js', 'css', 'watch', 'open']);
