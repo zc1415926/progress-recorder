@@ -1,9 +1,8 @@
-"use strict";
+'use strict';
 
 module.exports = {
-	INITIALIZE: 'initialize',
-	CREATE_AUTHOR: '',
 	GET_ALL_STUDENTS: 'get_all_students',
-	UPDATE_AUTHOR: '',
-	DELETE_AUTHOR: ''
+	CREATE_STUDENT: 'create_student',
+    UPDATE_STUDENT: 'update_student',
+    DELETE_STUDENT: 'delete_student'
 };

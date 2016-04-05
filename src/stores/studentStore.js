@@ -7,13 +7,12 @@
 var EventEmitter = require('events').EventEmitter;
 var Dispatcher = require('../dispatcher/appDispatcher');
 var ActionTypes = require('../actions/actionTypes');
+var assign = require('lodash.assign');
 
 var CHANGE_EVENT = 'change';
 var _students = [];
 
-var _ = require('lodash');
-
-var StudentStore = _.extend({}, EventEmitter.prototype, {
+var StudentStore = assign({}, EventEmitter.prototype, {
     addChangeListener: function (callback) {
         this.addListener(CHANGE_EVENT, callback);
     },
@@ -42,7 +41,7 @@ Dispatcher.register(function (action) {
             StudentStore.emitChange();
             break;
         default:
-            console.log(action);
+            //nothing to do...
     }
 });
 

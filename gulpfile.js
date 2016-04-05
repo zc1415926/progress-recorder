@@ -12,7 +12,6 @@ var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var concat = require('gulp-concat');
 var htmlmin = require('gulp-htmlmin');
-var lint = require('gulp-eslint');
 
 var config = {
     port: 8000,
@@ -69,12 +68,6 @@ gulp.task('js', function(){
         .pipe(source('bundle.js'))
         .pipe(gulp.dest(config.path.dist + '/scripts'))
         .pipe(connect.reload());
-});
-
-gulp.task('lint', function(){
-    return gulp.src(config.path.js)
-        .pipe(lint({config: 'eslint.config.json'}))
-        .pipe(lint.format());
 });
 
 gulp.task('watch', function(){

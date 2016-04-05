@@ -1,10 +1,9 @@
 /**
  * Created by ZC on 2016/4/4.
  */
-"use strict";
+'use strict';
 
 var React = require('react');
-//var StudentStore = require('../stores/studentStore');
 
 var StudentManager = React.createClass({
     render: function () {

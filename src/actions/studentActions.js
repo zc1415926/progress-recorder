@@ -5,7 +5,6 @@
 
 var Dispatcher = require('../dispatcher/appDispatcher');
 var ActionTypes = require('../actions/actionTypes');
-var StudentApi = require('../api/studentApi');
 
 var SERVER_BASE_URL = 'https://study-angular-backend-zc1415926.c9users.io';
 
