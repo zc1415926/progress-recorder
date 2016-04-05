@@ -12,6 +12,8 @@ var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var concat = require('gulp-concat');
 var htmlmin = require('gulp-htmlmin');
+var buffer = require('vinyl-buffer');
+var uglify = require('gulp-uglify');
 
 var config = {
     port: 8000,
@@ -66,6 +68,8 @@ gulp.task('js', function(){
         .bundle()
         .on('error', console.error.bind(console))
         .pipe(source('bundle.js'))
+        .pipe(buffer())
+        .pipe(uglify())
         .pipe(gulp.dest(config.path.dist + '/scripts'))
         .pipe(connect.reload());
 });
