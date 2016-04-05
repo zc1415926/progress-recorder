@@ -3,7 +3,6 @@
  */
 'use strict';
 
-//var assign = require('object-assign');
 var EventEmitter = require('events').EventEmitter;
 var Dispatcher = require('../dispatcher/appDispatcher');
 var ActionTypes = require('../actions/actionTypes');
