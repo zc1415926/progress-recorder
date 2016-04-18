@@ -49,7 +49,7 @@ gulp.task('open',  function(){
         .pipe(open({uri: config.devBaseUrl + ':' + config.port + '/'}));
 });
 
-gulp.task('minify-html', function(){
+gulp.task('html', function(){
     gulp.src(config.path.html)
         .pipe(htmlmin({removeComments: true,collapseWhitespace: true}))
         .pipe(gulp.dest(config.path.dist))
@@ -59,7 +59,8 @@ gulp.task('minify-html', function(){
 gulp.task('css', function(){
     gulp.src(config.path.css)
         .pipe(concat('bundle.css'))
-        .pipe(gulp.dest(config.path.dist + 'css/'));
+        .pipe(gulp.dest(config.path.dist + 'css/'))
+        .pipe(connect.reload());
 });
 
 gulp.task('js', function(){
@@ -75,8 +76,9 @@ gulp.task('js', function(){
 });
 
 gulp.task('watch', function(){
-    gulp.watch(config.path.html, ['minify-html']);
+    gulp.watch(config.path.html, ['html']);
+    gulp.watch(config.path.css, ['css']);
     gulp.watch(config.path.js, ['js']);
 });
 
-gulp.task('default', ['connect', 'minify-html', 'js', 'css', 'watch', 'open']);
+gulp.task('default', ['connect', 'html', 'js', 'css', 'watch', 'open']);
