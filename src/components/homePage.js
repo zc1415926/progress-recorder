@@ -35,8 +35,11 @@ var HomePage = React.createClass({
                 <tr key={student.id}>
                     <td>{student.student_number}</td>
                     <td>{student.student_name}</td>
+                    <td>{student.student_entry_year}</td>
                     <td>{student.student_grade}</td>
                     <td>{student.student_class}</td>
+                    <td><button type="button" className="btn btn-link btn-student-operation"><span className="glyphicon glyphicon-remove"></span></button>
+                    <button type="button" className="btn btn-link btn-student-operation"><span className="glyphicon glyphicon-pencil"></span></button></td>
                 </tr>
             );
         };
@@ -48,10 +51,12 @@ var HomePage = React.createClass({
                 <table className="table">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>State</th>
-                            <th>Grade</th>
-                            <th>Class</th>
+                            <th>学号</th>
+                            <th>姓名</th>
+                            <th>入学年</th>
+                            <th>年级</th>
+                            <th>班级</th>
+                            <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>{this.state.students.map(createAuthorRow, this)}</tbody>

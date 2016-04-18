@@ -23,7 +23,9 @@ var config = {
         js     : 'src/**/*.js',
         css    : [
             'node_modules/bootstrap/dist/css/bootstrap.min.css',
+            'src/**/*.css'
         ],
+        fonts  : 'node_modules/bootstrap/dist/fonts/*',
         images : 'src/images/*',
         dist   : 'dist/',
         mainJs : 'src/main.js'
@@ -75,10 +77,15 @@ gulp.task('js', function(){
         .pipe(connect.reload());
 });
 
+gulp.task('font', function(){
+    gulp.src(config.path.fonts)
+        .pipe(gulp.dest(config.path.dist + 'fonts/'));
+});
+
 gulp.task('watch', function(){
     gulp.watch(config.path.html, ['html']);
     gulp.watch(config.path.css, ['css']);
     gulp.watch(config.path.js, ['js']);
 });
 
-gulp.task('default', ['connect', 'html', 'js', 'css', 'watch', 'open']);
+gulp.task('default', ['connect', 'html', 'js', 'css', 'font', 'watch', 'open']);
