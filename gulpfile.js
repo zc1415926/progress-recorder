@@ -72,7 +72,7 @@ gulp.task('js', function(){
         .on('error', console.error.bind(console))
         .pipe(source('bundle.js'))
         .pipe(buffer())
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(gulp.dest(config.path.dist + '/scripts'))
         .pipe(connect.reload());
 });
