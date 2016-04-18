@@ -6,12 +6,14 @@
 var React = require('react');
 var StudentStore = require('../stores/studentStore');
 var Link = require('react-router').Link;
+var StuInfoModal = require('./student/studentInfoModal');
 
 var HomePage = React.createClass({
 
     getInitialState: function() {
         return {
             students: StudentStore.getAllStudents(),
+            modalIsOpen: false
         };
     },
 
@@ -26,6 +28,10 @@ var HomePage = React.createClass({
     _onChange: function() {
         console.log('this is onChange handler');
         this.setState({ students: StudentStore.getAllStudents() });
+    },
+
+    openModal: function() {
+        this.setState({modalIsOpen: true});
     },
 
     render: function () {
@@ -61,6 +67,8 @@ var HomePage = React.createClass({
                     </thead>
                     <tbody>{this.state.students.map(createAuthorRow, this)}</tbody>
                 </table>
+                <button onClick={this.openModal}>Open Modal</button>
+                <StuInfoModal isOpen={this.state.modalIsOpen}></StuInfoModal>
             </div>
         );
     }
