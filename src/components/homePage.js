@@ -38,8 +38,8 @@ var HomePage = React.createClass({
                     <td>{student.student_entry_year}</td>
                     <td>{student.student_grade}</td>
                     <td>{student.student_class}</td>
-                    <td><button type="button" className="btn btn-link btn-student-operation"><span className="glyphicon glyphicon-remove"></span></button>
-                    <button type="button" className="btn btn-link btn-student-operation"><span className="glyphicon glyphicon-pencil"></span></button></td>
+                    <td><button type="button" className="btn btn-link btn-student-operation"><span className="glyphicon glyphicon-pencil"></span></button>
+                        <button type="button" className="btn btn-link btn-student-operation"><span className="glyphicon glyphicon-remove"></span></button></td>
                 </tr>
             );
         };
