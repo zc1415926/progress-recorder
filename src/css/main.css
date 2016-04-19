@@ -3,9 +3,15 @@
     margin-right: 10px;
 }
 
-.modal-body{
+.modal-body {
     padding: 20px;
 }
+
+.navbar {
+    margin-bottom: 0;
+}
+
+.td
 
 .ReactModal__Overlay {
     -webkit-perspective: 600;
