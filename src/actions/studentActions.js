@@ -30,9 +30,9 @@ var StudentAction = {
     },
 
     dispatchGetAllStudentsAction: function (data) {
-        console.log("jQuery get data: ");
-        console.log(data);
-        console.log("jQuery out.");
+        //console.log("jQuery get data: ");
+        //console.log(data);
+        //console.log("jQuery out.");
         
         Dispatcher.dispatch({
             actionType: ActionTypes.GET_ALL_STUDENTS,

@@ -3,6 +3,10 @@
     margin-right: 10px;
 }
 
+.modal-body{
+    padding: 20px;
+}
+
 .ReactModal__Overlay {
     -webkit-perspective: 600;
     perspective: 600;

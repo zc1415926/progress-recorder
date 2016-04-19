@@ -26,12 +26,12 @@ var HomePage = React.createClass({
     },
 
     _onChange: function() {
-        console.log('this is onChange handler');
         this.setState({ students: StudentStore.getAllStudents() });
     },
 
-    openModal: function() {
-        this.setState({modalIsOpen: true});
+    openModal: function(stu,event) {
+        this.setState({currentStudent: stu,
+            modalIsOpen: true});
     },
 
     render: function () {
@@ -44,8 +44,15 @@ var HomePage = React.createClass({
                     <td>{student.student_entry_year}</td>
                     <td>{student.student_grade}</td>
                     <td>{student.student_class}</td>
-                    <td><button type="button" className="btn btn-link btn-student-operation"><span className="glyphicon glyphicon-pencil"></span></button>
-                        <button type="button" className="btn btn-link btn-student-operation"><span className="glyphicon glyphicon-remove"></span></button></td>
+                    <td>
+                        <button type="button" className="btn btn-link btn-student-operation"
+                            onClick={this.openModal.bind(this, student)}>
+                            <span className="glyphicon glyphicon-pencil"></span>
+                        </button>
+                        <button type="button" className="btn btn-link btn-student-operation">
+                            <span className="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </td>
                 </tr>
             );
         };
@@ -67,8 +74,8 @@ var HomePage = React.createClass({
                     </thead>
                     <tbody>{this.state.students.map(createAuthorRow, this)}</tbody>
                 </table>
-                <button onClick={this.openModal}>Open Modal</button>
-                <StuInfoModal isOpen={this.state.modalIsOpen}></StuInfoModal>
+
+                <StuInfoModal isOpen={this.state.modalIsOpen} currentStudent={this.state.currentStudent} />
             </div>
         );
     }
