@@ -7,13 +7,17 @@ var React = require('react');
 var StudentStore = require('../stores/studentStore');
 var Link = require('react-router').Link;
 var StuInfoModal = require('./student/studentInfoModal');
+var StuDelModal = require('./student/studentDeleteModal');
+
+var stateObject = {};
 
 var HomePage = React.createClass({
 
     getInitialState: function () {
         return {
             students: StudentStore.getAllStudents(),
-            modalIsOpen: false
+            isEditModalOpen: false,
+            isStuDelModalOpen: false,
         };
     },
 
@@ -29,11 +33,31 @@ var HomePage = React.createClass({
         this.setState({students: StudentStore.getAllStudents()});
     },
 
-    openModal: function (stu, event) {
+    openEditModal: function (stu, event) {
+        //console.log('openModal');
+        //console.log(this.state.modalIsOpen);
         this.setState({
             currentStudent: stu,
-            modalIsOpen: true
+            isEditModalOpen: true
         });
+    },
+
+    openStuDelModal: function(stu, event){
+        this.setState({
+            currentStudent: stu,
+            isStuDelModalOpen: true
+        });
+    },
+
+
+    onModalCloseNoteParent:function(modalName){
+        // 使用obj.'is'+modalName+'ModalOpen'的方法不能定义一个object的key
+        // 要定义一个由表达式组成的object的key，要先声明var stateObject = {}
+        // 再用obj[obj.'is'+modalName+'ModalOpen']=false赋值
+
+        stateObject['is'+modalName+'ModalOpen'] = false;
+        console.log(stateObject);
+        this.setState(stateObject);
     },
 
     render: function () {
@@ -48,10 +72,11 @@ var HomePage = React.createClass({
                     <td>{student.student_class}</td>
                     <td>
                         <button type="button" className="btn btn-link btn-student-operation"
-                                onClick={this.openModal.bind(this, student)}>
+                                onClick={this.openEditModal.bind(this, student)}>
                             <span className="glyphicon glyphicon-pencil"></span>
                         </button>
-                        <button type="button" className="btn btn-link btn-student-operation">
+                        <button type="button" className="btn btn-link btn-student-operation"
+                                onClick={this.openStuDelModal.bind(this, student)}>
                             <span className="glyphicon glyphicon-remove"></span>
                         </button>
                     </td>
@@ -81,7 +106,10 @@ var HomePage = React.createClass({
                     <tbody>{this.state.students.map(createAuthorRow, this)}</tbody>
                 </table>
 
-                <StuInfoModal isOpen={this.state.modalIsOpen} currentStudent={this.state.currentStudent}/>
+                <StuInfoModal isOpen={this.state.isEditModalOpen} currentStudent={this.state.currentStudent}
+                              callbackParent={this.onModalCloseNoteParent}/>
+                <StuDelModal isOpen={this.state.isStuDelModalOpen} currentStudent={this.state.currentStudent}
+                              callbackParent={this.onModalCloseNoteParent}/>
             </div>
         );
     }

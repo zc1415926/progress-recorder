@@ -20,18 +20,17 @@ var StudentInfoModal = React.createClass({
     },
 
     componentDidUpdate: function(){
-        //console.log('Info componentDidUpdate');
+        //console.log('Delete componentDidUpdate');
         //console.log(this.state.modalIsOpen);
         if(!this.state.modalIsOpen){
-            this.props.callbackParent('Edit');
+            this.props.callbackParent('StuDel');
         }
-
     },
 
     handleModalCloseRequest: function () {
         // opportunity to validate something and keep the modal open even if it
         // requested to be closed
-        this.setState({modalIsOpen: false});
+        this.setState({'modalIsOpen': false});
        // this.props.callbackParent();
     },
 
@@ -46,6 +45,8 @@ var StudentInfoModal = React.createClass({
     componentWillUnmount: function () {
         this.props.callbackParent();
     },
+
+
     render: function () {
         return (
             <Modal
@@ -100,7 +101,7 @@ var StudentInfoModal = React.createClass({
                         <button type="button" className="btn btn-default" onClick={this.handleModalCloseRequest}
                                 >Close
                         </button>
-                        <button type="button" className="btn btn-primary" onClick={this.handleSaveClicked}>Save
+                        <button type="button" className="btn btn-danger" onClick={this.handleSaveClicked}>Save
                             changes
                         </button>
                     </div>
