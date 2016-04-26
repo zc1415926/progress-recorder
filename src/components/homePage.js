@@ -6,7 +6,7 @@
 var React = require('react');
 var StudentStore = require('../stores/studentStore');
 var Link = require('react-router').Link;
-var StuInfoModal = require('./student/studentInfoModal');
+var StuUpdateModal = require('./student/studentUpdateModal');
 var StuDelModal = require('./student/studentDeleteModal');
 
 var stateObject = {};
@@ -106,7 +106,7 @@ var HomePage = React.createClass({
                     <tbody>{this.state.students.map(createAuthorRow, this)}</tbody>
                 </table>
 
-                <StuInfoModal isOpen={this.state.isEditModalOpen} currentStudent={this.state.currentStudent}
+                <StuUpdateModal isOpen={this.state.isEditModalOpen} currentStudent={this.state.currentStudent}
                               callbackParent={this.onModalCloseNoteParent}/>
                 <StuDelModal isOpen={this.state.isStuDelModalOpen} currentStudent={this.state.currentStudent}
                               callbackParent={this.onModalCloseNoteParent}/>
