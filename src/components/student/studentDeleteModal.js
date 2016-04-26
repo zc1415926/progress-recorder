@@ -14,14 +14,10 @@ var StudentInfoModal = React.createClass({
     },
 
     shouldComponentUpdate: function (nextProps) {
-        //console.log('StudentInfoModal');
-        //console.log(nextProps.isOpen);
         return this.state.modalIsOpen = nextProps.isOpen;
     },
 
     componentDidUpdate: function(){
-        //console.log('Delete componentDidUpdate');
-        //console.log(this.state.modalIsOpen);
         if(!this.state.modalIsOpen){
             this.props.callbackParent('StuDel');
         }
@@ -31,7 +27,6 @@ var StudentInfoModal = React.createClass({
         // opportunity to validate something and keep the modal open even if it
         // requested to be closed
         this.setState({'modalIsOpen': false});
-       // this.props.callbackParent();
     },
 
     handleSaveClicked: function (e) {
@@ -41,11 +36,6 @@ var StudentInfoModal = React.createClass({
     onModalChange:function(e){
 
     },
-
-    componentWillUnmount: function () {
-        this.props.callbackParent();
-    },
-
 
     render: function () {
         return (
@@ -61,7 +51,7 @@ var StudentInfoModal = React.createClass({
                             <span aria-hidden="true">&times;</span>
                             <span className="sr-only">Close</span>
                         </button>
-                        <h4 className="modal-title">修改学生信息</h4>
+                        <h4 className="modal-title">删除学生信息</h4>
                     </div>
                     <div className="modal-body">
                         <form>
@@ -73,36 +63,36 @@ var StudentInfoModal = React.createClass({
                             </div>
                             <div className="form-group">
                                 <label htmlFor="student_name" className="control-label">姓名：</label>
-                                <input type="text" className="form-control" id="student_name"
+                                <input type="text" className="form-control" id="student_name" disabled
                                        value={this.props.currentStudent ? this.props.currentStudent.student_name : ''}
                                        onChange={this.onModalChange}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="student_entry_year" className="control-label">入学年：</label>
-                                <input type="text" className="form-control" id="student_entry_year"
+                                <input type="text" className="form-control" id="student_entry_year" disabled
                                        value={this.props.currentStudent ? this.props.currentStudent.student_entry_year : ''}
                                        onChange={this.onModalChange}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="student_grade" className="control-label">年级：</label>
-                                <input type="text" className="form-control" id="student_grade"
+                                <input type="text" className="form-control" id="student_grade" disabled
                                        value={this.props.currentStudent ? this.props.currentStudent.student_grade : ''}
                                        onChange={this.onModalChange}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="student_class" className="control-label">班级：</label>
-                                <input type="text" className="form-control" id="student_class"
+                                <input type="text" className="form-control" id="student_class" disabled
                                        value={this.props.currentStudent ? this.props.currentStudent.student_class : ''}
                                        onChange={this.onModalChange}/>
                             </div>
                         </form>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-default" onClick={this.handleModalCloseRequest}
-                                >Close
+                        <button type="button" className="btn btn-default" onClick={this.handleModalCloseRequest}>
+                            取消
                         </button>
-                        <button type="button" className="btn btn-danger" onClick={this.handleSaveClicked}>Save
-                            changes
+                        <button type="button" className="btn btn-danger" onClick={this.handleSaveClicked}>
+                            确认删除
                         </button>
                     </div>
                 </div>

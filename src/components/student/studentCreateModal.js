@@ -19,9 +19,8 @@ var StudentInfoModal = React.createClass({
 
     componentDidUpdate: function(){
         if(!this.state.modalIsOpen){
-            this.props.callbackParent('Edit');
+            this.props.callbackParent('StuCreate');
         }
-
     },
 
     handleModalCloseRequest: function () {
@@ -52,38 +51,33 @@ var StudentInfoModal = React.createClass({
                             <span aria-hidden="true">&times;</span>
                             <span className="sr-only">Close</span>
                         </button>
-                        <h4 className="modal-title">修改学生信息</h4>
+                        <h4 className="modal-title">添加学生信息</h4>
                     </div>
                     <div className="modal-body">
                         <form>
                             <div className="form-group">
                                 <label htmlFor="student_number" className="control-label">学号：</label>
-                                <input type="text" className="form-control" id="student_number" disabled
-                                       value={this.props.currentStudent ? this.props.currentStudent.student_number : ''}
+                                <input type="text" className="form-control" id="student_number"
                                        onChange={this.onModalChange} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="student_name" className="control-label">姓名：</label>
                                 <input type="text" className="form-control" id="student_name"
-                                       value={this.props.currentStudent ? this.props.currentStudent.student_name : ''}
                                        onChange={this.onModalChange}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="student_entry_year" className="control-label">入学年：</label>
                                 <input type="text" className="form-control" id="student_entry_year"
-                                       value={this.props.currentStudent ? this.props.currentStudent.student_entry_year : ''}
                                        onChange={this.onModalChange}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="student_grade" className="control-label">年级：</label>
                                 <input type="text" className="form-control" id="student_grade"
-                                       value={this.props.currentStudent ? this.props.currentStudent.student_grade : ''}
                                        onChange={this.onModalChange}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="student_class" className="control-label">班级：</label>
                                 <input type="text" className="form-control" id="student_class"
-                                       value={this.props.currentStudent ? this.props.currentStudent.student_class : ''}
                                        onChange={this.onModalChange}/>
                             </div>
                         </form>
@@ -93,7 +87,7 @@ var StudentInfoModal = React.createClass({
                             取消
                         </button>
                         <button type="button" className="btn btn-primary" onClick={this.handleSaveClicked}>
-                            确认修改
+                            确认添加
                         </button>
                     </div>
                 </div>

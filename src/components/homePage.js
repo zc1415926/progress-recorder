@@ -6,6 +6,7 @@
 var React = require('react');
 var StudentStore = require('../stores/studentStore');
 var Link = require('react-router').Link;
+var StuCreateModal = require('./student/studentCreateModal');
 var StuUpdateModal = require('./student/studentUpdateModal');
 var StuDelModal = require('./student/studentDeleteModal');
 
@@ -16,6 +17,7 @@ var HomePage = React.createClass({
     getInitialState: function () {
         return {
             students: StudentStore.getAllStudents(),
+            isStuCreateModalOpen: false,
             isEditModalOpen: false,
             isStuDelModalOpen: false,
         };
@@ -31,6 +33,12 @@ var HomePage = React.createClass({
 
     _onChange: function () {
         this.setState({students: StudentStore.getAllStudents()});
+    },
+
+    openStuCreateModal: function(){
+        this.setState({
+            isStuCreateModalOpen: true
+        });
     },
 
     openEditModal: function (stu, event) {
@@ -89,7 +97,10 @@ var HomePage = React.createClass({
                 <div className="jumbotron subPage">
                     <h1>学生管理</h1>
                     <p>您可以在这里添加、删除、修改学生信息。</p>
-                    <Link to="/student" className="btn btn-primary btn-lg">添加学生</Link>
+                    <button type="button" className="btn btn-primary btn-lg"
+                            onClick={this.openStuCreateModal}>
+                        添加学生
+                    </button>
                 </div>
 
                 <table className="table">
@@ -106,6 +117,8 @@ var HomePage = React.createClass({
                     <tbody>{this.state.students.map(createAuthorRow, this)}</tbody>
                 </table>
 
+                <StuCreateModal isOpen={this.state.isStuCreateModalOpen} currentStudent={this.state.currentStudent}
+                                callbackParent={this.onModalCloseNoteParent}/>
                 <StuUpdateModal isOpen={this.state.isEditModalOpen} currentStudent={this.state.currentStudent}
                               callbackParent={this.onModalCloseNoteParent}/>
                 <StuDelModal isOpen={this.state.isStuDelModalOpen} currentStudent={this.state.currentStudent}
