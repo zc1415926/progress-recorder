@@ -12,8 +12,8 @@ var router = React.createClass({
     render: function () {
     return (
         <Router history={browserHistory}>
-            <Route path="/" component={require('./homePage')}/>
-            <Route path="student" component={require('./student/studentManager')} />
+            <Route path="/" component={require('./student/studentManager')}/>
+            {/*<Route path="student" component={require('./student/studentManager')} />*/}
         </Router>
     );
 }});
