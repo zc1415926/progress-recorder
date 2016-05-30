@@ -6,7 +6,8 @@
 var Dispatcher = require('../dispatcher/appDispatcher');
 var ActionTypes = require('../actions/actionTypes');
 
-var SERVER_BASE_URL = 'https://study-angular-backend-zc1415926.c9users.io';
+var env = require('../env.json');
+console.log(env.SERVER_BASE_URL);
 
 var StudentAction = {
     createStudent: function () {
@@ -15,7 +16,7 @@ var StudentAction = {
     getAllStudents: function () {
         $.ajax({
             type: 'GET',
-            url: SERVER_BASE_URL + '/student/index',
+            url: env.SERVER_BASE_URL + '/student/index',
             success: this.dispatchGetAllStudentsAction
         });
     },

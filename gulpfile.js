@@ -27,14 +27,14 @@ var config = {
         ],
         fonts  : 'node_modules/bootstrap/dist/fonts/*',
         images : 'src/images/*',
-        dist   : 'dist/',
+        serverRoot   : 'dist/',
         mainJs : 'src/main.js'
     }
 };
 
 gulp.task('connect', function(){
     connect.server({
-        root: ['dist'],
+        root: config.path.serverRoot,
         port: config.port,
         base: config.devBaseUrl,
         livereload: true,
@@ -42,26 +42,26 @@ gulp.task('connect', function(){
 });
 
 gulp.task('reload', function(){
-    gulp.src(config.path.html)
+    gulp.src(config.serverRoot.html)
         .pipe(connect.reload());
 });
 
 gulp.task('open',  function(){
-    gulp.src('dist/index.html')
+    gulp.src(config.path.serverRoot + 'index.html')
         .pipe(open({uri: config.devBaseUrl + ':' + config.port + '/'}));
 });
 
 gulp.task('html', function(){
     gulp.src(config.path.html)
         .pipe(htmlmin({removeComments: true,collapseWhitespace: true}))
-        .pipe(gulp.dest(config.path.dist))
+        .pipe(gulp.dest(config.path.serverRoot))
         .pipe(connect.reload());
 });
 
 gulp.task('css', function(){
     gulp.src(config.path.css)
         .pipe(concat('bundle.css'))
-        .pipe(gulp.dest(config.path.dist + 'css/'))
+        .pipe(gulp.dest(config.path.serverRoot + 'css/'))
         .pipe(connect.reload());
 });
 
@@ -73,13 +73,13 @@ gulp.task('js', function(){
         .pipe(source('bundle.js'))
         .pipe(buffer())
         //.pipe(uglify())
-        .pipe(gulp.dest(config.path.dist + '/scripts'))
+        .pipe(gulp.dest(config.path.serverRoot + '/scripts'))
         .pipe(connect.reload());
 });
 
 gulp.task('font', function(){
     gulp.src(config.path.fonts)
-        .pipe(gulp.dest(config.path.dist + 'fonts/'));
+        .pipe(gulp.dest(config.path.serverRoot + 'fonts/'));
 });
 
 gulp.task('watch', function(){
