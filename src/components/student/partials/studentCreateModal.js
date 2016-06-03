@@ -4,12 +4,19 @@
 'use strict';
 var React = require('react');
 var Modal = require('react-modal');
+var _ = require('lodash');
 
 var StudentInfoModal = React.createClass({
 
     getInitialState: function () {
         return {
-            modalIsOpen: this.props.isOpen
+            modalIsOpen: this.props.isOpen,
+            student_number: '',
+            student_name: '',
+            student_entry_year: '',
+            student_grade: '',
+            student_class: '',
+            errors: {}
         };
     },
 
@@ -18,9 +25,9 @@ var StudentInfoModal = React.createClass({
     },
 
     componentDidUpdate: function(){
-        if(!this.state.modalIsOpen){
+        /*if(!this.state.modalIsOpen){
             this.props.callbackParent('StuCreate');
-        }
+        }*/
     },
 
     handleModalCloseRequest: function () {
@@ -30,11 +37,54 @@ var StudentInfoModal = React.createClass({
     },
 
     handleSaveClicked: function (e) {
-        alert('Save button was clicked');
+
+        this.state.errors = {};
+
+        if(this.state.student_number == '' || _.isNaN(_.toNumber(this.state.student_number))){
+            console.log('student number error!');
+            this.state.errors.student_number = 'student_number error';
+        }
+        if(this.state.student_name == '' || this.state.student_name.length < 2){
+            console.log('student_name error!');
+            this.state.errors.student_name = 'student_name error';
+        }
+        if(this.state.student_entry_year == ''){
+            console.log('student_entry_year error!');
+            this.state.errors.student_entry_year = 'student_entry_year error';
+        }
+        if(this.state.student_grade == ''){
+            console.log('student number error!');
+            this.state.errors.student_grade = 'student_grade error';
+        }
+        if(this.state.student_class == ''){
+            console.log('student number error!');
+            this.state.errors.student_class = 'student_class error';
+        }
+
+        this.setState({errors: this.state.errors});
+
+        console.log(_.keys(this.state.errors));
+        if(_.keys(this.state.errors).length == 0){
+            console.log('valid');
+        }else{
+
+        }
+        this.props.callbackParent([
+            this.state.student_number,
+            this.state.student_name,
+            this.state.student_entry_year,
+            this.state.student_grade,
+            this.state.student_class
+        ]);
+        //console.log(this.state);
+        //this.setState({modalIsOpen: false});
     },
 
-    onModalChange:function(e){
+    onModalChange:function(param, e){
+        var obj = {};
+        obj[param]=e.target.value;
 
+        this.setState(obj);
     },
 
     render: function () {
@@ -51,34 +101,34 @@ var StudentInfoModal = React.createClass({
                             <span aria-hidden="true">&times;</span>
                             <span className="sr-only">Close</span>
                         </button>
-                        <h4 className="modal-title">添加学生信息</h4>
+                        <h4 className="modal-title">添加学生信息{this.state.errors.toString()}</h4>
                     </div>
                     <div className="modal-body">
                         <form>
                             <div className="form-group">
                                 <label htmlFor="student_number" className="control-label">学号：</label>
                                 <input type="text" className="form-control" id="student_number"
-                                       onChange={this.onModalChange} />
+                                       onChange={this.onModalChange.bind(this, "student_number")} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="student_name" className="control-label">姓名：</label>
                                 <input type="text" className="form-control" id="student_name"
-                                       onChange={this.onModalChange}/>
+                                       onChange={this.onModalChange.bind(this, "student_name")}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="student_entry_year" className="control-label">入学年：</label>
                                 <input type="text" className="form-control" id="student_entry_year"
-                                       onChange={this.onModalChange}/>
+                                       onChange={this.onModalChange.bind(this, "student_entry_year")}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="student_grade" className="control-label">年级：</label>
                                 <input type="text" className="form-control" id="student_grade"
-                                       onChange={this.onModalChange}/>
+                                       onChange={this.onModalChange.bind(this, "student_grade")}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="student_class" className="control-label">班级：</label>
                                 <input type="text" className="form-control" id="student_class"
-                                       onChange={this.onModalChange}/>
+                                       onChange={this.onModalChange.bind(this, "student_class")}/>
                             </div>
                         </form>
                     </div>

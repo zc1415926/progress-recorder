@@ -62,10 +62,11 @@ var HomePage = React.createClass({
         // 使用obj.'is'+modalName+'ModalOpen'的方法不能定义一个object的key
         // 要定义一个由表达式组成的object的key，要先声明var stateObject = {}
         // 再用obj[obj.'is'+modalName+'ModalOpen']=false赋值
+        //stateObject['is'+modalName+'ModalOpen'] = false;
+        console.log(modalName);
+        //browserHistory.push('/');
+        this.setState(modalName);
 
-        stateObject['is'+modalName+'ModalOpen'] = false;
-        console.log(stateObject);
-        this.setState(stateObject);
     },
 
     render: function () {

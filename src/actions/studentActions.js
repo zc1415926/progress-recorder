@@ -7,7 +7,7 @@ var Dispatcher = require('../dispatcher/appDispatcher');
 var ActionTypes = require('../actions/actionTypes');
 
 var env = require('../env.json');
-console.log(env.SERVER_BASE_URL);
+console.log('服务器端地址：' + env.SERVER_BASE_URL);
 
 var StudentAction = {
     createStudent: function () {
