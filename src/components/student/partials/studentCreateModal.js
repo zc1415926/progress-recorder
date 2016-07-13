@@ -25,9 +25,9 @@ var StudentInfoModal = React.createClass({
     },
 
     componentDidUpdate: function(){
-        /*if(!this.state.modalIsOpen){
+        if(!this.state.modalIsOpen){
             this.props.callbackParent('StuCreate');
-        }*/
+        }
     },
 
     handleModalCloseRequest: function () {
@@ -67,15 +67,15 @@ var StudentInfoModal = React.createClass({
         if(_.keys(this.state.errors).length == 0){
             console.log('valid');
         }else{
-
+            console.log('invalid');
         }
-        this.props.callbackParent([
+        /*this.props.callbackParent([
             this.state.student_number,
             this.state.student_name,
             this.state.student_entry_year,
             this.state.student_grade,
             this.state.student_class
-        ]);
+        ]);*/
         //console.log(this.state);
         //this.setState({modalIsOpen: false});
     },
