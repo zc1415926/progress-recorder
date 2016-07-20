@@ -4,7 +4,7 @@
 'use strict';
 
 var React = require('react');
-var Nav = require('../partials/nav');
+var Nav = require('./partials/nav');
 
 var App = React.createClass({
     render: function () {
