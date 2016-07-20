@@ -24,6 +24,7 @@ ReactDOM.render((
         <Route path="/" component={App}>
             <IndexRoute component={Home}/>
             <Route path="/students" component={Students}/>
+            <Route path="*" component={require('./components/app/pageNotFind')}/>
         </Route>
     </Router>
 
