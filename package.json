@@ -29,6 +29,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
+    "axios": "^0.13.1",
     "bootstrap": "^3.3.6",
     "flux": "^2.1.1",
     "gulp": "^3.9.1",
