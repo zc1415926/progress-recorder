@@ -14,6 +14,7 @@ var concat = require('gulp-concat');
 var htmlmin = require('gulp-htmlmin');
 var buffer = require('vinyl-buffer');
 var uglify = require('gulp-uglify');
+var history = require('connect-history-api-fallback');
 
 var config = {
     port: 8000,
@@ -38,7 +39,12 @@ gulp.task('connect', function(){
         port: config.port,
         base: config.devBaseUrl,
         livereload: true,
-    });
+        middleware: function(connect, opt) {
+            return [
+                history({})
+            ]
+        }
+    })
 });
 
 gulp.task('reload', function(){
