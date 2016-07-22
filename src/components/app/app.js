@@ -5,14 +5,17 @@
 
 var React = require('react');
 var Nav = require('./partials/nav');
+var Footer = require('./partials/footer');
 
 var App = React.createClass({
     render: function () {
         return (
             <div>
                 <Nav/>
-
-                {this.props.children}
+                <div className="container">
+                    {this.props.children}
+                </div>
+                <Footer/>
             </div>
         );
     }
