@@ -7,6 +7,10 @@
     margin-right: 20px;
 }
 
+#studentListTable {
+    margin-top: 15px;
+}
+
 .modal-body {
     padding: 20px;
 }

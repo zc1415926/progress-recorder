@@ -9,6 +9,8 @@ var StudentStore = require('../../stores/studentStore');
 var StuCreateModal = require('./partials/studentCreateModal');
 var StuUpdateModal = require('./partials/studentUpdateModal');
 var StuDelModal = require('./partials/studentDeleteModal');
+var GradeClass = require('./partials/gradeClassSelector');
+var StudentList = require('./partials/studentList');
 
 var stateObject = {};
 
@@ -66,56 +68,22 @@ var HomePage = React.createClass({
         console.log(stateObject);
         //browserHistory.push('/');
         this.setState(stateObject);
+
     },
 
     render: function () {
-
-        var createAuthorRow = function (student) {
-            return (
-                <tr key={student.id}>
-                    <td>{student.student_number}</td>
-                    <td>{student.student_name}</td>
-                    <td>{student.student_entry_year}</td>
-                    <td>{student.student_grade}</td>
-                    <td>{student.student_class}</td>
-                    <td>
-                        <button type="button" className="btn btn-link btn-student-operation"
-                                onClick={this.openEditModal.bind(this, student)}>
-                            <span className="glyphicon glyphicon-pencil"></span>
-                        </button>
-                        <button type="button" className="btn btn-link btn-student-operation"
-                                onClick={this.openStuDelModal.bind(this, student)}>
-                            <span className="glyphicon glyphicon-remove"></span>
-                        </button>
-                    </td>
-                </tr>
-            );
-        };
-
         return (
             <div className="container">
                 <div className="jumbotron subPage">
                     <h1>学生管理</h1>
                     <p>您可以在这里添加、删除、修改学生信息。</p>
-                    <button type="button" className="btn btn-primary btn-lg"
-                            onClick={this.openStuCreateModal}>
-                        添加学生
-                    </button>
+                    <GradeClass/>
                 </div>
 
-                <table className="table">
-                    <thead>
-                    <tr>
-                        <th>学号</th>
-                        <th>姓名</th>
-                        <th>入学年</th>
-                        <th>年级</th>
-                        <th>班级</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>{this.state.students.map(createAuthorRow, this)}</tbody>
-                </table>
+                <StudentList students={this.state.students}
+                             onCreateClick={this.openStuCreateModal}
+                             onEditClick={this.openEditModal}
+                             onDeleteClick={this.openStuDelModal}/>
 
                 <StuCreateModal isOpen={this.state.isStuCreateModalOpen} currentStudent={this.state.currentStudent}
                                 callbackParent={this.onModalCloseNoteParent}/>
