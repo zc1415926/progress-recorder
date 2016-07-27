@@ -21,7 +21,10 @@ var config = {
     devBaseUrl: 'http://localhost',
     path: {
         html   : 'src/*.html',
-        js     : 'src/**/*.js',
+        js     : [
+            'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/bootstrap/dist/js/bootstrap.min.js'
+        ],
         css    : [
             'node_modules/bootstrap/dist/css/bootstrap.min.css',
             'src/**/*.css'
@@ -72,6 +75,9 @@ gulp.task('css', function(){
 });
 
 gulp.task('js', function(){
+    gulp.src(config.path.js)
+        .pipe(gulp.dest(config.path.serverRoot + 'scripts/'))
+
     browserify(config.path.mainJs)
         .transform(reactify)
         .bundle()
