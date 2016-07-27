@@ -4,7 +4,8 @@
 'use strict';
 
 var React = require('react');
-var NavTab = require('./navTab');
+//var NavTab = require('./navTab');
+var NavTab = require('react-router-navtab');
 
 var Nav = React.createClass({
     render: function () {
@@ -19,6 +20,7 @@ var Nav = React.createClass({
                         <ul className="nav navbar-nav">
                             <NavTab to="/">首页</NavTab>
                             <NavTab to="/students">学生管理</NavTab>
+                            <NavTab to="/behaviour">平时表现</NavTab>
                         </ul>
                     </div>
                 </div>
