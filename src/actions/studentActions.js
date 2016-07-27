@@ -32,6 +32,19 @@ var StudentAction = {
     },
     deleteStudent: function () {
         
+    },
+
+    getGradeClasses: function(){
+        axios.get(env.SERVER_BASE_URL + '/gradeClasses')
+            .then(function(response){
+                Dispatcher.dispatch({
+                    actionType: ActionTypes.GET_GRADE_CLASSES,
+                    gradeClasses: response['data']
+                });
+            })
+            .catch(function(error){
+                console.log(error);
+            });
     }
 };
 

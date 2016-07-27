@@ -15,6 +15,7 @@ var DropdownMenu = React.createClass({
 
     onListItemClicked: function (listItem) {
         this.setState({text: listItem});
+        this.props.callbackParent(listItem);
     },
     createListItems: function (listItem) {
         return <li><a href="#" onClick={this.onListItemClicked.bind(this, listItem)}>{listItem}</a></li>;

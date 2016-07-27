@@ -10,6 +10,7 @@ var assign = require('lodash.assign');
 
 var CHANGE_EVENT = 'change';
 var _students = [];
+var _gradeClasses = {};
 
 var StudentStore = assign({}, EventEmitter.prototype, {
     addChangeListener: function (callback) {
@@ -28,15 +29,23 @@ var StudentStore = assign({}, EventEmitter.prototype, {
         return _students;
     },
 
+    getGradeClasses: function(){
+        return _gradeClasses;
+    },
+
     getAuthorById: function (id) {
         _.find(_authors, {id: id})
-    }
+    },
 });
 
 Dispatcher.register(function (action) {
     switch (action.actionType){
         case ActionTypes.GET_ALL_STUDENTS:
             _students = action.students;
+            StudentStore.emitChange();
+            break;
+        case ActionTypes.GET_GRADE_CLASSES:
+            _gradeClasses = action.gradeClasses;
             StudentStore.emitChange();
             break;
         default:
