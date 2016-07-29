@@ -13,12 +13,16 @@ var DropdownMenu = React.createClass({
         };
     },
 
+    shouldComponentUpdate: function (nextProps) {
+        return this.state.text = nextProps.text;
+    },
+
     onListItemClicked: function (listItem) {
         this.setState({text: listItem});
         this.props.callbackParent(listItem);
     },
     createListItems: function (listItem) {
-        return <li><a href="#" onClick={this.onListItemClicked.bind(this, listItem)}>{listItem}</a></li>;
+        return <li key={listItem}><a href="#" onClick={this.onListItemClicked.bind(this, listItem)}>{listItem}</a></li>;
     },
 
     render: function () {

@@ -17,13 +17,14 @@ var Students = require('./components/student/studentManager');
 var StudentCreate = require('./components/student/pages/studentCreatePage');
 
 
-StudentActions.getAllStudents();
+//StudentActions.getAllStudents();
 
 ReactDOM.render((
     <Router history={browserHistory}>
         <Route path="/" component={App}>
             <IndexRoute component={Home}/>
             <Route path="/students" component={Students}/>
+            <Route path="/behaviour" component={require('./components/behaviour/behaviourPage')}/>
             <Route path="*" component={require('./components/app/pageNotFind')}/>
         </Route>
     </Router>

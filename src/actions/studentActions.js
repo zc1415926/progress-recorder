@@ -25,8 +25,22 @@ var StudentAction = {
             });
     },
     getStudentById: function () {
-        
+
     },
+
+    getStudentsByGradeClass: function(gradeNum, classNum){
+        axios.get(env.SERVER_BASE_URL + '/student/' + gradeNum + '/' + classNum)
+            .then(function(response){
+                Dispatcher.dispatch({
+                    actionType: ActionTypes.GET_STUDENTS_BY_GRADE_CLASS,
+                    students: response['data']
+                });
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+    },
+
     updateStudent: function () {
         
     },

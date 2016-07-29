@@ -5,6 +5,7 @@
 
 var React = require('react');
 var StudentStore = require('../../stores/studentStore');
+var StudentActions = require('../../actions/studentActions');
 
 var StuCreateModal = require('./partials/studentCreateModal');
 var StuUpdateModal = require('./partials/studentUpdateModal');
@@ -18,7 +19,7 @@ var HomePage = React.createClass({
 
     getInitialState: function () {
         return {
-            students: StudentStore.getAllStudents(),
+            students: [],
             isStuCreateModalOpen: false,
             isEditModalOpen: false,
             isStuDelModalOpen: false,
@@ -68,7 +69,10 @@ var HomePage = React.createClass({
         console.log(stateObject);
         //browserHistory.push('/');
         this.setState(stateObject);
+    },
 
+    getStudentsByGradeClass: function (currentGrade, currentClass) {
+        StudentActions.getStudentsByGradeClass(currentGrade, currentClass);
     },
 
     render: function () {
@@ -77,7 +81,7 @@ var HomePage = React.createClass({
                 <div className="jumbotron subPage">
                     <h1>学生管理</h1>
                     <p>您可以在这里添加、删除、修改学生信息。</p>
-                    <GradeClass/>
+                    <GradeClass getStudentsByGradeClass={this.getStudentsByGradeClass}/>
                 </div>
 
                 <StudentList students={this.state.students}

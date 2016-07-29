@@ -1,5 +1,5 @@
 /**
- * Created by ZC on 2016/4/3.
+ * Created by ZC on 2016/7/28.
  */
 'use strict';
 
@@ -9,9 +9,9 @@ var ActionTypes = require('../actions/actionTypes');
 var assign = require('lodash.assign');
 
 var CHANGE_EVENT = 'change';
-var _students = [];
+var _gradeClasses = {};
 
-var StudentStore = assign({}, EventEmitter.prototype, {
+var GradeClassStore = assign({}, EventEmitter.prototype, {
     addChangeListener: function (callback) {
         this.addListener(CHANGE_EVENT, callback);
     },
@@ -24,24 +24,20 @@ var StudentStore = assign({}, EventEmitter.prototype, {
         this.emit(CHANGE_EVENT);
     },
 
-    getAllStudents: function () {
-        return _students;
+    getGradeClasses: function(){
+        return _gradeClasses;
     },
 });
 
 Dispatcher.register(function (action) {
     switch (action.actionType){
-        case ActionTypes.GET_ALL_STUDENTS:
-            _students = action.students;
-            StudentStore.emitChange();
-            break;
-        case ActionTypes.GET_STUDENTS_BY_GRADE_CLASS:
-            _students = action.students;
-            StudentStore.emitChange();
+        case ActionTypes.GET_GRADE_CLASSES:
+            _gradeClasses = action.gradeClasses;
+            GradeClassStore.emitChange();
             break;
         default:
-            //nothing to do...
+        //nothing to do...
     }
 });
 
-module.exports = StudentStore;
+module.exports = GradeClassStore;
