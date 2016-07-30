@@ -5,7 +5,7 @@
 
 var React = require('react');
 var Dropdown = require('./DropdownMenu');
-var GradeClassActions = require('../../../actions/studentActions');
+var GradeClassActions = require('../../../actions/gradeClassActions');
 var GradeClassStore = require('../../../stores/gradeClassStore');
 var _ = require('lodash');
 

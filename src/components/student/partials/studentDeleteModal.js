@@ -32,7 +32,11 @@ var StudentInfoModal = React.createClass({
 
     handleDeleteClicked: function () {
         StudentActions.deleteStudent({
-            student_number: this.props.currentStudent.student_number
+            student_number: this.props.currentStudent.student_number,
+            student_name:   this.props.currentStudent.student_name,
+            student_entry_year: this.props.currentStudent.student_entry_year,
+            student_grade:  this.props.currentStudent.student_grade,
+            student_class:  this.props.currentStudent.student_class
         });
 
         this.setState({modalIsOpen: false});

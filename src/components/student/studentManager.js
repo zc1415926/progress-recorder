@@ -35,7 +35,7 @@ var HomePage = React.createClass({
     },
 
     _onChange: function () {
-        this.setState({students: StudentStore.getAllStudents()});
+        this.setState({students: StudentStore.getStudents()});
     },
 
     openStuCreateModal: function(){

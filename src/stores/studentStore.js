@@ -24,7 +24,7 @@ var StudentStore = assign({}, EventEmitter.prototype, {
         this.emit(CHANGE_EVENT);
     },
 
-    getAllStudents: function () {
+    getStudents: function () {
         return _students;
     },
 });

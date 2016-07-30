@@ -6,33 +6,18 @@
 var React = require('react');
 
 var StudentList = React.createClass({
-    /*getInitialState: function () {
+
+    getInitialState: function () {
         return {
-            students: this.props.students
+            students: this.props.students,
         };
     },
-    createAuthorRow: function (student) {
-        return (
-            <tr key={student.id}>
-                <td>{student.student_number}</td>
-                <td>{student.student_name}</td>
-                <td>{student.student_entry_year}</td>
-                <td>{student.student_grade}</td>
-                <td>{student.student_class}</td>
-                <td>
-                    <button type="button" className="btn btn-link btn-student-operation"
-                            onClick={this.openEditModal.bind(this, student)}>
-                        <span className="glyphicon glyphicon-pencil"></span>
-                    </button>
-                    <button type="button" className="btn btn-link btn-student-operation"
-                            onClick={this.openStuDelModal.bind(this, student)}>
-                        <span className="glyphicon glyphicon-remove"></span>
-                    </button>
-                </td>
-            </tr>
-        );
-    },*/
 
+    shouldComponentUpdate: function (nextProps) {
+        //console.log('StudentList nextProps');
+        //console.log(nextProps);
+        return this.state.students = nextProps.students;
+    },
 
     createStudentRow: function(student)
     {
@@ -86,7 +71,7 @@ var StudentList = React.createClass({
                         <th>操作</th>
                     </tr>
                     </thead>
-                    <tbody>{this.props.students.map(this.createStudentRow, this)}</tbody>
+                    <tbody>{this.state.students.map(this.createStudentRow, this)}</tbody>
                 </table>
             </div>
         );

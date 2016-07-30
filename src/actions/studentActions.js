@@ -16,10 +16,11 @@ var StudentAction = {
             data: stuObj
         })
             .then(function(response){
-                Dispatcher.dispatch({
-                    actionType: ActionTypes.CREATE_STUDENT,
-                    students: response['data']
-                });
+                if(response['data']['status'] == "success"){
+                    getStudentsByGradeClass(stuObj['student_grade'], stuObj['student_class'])
+                }else{
+                    console.log(response['data']['data'])
+                }
             })
             .catch(function(error){
                 console.log(error);
@@ -43,51 +44,41 @@ var StudentAction = {
     },
 
     getStudentsByGradeClass: function(gradeNum, classNum){
-        axios.get(env.SERVER_BASE_URL + '/student/' + gradeNum + '/' + classNum)
-            .then(function(response){
-                Dispatcher.dispatch({
-                    actionType: ActionTypes.GET_STUDENTS_BY_GRADE_CLASS,
-                    students: response['data']
-                });
-            })
-            .catch(function(error){
-                console.log(error);
-            });
+        getStudentsByGradeClass(gradeNum, classNum);
     },
 
     updateStudent: function () {
         
     },
 
-    deleteStudent: function (stuNum) {
+    deleteStudent: function (stuObj) {
         axios.post(env.SERVER_BASE_URL + '/student/delete', {
-            data: stuNum
+            data: stuObj['student_number']
         })
             .then(function(response){
-
-                console.log(response['data']);
-                Dispatcher.dispatch({
-                    actionType: ActionTypes.CREATE_STUDENT,
-                    students: response['data']
-                });
+                if(response['data']['status'] == "success"){
+                    getStudentsByGradeClass(stuObj['student_grade'], stuObj['student_class']);
+                }else{
+                    console.log(response['data']['data']);
+                }
             })
             .catch(function(error){
                 console.log(error);
             });
     },
+};
 
-    getGradeClasses: function(){
-        axios.get(env.SERVER_BASE_URL + '/gradeClasses')
-            .then(function(response){
-                Dispatcher.dispatch({
-                    actionType: ActionTypes.GET_GRADE_CLASSES,
-                    gradeClasses: response['data']
-                });
-            })
-            .catch(function(error){
-                console.log(error);
+var getStudentsByGradeClass = function(gradeNum, classNum){
+    axios.get(env.SERVER_BASE_URL + '/student/' + gradeNum + '/' + classNum)
+        .then(function(response){
+            Dispatcher.dispatch({
+                actionType: ActionTypes.GET_STUDENTS_BY_GRADE_CLASS,
+                students: response['data']
             });
-    }
+        })
+        .catch(function(error){
+            console.log(error);
+        });
 };
 
 module.exports = StudentAction;
