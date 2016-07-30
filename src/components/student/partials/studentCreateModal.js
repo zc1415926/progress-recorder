@@ -6,16 +6,20 @@ var React = require('react');
 var Modal = require('react-modal');
 var _ = require('lodash');
 
+var StudentActions = require('../../../actions/studentActions');
+
 var StudentInfoModal = React.createClass({
 
     getInitialState: function () {
         return {
             modalIsOpen: this.props.isOpen,
+
             student_number: '',
             student_name: '',
             student_entry_year: '',
             student_grade: '',
             student_class: '',
+
             errors: {}
         };
     },
@@ -40,7 +44,7 @@ var StudentInfoModal = React.createClass({
 
         this.state.errors = {};
 
-        if(this.state.student_number == '' || _.isNaN(_.toNumber(this.state.student_number))){
+        /*if(this.state.student_number == '' || _.isNaN(_.toNumber(this.state.student_number))){
             console.log('student number error!');
             this.state.errors.student_number = 'student_number error';
         }
@@ -59,13 +63,20 @@ var StudentInfoModal = React.createClass({
         if(this.state.student_class == ''){
             console.log('student number error!');
             this.state.errors.student_class = 'student_class error';
-        }
+        }*/
 
         this.setState({errors: this.state.errors});
 
-        console.log(_.keys(this.state.errors));
         if(_.keys(this.state.errors).length == 0){
             console.log('valid');
+            StudentActions.createStudent({
+                student_number: this.state.student_number,
+                student_name:   this.state.student_name,
+                student_entry_year: this.state.student_entry_year,
+                student_grade:  this.state.student_grade,
+                student_class:  this.state.student_class
+            });
+            this.setState({modalIsOpen: false});
         }else{
             console.log('invalid');
         }
@@ -101,7 +112,7 @@ var StudentInfoModal = React.createClass({
                             <span aria-hidden="true">&times;</span>
                             <span className="sr-only">Close</span>
                         </button>
-                        <h4 className="modal-title">添加学生信息{this.state.errors.toString()}</h4>
+                        <h4 className="modal-title">添加学生信息</h4>
                     </div>
                     <div className="modal-body">
                         <form>

@@ -11,14 +11,28 @@ var env = require('../env.json');
 console.log('服务器端地址：' + env.SERVER_BASE_URL);
 
 var StudentAction = {
-    createStudent: function () {
-
+    createStudent: function (stuObj) {
+        axios.post(env.SERVER_BASE_URL + '/student/create', {
+            data: stuObj
+        })
+            .then(function(response){
+                Dispatcher.dispatch({
+                    actionType: ActionTypes.CREATE_STUDENT,
+                    students: response['data']
+                });
+            })
+            .catch(function(error){
+                console.log(error);
+            });
     },
 
     getAllStudents: function () {
         axios.get(env.SERVER_BASE_URL + '/student/index')
             .then(function(response){
-                dispatchGetAllStudentsAction(response['data']);
+                Dispatcher.dispatch({
+                    actionType: ActionTypes.GET_ALL_STUDENTS,
+                    students: response['data']
+                });
             })
             .catch(function(error){
                 console.log(error);
@@ -44,8 +58,22 @@ var StudentAction = {
     updateStudent: function () {
         
     },
-    deleteStudent: function () {
-        
+
+    deleteStudent: function (stuNum) {
+        axios.post(env.SERVER_BASE_URL + '/student/delete', {
+            data: stuNum
+        })
+            .then(function(response){
+
+                console.log(response['data']);
+                Dispatcher.dispatch({
+                    actionType: ActionTypes.CREATE_STUDENT,
+                    students: response['data']
+                });
+            })
+            .catch(function(error){
+                console.log(error);
+            });
     },
 
     getGradeClasses: function(){
@@ -60,13 +88,6 @@ var StudentAction = {
                 console.log(error);
             });
     }
-};
-
-var dispatchGetAllStudentsAction = function (data) {
-    Dispatcher.dispatch({
-        actionType: ActionTypes.GET_ALL_STUDENTS,
-        students: data
-    });
 };
 
 module.exports = StudentAction;
