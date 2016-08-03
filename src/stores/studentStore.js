@@ -9,7 +9,9 @@ var ActionTypes = require('../actions/actionTypes');
 var assign = require('lodash.assign');
 
 var CHANGE_EVENT = 'change';
+var UPDATE_EVENT = 'update';
 var _students = [];
+var _student = {};
 
 var StudentStore = assign({}, EventEmitter.prototype, {
     addChangeListener: function (callback) {
@@ -20,8 +22,20 @@ var StudentStore = assign({}, EventEmitter.prototype, {
         this.removeListener(CHANGE_EVENT,callback);
     },
 
+    addUpdateListener: function (callback) {
+        this.addListener(UPDATE_EVENT, callback);
+    },
+
+    removeUpdateListener: function (callback) {
+        this.removeListener(UPDATE_EVENT,callback);
+    },
+
     emitChange: function () {
         this.emit(CHANGE_EVENT);
+    },
+
+    emitUpdate: function () {
+        this.emit(UPDATE_EVENT);
     },
 
     getStudents: function () {
@@ -38,6 +52,10 @@ Dispatcher.register(function (action) {
         case ActionTypes.GET_STUDENTS_BY_GRADE_CLASS:
             _students = action.students;
             StudentStore.emitChange();
+            break;
+        case ActionTypes.UPDATE_STUDENT:
+            _student = action.student;
+            StudentStore.emitUpdate();
             break;
         default:
             //nothing to do...

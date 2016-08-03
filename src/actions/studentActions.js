@@ -62,6 +62,11 @@ var StudentAction = {
             .then(function(response){
                 if(response['data']['status'] == "success"){
                     getStudentsByGradeClass(stuObj['student_grade'], stuObj['student_class']);
+
+                    Dispatcher.dispatch({
+                        actionType: ActionTypes.UPDATE_STUDENT,
+                        student: response['data']
+                    });
                 }else{
                     console.log(response['data']['data']);
                 }

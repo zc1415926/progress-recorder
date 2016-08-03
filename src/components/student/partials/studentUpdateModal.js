@@ -4,7 +4,11 @@
 'use strict';
 var React = require('react');
 var Modal = require('react-modal');
+var toastr = require('toastr');
 var StudentActions = require('../../../actions/studentActions');
+var StudentStore = require('../../../stores/studentStore');
+
+var Input = require('./inputGroup');
 
 var StudentUpdateModal = React.createClass({
 
@@ -19,6 +23,14 @@ var StudentUpdateModal = React.createClass({
                 student_class       : '',
             },
         };
+    },
+
+    componentDidMount: function () {
+        StudentStore.addUpdateListener(this.handleUpdateSuccess);
+    },
+
+    componentWillUnmount: function () {
+        StudentStore.removeUpdateListener(this.handleUpdateSuccess);
     },
 
     shouldComponentUpdate: function (nextProps) {
@@ -43,7 +55,10 @@ var StudentUpdateModal = React.createClass({
 
     handleUpdateClicked: function () {
         StudentActions.updateStudent(this.state.student);
+    },
 
+    handleUpdateSuccess: function () {
+        toastr.success("成功修改学生信息");
         this.setState({modalIsOpen: false});
     },
 

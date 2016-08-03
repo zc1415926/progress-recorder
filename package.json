@@ -40,6 +40,7 @@
     "react-dom": "^15.2.1",
     "react-modal": "^1.4.0",
     "react-router": "^2.5.2",
-    "react-router-navtab": "0.0.4"
+    "react-router-navtab": "0.0.4",
+    "toastr": "^2.1.2"
   }
 }
