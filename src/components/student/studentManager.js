@@ -45,11 +45,20 @@ var HomePage = React.createClass({
     },
 
     openEditModal: function (stu, event) {
-        //console.log('openModal');
-        //console.log(this.state.modalIsOpen);
         this.setState({
-            currentStudent: stu,
-            isEditModalOpen: true
+            isEditModalOpen: true,
+
+            /*
+            如果不这样进行一次操作，传返回的stu的话，会导致这stu一直是“传引用（瞎猜的）”，
+            使得当在修改学生信息对话框中修改了文本框中的内容并点击“取消”后，
+            学生列表中的相应位置在内存中被修改，使用下面的代码打断引用的传递解决该问题
+             */
+            currentStudent: {
+                student_number      : stu['student_number'],
+                student_name        : stu['student_name'],
+                student_entry_year  : stu['student_entry_year'],
+                student_grade       : stu['student_grade'],
+                student_class       : stu['student_class']}
         });
     },
 

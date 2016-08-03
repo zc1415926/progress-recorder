@@ -55,8 +55,20 @@ var StudentAction = {
         getStudentsByGradeClass(gradeNum, classNum);
     },
 
-    updateStudent: function () {
-        
+    updateStudent: function (stuObj) {
+        axios.post(env.SERVER_BASE_URL + '/student/update', {
+            data: stuObj
+        })
+            .then(function(response){
+                if(response['data']['status'] == "success"){
+                    getStudentsByGradeClass(stuObj['student_grade'], stuObj['student_class']);
+                }else{
+                    console.log(response['data']['data']);
+                }
+            })
+            .catch(function(error){
+                console.log(error);
+            });
     },
 
     deleteStudent: function (stuObj) {
