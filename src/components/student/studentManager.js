@@ -27,11 +27,11 @@ var HomePage = React.createClass({
     },
 
     componentDidMount: function () {
-        StudentStore.addChangeListener(this._onChange);
+        StudentStore.addEventListener(StudentStore.CHANGE_EVENT, this._onChange);
     },
 
     componentWillUnmount: function () {
-        StudentStore.removeChangeListener(this._onChange);
+        StudentStore.removeEventListener(StudentStore.CHANGE_EVENT, this._onChange);
     },
 
     _onChange: function () {

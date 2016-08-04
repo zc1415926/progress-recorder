@@ -8,8 +8,6 @@ var Dispatcher = require('../dispatcher/appDispatcher');
 var ActionTypes = require('../actions/actionTypes');
 var assign = require('lodash.assign');
 
-var CHANGE_EVENT = 'change';
-var UPDATE_EVENT = 'update';
 var _students = [];
 var _student = {};
 
@@ -19,22 +17,7 @@ var StudentStore = assign({}, EventEmitter.prototype, {
     DELETE_EVENT : 'delete',
     UPDATE_EVENT : 'update',
     RETRIEVE_EVENT : 'retrieve',
-
-    addChangeListener: function (callback) {
-        this.addListener(CHANGE_EVENT, callback);
-    },
-
-    removeChangeListener: function (callback) {
-        this.removeListener(CHANGE_EVENT,callback);
-    },
-
-    addUpdateListener: function (callback) {
-        this.addListener(UPDATE_EVENT, callback);
-    },
-
-    removeUpdateListener: function (callback) {
-        this.removeListener(UPDATE_EVENT,callback);
-    },
+    CHANGE_EVENT : 'change',
 
     addEventListener: function (event, callback) {
         this.addListener(event, callback);
@@ -44,16 +27,8 @@ var StudentStore = assign({}, EventEmitter.prototype, {
         this.removeListener(event, callback);
     },
 
-    emitChange: function () {
-        this.emit(CHANGE_EVENT);
-    },
-
     emitEvent: function (event) {
         this.emit(event);
-    },
-
-    emitUpdate: function () {
-        this.emit(UPDATE_EVENT);
     },
 
     getStudents: function () {
@@ -65,11 +40,11 @@ Dispatcher.register(function (action) {
     switch (action.actionType){
         case ActionTypes.GET_ALL_STUDENTS:
             _students = action.students;
-            StudentStore.emitChange();
+            StudentStore.emitEvent(StudentStore.CHANGE_EVENT);
             break;
         case ActionTypes.GET_STUDENTS_BY_GRADE_CLASS:
             _students = action.students;
-            StudentStore.emitChange();
+            StudentStore.emitEvent(StudentStore.CHANGE_EVENT);
             break;
         case ActionTypes.CREATE_STUDENT:
             _student = action.student;
@@ -81,7 +56,7 @@ Dispatcher.register(function (action) {
             break;
         case ActionTypes.UPDATE_STUDENT:
             _student = action.student;
-            StudentStore.emitUpdate();
+            StudentStore.emitEvent(StudentStore.UPDATE_EVENT);
             break;
         default:
             //nothing to do...

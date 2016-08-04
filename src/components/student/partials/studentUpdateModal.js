@@ -26,11 +26,11 @@ var StudentUpdateModal = React.createClass({
     },
 
     componentDidMount: function () {
-        StudentStore.addUpdateListener(this.handleUpdateSuccess);
+        StudentStore.addEventListener(StudentStore.UPDATE_EVENT, this.handleUpdateSuccess);
     },
 
     componentWillUnmount: function () {
-        StudentStore.removeUpdateListener(this.handleUpdateSuccess);
+        StudentStore.removeEventListener(StudentStore.UPDATE_EVENT, this.handleUpdateSuccess);
     },
 
     shouldComponentUpdate: function (nextProps) {
