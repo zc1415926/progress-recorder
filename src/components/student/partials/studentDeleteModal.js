@@ -60,7 +60,7 @@ var StudentInfoModal = React.createClass({
     handleDeleteClicked: function () {
         StudentActions.deleteStudent(this.state.student);
     },
-    
+
     render: function () {
         return (
             <Modal

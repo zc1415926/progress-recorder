@@ -9,7 +9,12 @@ var HomePage = React.createClass({
     render: function () {
         return (
             <div>
-                <h1>欢迎使用学生过程性评价系统</h1>
+                <div className="jumbotron subPage">
+                    <h1>欢迎使用学生过程性评价系统</h1>
+                    <ul>
+                        <li>已经完成学生信息的增删改查功能</li>
+                    </ul>
+                </div>
             </div>
         );
     }

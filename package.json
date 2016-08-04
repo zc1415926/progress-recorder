@@ -1,6 +1,6 @@
 {
   "name": "progress-recorder",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "To record students' progress of their study.",
   "main": "main.js",
   "scripts": {
