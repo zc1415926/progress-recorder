@@ -7,12 +7,20 @@ var Modal = require('react-modal');
 var toastr = require('toastr');
 var StudentStore = require('../../../stores/studentStore');
 var StudentActions = require('../../../actions/studentActions');
+var Input = require('./inputGroup');
 
 var StudentInfoModal = React.createClass({
 
     getInitialState: function () {
         return {
-            modalIsOpen: this.props.isOpen
+            modalIsOpen: this.props.isOpen,
+            student: {
+                student_number      : '',
+                student_name        : '',
+                student_entry_year  : '',
+                student_grade       : '',
+                student_class       : '',
+            },
         };
     },
 
@@ -25,6 +33,10 @@ var StudentInfoModal = React.createClass({
     },
 
     shouldComponentUpdate: function (nextProps) {
+        if(nextProps['currentStudent']){
+            this.state.student=nextProps['currentStudent'];
+        }
+
         return this.state.modalIsOpen = nextProps.isOpen;
     },
 
@@ -46,19 +58,9 @@ var StudentInfoModal = React.createClass({
     },
 
     handleDeleteClicked: function () {
-        StudentActions.deleteStudent({
-            student_number: this.props.currentStudent.student_number,
-            student_name:   this.props.currentStudent.student_name,
-            student_entry_year: this.props.currentStudent.student_entry_year,
-            student_grade:  this.props.currentStudent.student_grade,
-            student_class:  this.props.currentStudent.student_class
-        });
+        StudentActions.deleteStudent(this.state.student);
     },
-
-    onModalChange:function(e){
-
-    },
-
+    
     render: function () {
         return (
             <Modal
@@ -77,36 +79,16 @@ var StudentInfoModal = React.createClass({
                     </div>
                     <div className="modal-body">
                         <form>
-                            <div className="form-group">
-                                <label htmlFor="student_number" className="control-label">学号：</label>
-                                <input type="text" className="form-control" id="student_number" disabled
-                                       value={this.props.currentStudent ? this.props.currentStudent.student_number : ''}
-                                       onChange={this.onModalChange} />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="student_name" className="control-label">姓名：</label>
-                                <input type="text" className="form-control" id="student_name" disabled
-                                       value={this.props.currentStudent ? this.props.currentStudent.student_name : ''}
-                                       onChange={this.onModalChange}/>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="student_entry_year" className="control-label">入学年：</label>
-                                <input type="text" className="form-control" id="student_entry_year" disabled
-                                       value={this.props.currentStudent ? this.props.currentStudent.student_entry_year : ''}
-                                       onChange={this.onModalChange}/>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="student_grade" className="control-label">年级：</label>
-                                <input type="text" className="form-control" id="student_grade" disabled
-                                       value={this.props.currentStudent ? this.props.currentStudent.student_grade : ''}
-                                       onChange={this.onModalChange}/>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="student_class" className="control-label">班级：</label>
-                                <input type="text" className="form-control" id="student_class" disabled
-                                       value={this.props.currentStudent ? this.props.currentStudent.student_class : ''}
-                                       onChange={this.onModalChange}/>
-                            </div>
+                            <Input id="student_number" text="学号：" value={this.state.student.student_number}
+                                   disabled="disabled"/>
+                            <Input id="student_name" text="姓名：" value={this.state.student.student_name}
+                                   disabled="disabled"/>
+                            <Input id="student_entry_year" text="入学年：" value={this.state.student.student_entry_year}
+                                   disabled="disabled"/>
+                            <Input id="student_grade" text="年级：" value={this.state.student.student_grade}
+                                   disabled="disabled"/>
+                            <Input id="student_class" text="班级：" value={this.state.student.student_class}
+                                   disabled="disabled"/>
                         </form>
                     </div>
                     <div className="modal-footer">

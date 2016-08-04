@@ -8,18 +8,20 @@ var _ = require('lodash');
 var toastr = require('toastr');
 var StudentStore = require('../../../stores/studentStore');
 var StudentActions = require('../../../actions/studentActions');
+var Input = require('./inputGroup');
 
 var StudentInfoModal = React.createClass({
 
     getInitialState: function () {
         return {
             modalIsOpen: this.props.isOpen,
-
-            student_number: '',
-            student_name: '',
-            student_entry_year: '',
-            student_grade: '',
-            student_class: '',
+            student: {
+                student_number      : '',
+                student_name        : '',
+                student_entry_year  : '',
+                student_grade       : '',
+                student_class       : '',
+            },
 
             errors: {}
         };
@@ -55,13 +57,7 @@ var StudentInfoModal = React.createClass({
     },
 
     handleSaveClicked: function (e) {
-        StudentActions.createStudent({
-            student_number: this.state.student_number,
-            student_name:   this.state.student_name,
-            student_entry_year: this.state.student_entry_year,
-            student_grade:  this.state.student_grade,
-            student_class:  this.state.student_class
-        });
+        StudentActions.createStudent(this.state.student);
         /*this.state.errors = {};
 
         if(this.state.student_number == '' || _.isNaN(_.toNumber(this.state.student_number))){
@@ -111,11 +107,9 @@ var StudentInfoModal = React.createClass({
         //this.setState({modalIsOpen: false});
     },
 
-    onModalChange:function(param, e){
-        var obj = {};
-        obj[param]=e.target.value;
-
-        this.setState(obj);
+    onModalChange:function(e){
+        this.state.student[e.target.id] = e.target.value;
+        return this.setState({student: this.state.student});
     },
 
     render: function () {
@@ -136,31 +130,16 @@ var StudentInfoModal = React.createClass({
                     </div>
                     <div className="modal-body">
                         <form>
-                            <div className="form-group">
-                                <label htmlFor="student_number" className="control-label">学号：</label>
-                                <input type="text" className="form-control" id="student_number"
-                                       onChange={this.onModalChange.bind(this, "student_number")} />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="student_name" className="control-label">姓名：</label>
-                                <input type="text" className="form-control" id="student_name"
-                                       onChange={this.onModalChange.bind(this, "student_name")}/>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="student_entry_year" className="control-label">入学年：</label>
-                                <input type="text" className="form-control" id="student_entry_year"
-                                       onChange={this.onModalChange.bind(this, "student_entry_year")}/>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="student_grade" className="control-label">年级：</label>
-                                <input type="text" className="form-control" id="student_grade"
-                                       onChange={this.onModalChange.bind(this, "student_grade")}/>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="student_class" className="control-label">班级：</label>
-                                <input type="text" className="form-control" id="student_class"
-                                       onChange={this.onModalChange.bind(this, "student_class")}/>
-                            </div>
+                            <Input id="student_number" text="学号：" value={this.state.student.student_number}
+                                   onChange={this.onModalChange}/>
+                            <Input id="student_name" text="姓名：" value={this.state.student.student_name}
+                                   onChange={this.onModalChange}/>
+                            <Input id="student_entry_year" text="入学年：" value={this.state.student.student_entry_year}
+                                   onChange={this.onModalChange}/>
+                            <Input id="student_grade" text="年级：" value={this.state.student.student_grade}
+                                   onChange={this.onModalChange}/>
+                            <Input id="student_class" text="班级：" value={this.state.student.student_class}
+                                   onChange={this.onModalChange}/>
                         </form>
                     </div>
                     <div className="modal-footer">
