@@ -4,6 +4,8 @@
 'use strict';
 var React = require('react');
 var Modal = require('react-modal');
+var toastr = require('toastr');
+var StudentStore = require('../../../stores/studentStore');
 var StudentActions = require('../../../actions/studentActions');
 
 var StudentInfoModal = React.createClass({
@@ -14,6 +16,14 @@ var StudentInfoModal = React.createClass({
         };
     },
 
+    componentDidMount: function () {
+        StudentStore.addEventListener(StudentStore.DELETE_EVENT, this.handleDeleteSuccess);
+    },
+
+    componentWillUnmount: function () {
+        StudentStore.removeEventListener(StudentStore.DELETE_EVENT, this.handleDeleteSuccess);
+    },
+
     shouldComponentUpdate: function (nextProps) {
         return this.state.modalIsOpen = nextProps.isOpen;
     },
@@ -22,6 +32,11 @@ var StudentInfoModal = React.createClass({
         if(!this.state.modalIsOpen){
             this.props.callbackParent('StuDel');
         }
+    },
+
+    handleDeleteSuccess: function () {
+        toastr.success('已经成功删除学生');
+        this.setState({modalIsOpen: false});
     },
 
     handleModalCloseRequest: function () {
@@ -38,8 +53,6 @@ var StudentInfoModal = React.createClass({
             student_grade:  this.props.currentStudent.student_grade,
             student_class:  this.props.currentStudent.student_class
         });
-
-        this.setState({modalIsOpen: false});
     },
 
     onModalChange:function(e){

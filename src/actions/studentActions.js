@@ -21,9 +21,13 @@ var StudentAction = {
                 这样就可以在成功添加一个学生后，自动刷新该年班学生列表
                  */
                 if(response['data']['status'] == "success"){
-                    getStudentsByGradeClass(stuObj['student_grade'], stuObj['student_class'])
+                    getStudentsByGradeClass(stuObj['student_grade'], stuObj['student_class']);
+                    Dispatcher.dispatch({
+                        actionType: ActionTypes.CREATE_STUDENT,
+                        student: response['data']
+                    });
                 }else{
-                    console.log(response['data']['data'])
+                    console.log(response['data']['data']);
                 }
             })
             .catch(function(error){
@@ -83,6 +87,10 @@ var StudentAction = {
             .then(function(response){
                 if(response['data']['status'] == "success"){
                     getStudentsByGradeClass(stuObj['student_grade'], stuObj['student_class']);
+                    Dispatcher.dispatch({
+                        actionType: ActionTypes.DELETE_STUDENT,
+                        student: response['data']
+                    });
                 }else{
                     console.log(response['data']['data']);
                 }

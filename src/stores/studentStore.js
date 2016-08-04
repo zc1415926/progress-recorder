@@ -14,6 +14,12 @@ var _students = [];
 var _student = {};
 
 var StudentStore = assign({}, EventEmitter.prototype, {
+
+    CREATE_EVENT : 'create',
+    DELETE_EVENT : 'delete',
+    UPDATE_EVENT : 'update',
+    RETRIEVE_EVENT : 'retrieve',
+
     addChangeListener: function (callback) {
         this.addListener(CHANGE_EVENT, callback);
     },
@@ -30,8 +36,20 @@ var StudentStore = assign({}, EventEmitter.prototype, {
         this.removeListener(UPDATE_EVENT,callback);
     },
 
+    addEventListener: function (event, callback) {
+        this.addListener(event, callback);
+    },
+
+    removeEventListener: function (event, callback) {
+        this.removeListener(event, callback);
+    },
+
     emitChange: function () {
         this.emit(CHANGE_EVENT);
+    },
+
+    emitEvent: function (event) {
+        this.emit(event);
     },
 
     emitUpdate: function () {
@@ -52,6 +70,14 @@ Dispatcher.register(function (action) {
         case ActionTypes.GET_STUDENTS_BY_GRADE_CLASS:
             _students = action.students;
             StudentStore.emitChange();
+            break;
+        case ActionTypes.CREATE_STUDENT:
+            _student = action.student;
+            StudentStore.emitEvent(StudentStore.CREATE_EVENT);
+            break;
+        case ActionTypes.DELETE_STUDENT:
+            _student = action.student;
+            StudentStore.emitEvent(StudentStore.DELETE_EVENT);
             break;
         case ActionTypes.UPDATE_STUDENT:
             _student = action.student;

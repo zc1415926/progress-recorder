@@ -5,7 +5,8 @@
 var React = require('react');
 var Modal = require('react-modal');
 var _ = require('lodash');
-
+var toastr = require('toastr');
+var StudentStore = require('../../../stores/studentStore');
 var StudentActions = require('../../../actions/studentActions');
 
 var StudentInfoModal = React.createClass({
@@ -24,6 +25,14 @@ var StudentInfoModal = React.createClass({
         };
     },
 
+    componentDidMount: function () {
+        StudentStore.addEventListener(StudentStore.CREATE_EVENT, this.handleCreateSuccess);
+    },
+
+    componentWillUnmount: function () {
+        StudentStore.removeEventListener(StudentStore.CREATE_EVENT, this.handleCreateSuccess);
+    },
+
     shouldComponentUpdate: function (nextProps) {
         return this.state.modalIsOpen = nextProps.isOpen;
     },
@@ -34,6 +43,11 @@ var StudentInfoModal = React.createClass({
         }
     },
 
+    handleCreateSuccess: function () {
+        toastr.success('成功添加了学生');
+        this.setState({modalIsOpen: false});
+    },
+
     handleModalCloseRequest: function () {
         // opportunity to validate something and keep the modal open even if it
         // requested to be closed
@@ -41,10 +55,16 @@ var StudentInfoModal = React.createClass({
     },
 
     handleSaveClicked: function (e) {
+        StudentActions.createStudent({
+            student_number: this.state.student_number,
+            student_name:   this.state.student_name,
+            student_entry_year: this.state.student_entry_year,
+            student_grade:  this.state.student_grade,
+            student_class:  this.state.student_class
+        });
+        /*this.state.errors = {};
 
-        this.state.errors = {};
-
-        /*if(this.state.student_number == '' || _.isNaN(_.toNumber(this.state.student_number))){
+        if(this.state.student_number == '' || _.isNaN(_.toNumber(this.state.student_number))){
             console.log('student number error!');
             this.state.errors.student_number = 'student_number error';
         }
@@ -63,7 +83,7 @@ var StudentInfoModal = React.createClass({
         if(this.state.student_class == ''){
             console.log('student number error!');
             this.state.errors.student_class = 'student_class error';
-        }*/
+        }
 
         this.setState({errors: this.state.errors});
 
@@ -79,7 +99,7 @@ var StudentInfoModal = React.createClass({
             this.setState({modalIsOpen: false});
         }else{
             console.log('invalid');
-        }
+        }*/
         /*this.props.callbackParent([
             this.state.student_number,
             this.state.student_name,
