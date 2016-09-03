@@ -18,6 +18,7 @@ ReactDOM.render((
         <Route path="/" component={App}>
             <IndexRoute component={Home}/>
             <Route path="/students" component={require('./components/student/studentManager')}/>
+            <Route path="/gradeClass" component={require('./components/gradeClass/gradeClassManager')}/>
             <Route path="/behaviour" component={require('./components/behaviour/behaviourPage')}/>
             <Route path="*" component={require('./components/app/pageNotFind')}/>
         </Route>

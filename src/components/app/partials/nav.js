@@ -20,6 +20,7 @@ var Nav = React.createClass({
                         <ul className="nav navbar-nav">
                             <NavTab to="/">首页</NavTab>
                             <NavTab to="/students">学生管理</NavTab>
+                            <NavTab to="/gradeClass">班级管理</NavTab>
                             <NavTab to="/behaviour">平时表现</NavTab>
                         </ul>
                     </div>
