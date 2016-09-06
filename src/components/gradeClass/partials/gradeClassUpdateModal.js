@@ -11,13 +11,19 @@ var ModalTitle = require('react-modal-bootstrap').ModalTitle;
 var ModalClose = require('react-modal-bootstrap').ModalClose;
 var ModalBody = require('react-modal-bootstrap').ModalBody;
 var ModalFooter = require('react-modal-bootstrap').ModalFooter;
+var Input = require('./inputGroup');
 
 var ReactModal = React.createClass({
 
     getInitialState: function () {
         return {
+            currentGradeClass:{
+                classCode: "",
+                entryYear: "",
+                gradeNum: "",
+                classNum: ""
+            },
             isOpen: this.props.isOpen,
-            currentGradeClass: this.props.currentGradeClass,
         };
     },
 
@@ -28,7 +34,6 @@ var ReactModal = React.createClass({
         if(nextProps['currentGradeClass']){
             this.state.currentGradeClass=nextProps['currentGradeClass'];
         }
-console.log(nextProps['currentGradeClass']);
 
         this.state.currentGradeClass = nextProps.currentGradeClass;
         return this.state.isOpen = nextProps.isOpen;
@@ -42,24 +47,25 @@ console.log(nextProps['currentGradeClass']);
         return (
             <div>
                 <div className="container">
-                    <h1>12121{this.state.isOpen}</h1>
                     <Modal isOpen={this.state.isOpen} onRequestHide={this.hideModal}>
                         <ModalHeader>
                             <ModalClose onClick={this.hideModal}/>
-                            <ModalTitle>Modal title</ModalTitle>
+                            <ModalTitle>修改年级班级信息</ModalTitle>
                         </ModalHeader>
                         <ModalBody>
-                            <p>{this.state.currentGradeClass}Ab ea ipsam iure perferendis! Ad debitis dolore excepturi
-                                explicabo hic incidunt placeat quasi repellendus soluta,
-                                vero. Autem delectus est laborum minus modi molestias
-                                natus provident, quidem rerum sint, voluptas!</p>
+                            <form>
+                                <Input id="classCode" text="班级代码" value={this.state.currentGradeClass.classCode} disabled="disabled"/>
+                                <Input id="entryYear" text="入学年级" value={this.state.currentGradeClass.entryYear}/>
+                                <Input id="gradeNum" text="年级" value={this.state.currentGradeClass.gradeNum}/>
+                                <Input id="classNum" text="班级" value={this.state.currentGradeClass.classNum}/>
+                            </form>
                         </ModalBody>
                         <ModalFooter>
                             <button className='btn btn-default' onClick={this.hideModal}>
-                                Close
+                                取消
                             </button>
                             <button className='btn btn-primary'>
-                                Save changes
+                                确定修改
                             </button>
                         </ModalFooter>
                     </Modal>
