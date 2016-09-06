@@ -35,7 +35,7 @@ var GradeClassComponent = React.createClass({
                 <td>{gradeClasses.classNum}</td>
                 <td>
                     <button type="button" className="btn btn-link btn-student-operation"
-                    >
+                    onClick={this.props.openUpdateModal.bind(null, gradeClasses)}>
                         <span className="glyphicon glyphicon-pencil"></span>
                     </button>
                     <button type="button" className="btn btn-link btn-student-operation"

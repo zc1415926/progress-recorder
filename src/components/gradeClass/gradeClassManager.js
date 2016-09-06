@@ -7,6 +7,7 @@ var React = require('react');
 var GradeClassActions = require('../../actions/gradeClassActions');
 var GradeClassStore = require('../../stores/gradeClassStore');
 var GradeClassList = require('./partials/gradeClassList');
+var GradeClassUpdateModal = require('./partials/gradeClassUpdateModal');
 
 var GradeClassManager = React.createClass({
 
@@ -18,6 +19,8 @@ var GradeClassManager = React.createClass({
                 gradeNum: '加载',
                 classNum: '!',
             }],
+
+            isUpdateModalOpen: false,
         };
     },
 
@@ -31,9 +34,12 @@ var GradeClassManager = React.createClass({
     },
 
     _onChange: function () {
-
-
         this.setState({gradeClasses: GradeClassStore.getGradeClasses()});
+    },
+
+    openUpdateModal: function (gradeClass) {
+        this.setState({isUpdateModalOpen: true,
+            currentGradeClass: gradeClass});
     },
 
     render: function () {
@@ -45,7 +51,11 @@ var GradeClassManager = React.createClass({
                     <p>您可以在这里添加、删除、修改班级信息。</p>
                 </div>
 
-                <GradeClassList gradeClasses={this.state.gradeClasses}/>
+                <GradeClassList gradeClasses={this.state.gradeClasses}
+                openUpdateModal={this.openUpdateModal}/>
+
+                <GradeClassUpdateModal isOpen={this.state.isUpdateModalOpen}
+                                       currentGradeClass={this.state.currentGradeClass}/>
             </div>
         );
     }
