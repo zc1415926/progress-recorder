@@ -51,7 +51,18 @@ var GradeClassComponent = React.createClass({
     render: function () {
         return (
             <div>
-                <table id="gradeClassListTable" className="table">
+                <div className="row">
+                    <div className="col-md-6">
+                        <button type="button" className="btn btn-primary btn-block "
+                                onClick={this.props.openCreateModal}>
+                            添加年级班级
+                        </button>
+                    </div>
+                    <div className="col-md-6">
+                        <p></p>
+                    </div>
+                </div>
+                <table id="gradeClassListTable" className="table listTable">
                     <thead>
                     <tr>
                         <th>班级代码</th>

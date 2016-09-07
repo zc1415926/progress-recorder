@@ -60,7 +60,7 @@ var StudentList = React.createClass({
                     </div>
                 </div>
 
-                <table id="studentListTable" className="table">
+                <table id="studentListTable" className="table listTable">
                     <thead>
                     <tr>
                         <th>学号</th>

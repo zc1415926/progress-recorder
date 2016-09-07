@@ -7,6 +7,7 @@ var React = require('react');
 var GradeClassActions = require('../../actions/gradeClassActions');
 var GradeClassStore = require('../../stores/gradeClassStore');
 var GradeClassList = require('./partials/gradeClassList');
+var GradeClassCreateModal = require('./partials/gradeClassCreateModal');
 var GradeClassUpdateModal = require('./partials/gradeClassUpdateModal');
 var GradeClassDeleteModal = require('./partials/gradeClassDeleteModal');
 
@@ -21,6 +22,7 @@ var GradeClassManager = React.createClass({
                 classNum: '!',
             }],
 
+            isCreateModalOpen: false,
             isUpdateModalOpen: false,
             isDeleteModalOpen: false,
         };
@@ -37,6 +39,14 @@ var GradeClassManager = React.createClass({
 
     _onChange: function () {
         this.setState({gradeClasses: GradeClassStore.getGradeClasses()});
+    },
+
+    openCreateModal: function () {
+        this.setState({isCreateModalOpen: true});
+    },
+
+    closeCreateModal: function () {
+        this.setState({isCreateModalOpen: false});
     },
 
     openUpdateModal: function (gradeClass) {
@@ -69,9 +79,12 @@ var GradeClassManager = React.createClass({
                 </div>
 
                 <GradeClassList gradeClasses={this.state.gradeClasses}
+                                openCreateModal={this.openCreateModal}
                                 openUpdateModal={this.openUpdateModal}
                                 openDeleteModal={this.openDeleteModal}/>
 
+                <GradeClassCreateModal isOpen={this.state.isCreateModalOpen}
+                                       closeModal={this.closeCreateModal}/>
                 <GradeClassUpdateModal isOpen={this.state.isUpdateModalOpen}
                                        currentGradeClass={this.state.currentGradeClass}
                                        closeModal={this.closeUpdateModal}/>
