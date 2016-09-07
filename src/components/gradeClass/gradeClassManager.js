@@ -8,6 +8,7 @@ var GradeClassActions = require('../../actions/gradeClassActions');
 var GradeClassStore = require('../../stores/gradeClassStore');
 var GradeClassList = require('./partials/gradeClassList');
 var GradeClassUpdateModal = require('./partials/gradeClassUpdateModal');
+var GradeClassDeleteModal = require('./partials/gradeClassDeleteModal');
 
 var GradeClassManager = React.createClass({
 
@@ -21,6 +22,7 @@ var GradeClassManager = React.createClass({
             }],
 
             isUpdateModalOpen: false,
+            isDeleteModalOpen: false,
         };
     },
 
@@ -42,6 +44,21 @@ var GradeClassManager = React.createClass({
             currentGradeClass: gradeClass});
     },
 
+    closeUpdateModal: function () {
+        this.setState({isUpdateModalOpen: false,
+            currentGradeClass: {}});
+    },
+
+    openDeleteModal: function (gradeClass) {
+        this.setState({isDeleteModalOpen: true,
+            currentGradeClass: gradeClass});
+    },
+
+    closeDeleteModal: function () {
+        this.setState({isDeleteModalOpen: false,
+            currentGradeClass: {}});
+    },
+
     render: function () {
 
         return (
@@ -52,10 +69,15 @@ var GradeClassManager = React.createClass({
                 </div>
 
                 <GradeClassList gradeClasses={this.state.gradeClasses}
-                openUpdateModal={this.openUpdateModal}/>
+                                openUpdateModal={this.openUpdateModal}
+                                openDeleteModal={this.openDeleteModal}/>
 
                 <GradeClassUpdateModal isOpen={this.state.isUpdateModalOpen}
-                                       currentGradeClass={this.state.currentGradeClass}/>
+                                       currentGradeClass={this.state.currentGradeClass}
+                                       closeModal={this.closeUpdateModal}/>
+                <GradeClassDeleteModal isOpen={this.state.isDeleteModalOpen}
+                                       currentGradeClass={this.state.currentGradeClass}
+                                       closeModal={this.closeDeleteModal}/>
             </div>
         );
     }

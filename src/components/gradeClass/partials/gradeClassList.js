@@ -22,24 +22,24 @@ var GradeClassComponent = React.createClass({
         return this.state.gradeClasses = nextProps.gradeClasses;
     },
 
-    createGradeClassRow: function (gradeClasses) {
+    createGradeClassRow: function (gradeClass) {
        /* _.forOwn(gradeClasses, function(value, key) {
             console.log(key);
             console.log(value);
         });*/
         return (
-            <tr key={gradeClasses.classCode}>
-                <td>{gradeClasses.classCode}</td>
-                <td>{gradeClasses.entryYear}</td>
-                <td>{gradeClasses.gradeNum}</td>
-                <td>{gradeClasses.classNum}</td>
+            <tr key={gradeClass.classCode}>
+                <td>{gradeClass.classCode}</td>
+                <td>{gradeClass.entryYear}</td>
+                <td>{gradeClass.gradeNum}</td>
+                <td>{gradeClass.classNum}</td>
                 <td>
                     <button type="button" className="btn btn-link btn-student-operation"
-                    onClick={this.props.openUpdateModal.bind(null, gradeClasses)}>
+                    onClick={this.props.openUpdateModal.bind(null, gradeClass)}>
                         <span className="glyphicon glyphicon-pencil"></span>
                     </button>
                     <button type="button" className="btn btn-link btn-student-operation"
-                    >
+                    onClick={this.props.openDeleteModal.bind(null, gradeClass)}>
                         <span className="glyphicon glyphicon-remove"></span>
                     </button>
                 </td>

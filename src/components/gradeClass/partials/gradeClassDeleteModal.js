@@ -56,22 +56,22 @@ var ReactModal = React.createClass({
                     <Modal isOpen={this.state.isOpen} onRequestHide={this.hideModal}>
                         <ModalHeader>
                             <ModalClose onClick={this.hideModal}/>
-                            <ModalTitle>修改年级班级信息</ModalTitle>
+                            <ModalTitle>删除年级班级信息</ModalTitle>
                         </ModalHeader>
                         <ModalBody>
                             <form>
                                 <Input id="classCode" text="班级代码" value={this.state.currentGradeClass.classCode} disabled="disabled"/>
-                                <Input id="entryYear" text="入学年级" value={this.state.currentGradeClass.entryYear}/>
-                                <Input id="gradeNum" text="年级" value={this.state.currentGradeClass.gradeNum}/>
-                                <Input id="classNum" text="班级" value={this.state.currentGradeClass.classNum}/>
+                                <Input id="entryYear" text="入学年级" value={this.state.currentGradeClass.entryYear} disabled="disabled"/>
+                                <Input id="gradeNum" text="年级" value={this.state.currentGradeClass.gradeNum} disabled="disabled"/>
+                                <Input id="classNum" text="班级" value={this.state.currentGradeClass.classNum} disabled="disabled"/>
                             </form>
                         </ModalBody>
                         <ModalFooter>
                             <button className='btn btn-default' onClick={this.hideModal}>
                                 取消
                             </button>
-                            <button className='btn btn-primary'>
-                                确定修改
+                            <button className='btn btn-danger'>
+                                确定删除
                             </button>
                         </ModalFooter>
                     </Modal>
