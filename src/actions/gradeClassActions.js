@@ -22,6 +22,30 @@ var GradeClassActions = {
             .catch(function(error){
                 console.log(error);
             });
+    },
+
+    createGradeClass: function (gradeClass) {
+        axios.post(env.SERVER_BASE_URL + '/gradeClasses/create', {
+            data: gradeClass
+        })
+            .then(function(response){
+
+                console.log(response);
+                /*
+
+                if(response['data']['status'] == "success"){
+                    getStudentsByGradeClass(stuObj['student_grade'], stuObj['student_class']);
+                    Dispatcher.dispatch({
+                        actionType: ActionTypes.CREATE_STUDENT,
+                        student: response['data']
+                    });
+                }else{
+                    console.log(response['data']['data']);
+                }*/
+            })
+            .catch(function(error){
+                console.log(error);
+            });
     }
 };
 

@@ -46,7 +46,8 @@ var GradeClassManager = React.createClass({
     },
 
     closeCreateModal: function () {
-        this.setState({isCreateModalOpen: false});
+        this.setState({isCreateModalOpen: false,
+            currentGradeClass: {}});
     },
 
     openUpdateModal: function (gradeClass) {
