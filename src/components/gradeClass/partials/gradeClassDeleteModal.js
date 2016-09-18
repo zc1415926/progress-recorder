@@ -12,6 +12,8 @@ var ModalClose = require('react-modal-bootstrap').ModalClose;
 var ModalBody = require('react-modal-bootstrap').ModalBody;
 var ModalFooter = require('react-modal-bootstrap').ModalFooter;
 var Input = require('./inputGroup');
+var gradeClassActions = require('../../../actions/gradeClassActions');
+var gradeClassStore = require('../../../stores/gradeClassStore');
 
 var ReactModal = React.createClass({
 
@@ -39,14 +41,31 @@ var ReactModal = React.createClass({
         return this.state.isOpen = nextProps.isOpen;
     },
 
-    hideModal:function () {
-        this.setState({isOpen: false});
-    },
-
     componentDidUpdate: function(){
         if(!this.state.isOpen){
             this.props.closeModal();
         }
+    },
+
+    componentDidMount: function () {
+
+        gradeClassStore.addEventListener(gradeClassStore.DELETE_EVENT, this.handleDeleteSuccess);
+    },
+
+    componentWillUnmount: function () {
+        gradeClassStore.removeEventListener(gradeClassStore.DELETE_EVENT, this.handleDeleteSuccess);
+    },
+
+    hideModal:function () {
+        this.setState({isOpen: false});
+    },
+
+    handleConfirm: function () {
+        gradeClassActions.deleteGradeClass(this.state.currentGradeClass.classCode);
+    },
+
+    handleDeleteSuccess: function () {
+        this.setState({isOpen: false});
     },
 
     render: function () {
@@ -70,7 +89,7 @@ var ReactModal = React.createClass({
                             <button className='btn btn-default' onClick={this.hideModal}>
                                 取消
                             </button>
-                            <button className='btn btn-danger'>
+                            <button className='btn btn-danger' onClick={this.handleConfirm}>
                                 确定删除
                             </button>
                         </ModalFooter>

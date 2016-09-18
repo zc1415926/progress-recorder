@@ -22,12 +22,12 @@ var GradeClassSelector = React.createClass({
     },
 
     componentDidMount: function () {
-        GradeClassStore.addChangeListener(this._onChange);
+        GradeClassStore.addEventListener(GradeClassStore.RETRIEVE_EVENT, this._onChange);
         GradeClassActions.getGradeClasses();
     },
 
     componentWillUnmount: function () {
-        GradeClassStore.removeChangeListener(this._onChange);
+        GradeClassStore.removeEventListener(GradeClassStore.RETRIEVE_EVENT, this._onChange);
     },
 
     _onChange: function () {

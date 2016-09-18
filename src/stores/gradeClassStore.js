@@ -8,32 +8,50 @@ var Dispatcher = require('../dispatcher/appDispatcher');
 var ActionTypes = require('../actions/actionTypes');
 var assign = require('lodash.assign');
 
-var CHANGE_EVENT = 'change';
 var _gradeClasses = {};
+var _gradeClassCode = {};
 
 var GradeClassStore = assign({}, EventEmitter.prototype, {
-    addChangeListener: function (callback) {
-        this.addListener(CHANGE_EVENT, callback);
+
+    CREATE_EVENT : 'create',
+    DELETE_EVENT : 'delete',
+    UPDATE_EVENT : 'update',
+    RETRIEVE_EVENT : 'retrieve',
+    CHANGE_EVENT : 'change',
+
+    addEventListener: function (event, callback) {
+        this.addListener(event, callback);
     },
 
-    removeChangeListener: function (callback) {
-        this.removeListener(CHANGE_EVENT,callback);
+    removeEventListener: function (event, callback) {
+        this.removeListener(event, callback);
     },
 
-    emitChange: function () {
-        this.emit(CHANGE_EVENT);
+    emitEvent: function (event) {
+        this.emit(event);
     },
 
     getGradeClasses: function(){
         return _gradeClasses;
     },
+
+    getGradeClassCode: function () {
+        return _gradeClassCode;
+    }
 });
 
 Dispatcher.register(function (action) {
     switch (action.actionType){
         case ActionTypes.GET_GRADE_CLASSES:
             _gradeClasses = action.gradeClasses;
-            GradeClassStore.emitChange();
+            GradeClassStore.emitEvent(GradeClassStore.RETRIEVE_EVENT);
+            break;
+        case ActionTypes.DELETE_GRADE_CLASS:
+            _gradeClassCode = action.gradeClassCode;
+            GradeClassStore.emitEvent(GradeClassStore.DELETE_EVENT);
+            //console.log(GradeClassStore.DELETE_EVENT);
+            //console.log(_gradeClasses);
+            //console.log(GradeClassStore.DELETE_EVENT);
             break;
         default:
         //nothing to do...

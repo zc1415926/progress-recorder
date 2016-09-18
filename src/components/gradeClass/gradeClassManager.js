@@ -10,6 +10,7 @@ var GradeClassList = require('./partials/gradeClassList');
 var GradeClassCreateModal = require('./partials/gradeClassCreateModal');
 var GradeClassUpdateModal = require('./partials/gradeClassUpdateModal');
 var GradeClassDeleteModal = require('./partials/gradeClassDeleteModal');
+var toastr = require('toastr');
 
 var GradeClassManager = React.createClass({
 
@@ -29,16 +30,24 @@ var GradeClassManager = React.createClass({
     },
 
     componentDidMount: function () {
-        GradeClassStore.addChangeListener(this._onChange);
+        GradeClassStore.addEventListener(GradeClassStore.RETRIEVE_EVENT, this._onChange);
+        GradeClassStore.addEventListener(GradeClassStore.DELETE_EVENT, this._onDelete);
+        //初次打开页面，获取一次数据
         GradeClassActions.getGradeClasses();
     },
 
     componentWillUnmount: function () {
-        GradeClassStore.removeChangeListener(this._onChange);
+        GradeClassStore.removeEventListener(this._onChange);
     },
 
     _onChange: function () {
         this.setState({gradeClasses: GradeClassStore.getGradeClasses()});
+    },
+
+    _onDelete: function () {
+        toastr.success('已经成功删除班级，班级代码：' + GradeClassStore.getGradeClassCode());
+        this.setState({isDeleteModalOpen: false,
+            currentGradeClass: {}});
     },
 
     openCreateModal: function () {

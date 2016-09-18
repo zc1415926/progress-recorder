@@ -7,5 +7,6 @@ module.exports = {
     DELETE_STUDENT: 'delete_student',
 
     GET_GRADE_CLASSES: 'get_grade_classes',
-    GET_STUDENTS_BY_GRADE_CLASS: 'get_students_by_grade_class'
+    GET_STUDENTS_BY_GRADE_CLASS: 'get_students_by_grade_class',
+    DELETE_GRADE_CLASS: 'delete grade class'
 };
