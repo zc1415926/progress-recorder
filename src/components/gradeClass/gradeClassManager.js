@@ -30,8 +30,9 @@ var GradeClassManager = React.createClass({
     },
 
     componentDidMount: function () {
-        GradeClassStore.addEventListener(GradeClassStore.RETRIEVE_EVENT, this._onChange);
-        GradeClassStore.addEventListener(GradeClassStore.DELETE_EVENT, this._onDelete);
+        GradeClassStore.addEventListener(GradeClassStore.RETRIEVE_EVENT, this.onChange);
+        GradeClassStore.addEventListener(GradeClassStore.UPDATE_EVENT, this.onUpdate);
+        GradeClassStore.addEventListener(GradeClassStore.DELETE_EVENT, this.onDelete);
         //初次打开页面，获取一次数据
         GradeClassActions.getGradeClasses();
     },
@@ -40,11 +41,17 @@ var GradeClassManager = React.createClass({
         GradeClassStore.removeEventListener(this._onChange);
     },
 
-    _onChange: function () {
+    onChange: function () {
         this.setState({gradeClasses: GradeClassStore.getGradeClasses()});
     },
 
-    _onDelete: function () {
+    onUpdate: function () {
+        toastr.success('已经成功修改班级：');
+        this.setState({isUpdateModalOpen: false,
+            currentGradeClass: {}});
+    },
+
+    onDelete: function () {
         toastr.success('已经成功删除班级，班级代码：' + GradeClassStore.getGradeClassCode());
         this.setState({isDeleteModalOpen: false,
             currentGradeClass: {}});

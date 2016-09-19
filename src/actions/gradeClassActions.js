@@ -49,6 +49,27 @@ var GradeClassActions = {
             });
     },
 
+    updateGradeClass: function (gradeClass) {
+        axios.post(env.SERVER_BASE_URL + '/gradeClasses/update', {
+            data: gradeClass
+        })
+            .then(function(response){
+                if(response['data']['status'] == "success"){
+
+                    getGradeClasses();
+                    Dispatcher.dispatch({
+                        actionType: ActionTypes.UPDATE_GRADE_CLASS,
+                        gradeClass: response['data']['data']});
+
+                }else{
+                    console.log(response['data']['data']);
+                }
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+    },
+
     deleteGradeClass: function (classCode) {
         axios.post(env.SERVER_BASE_URL + '/gradeClasses/delete', {
             data: classCode

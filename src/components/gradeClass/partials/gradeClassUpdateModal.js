@@ -12,6 +12,8 @@ var ModalClose = require('react-modal-bootstrap').ModalClose;
 var ModalBody = require('react-modal-bootstrap').ModalBody;
 var ModalFooter = require('react-modal-bootstrap').ModalFooter;
 var Input = require('./inputGroup');
+var gradeClassActions = require('../../../actions/gradeClassActions');
+var gradeClassStore = require('../../../stores/gradeClassStore');
 
 var ReactModal = React.createClass({
 
@@ -39,14 +41,35 @@ var ReactModal = React.createClass({
         return this.state.isOpen = nextProps.isOpen;
     },
 
-    hideModal:function () {
-        this.setState({isOpen: false});
+    componentDidMount: function () {
+        gradeClassStore.addEventListener(gradeClassStore.UPDATE_EVENT, this.handleUpdateSuccess);
+    },
+
+    componentWillUnmount: function () {
+        gradeClassStore.removeEventListener(gradeClassStore.UPDATE_EVENT, this.handleUpdateSuccess);
     },
 
     componentDidUpdate: function(){
         if(!this.state.isOpen){
             this.props.closeModal();
         }
+    },
+
+    onModalChange:function(e){
+        this.state.currentGradeClass[e.target.id] = e.target.value;
+        return this.setState({currentGradeClass: this.state.currentGradeClass});
+    },
+
+    hideModal: function () {
+        this.setState({isOpen: false});
+    },
+
+    handleConfirm: function () {
+        gradeClassActions.updateGradeClass(this.state.currentGradeClass);
+    },
+
+    handleUpdateSuccess: function () {
+        this.setState({isOpen: false});
     },
 
     render: function () {
@@ -61,16 +84,19 @@ var ReactModal = React.createClass({
                         <ModalBody>
                             <form>
                                 <Input id="classCode" text="班级代码" value={this.state.currentGradeClass.classCode} disabled="disabled"/>
-                                <Input id="entryYear" text="入学年级" value={this.state.currentGradeClass.entryYear}/>
-                                <Input id="gradeNum" text="年级" value={this.state.currentGradeClass.gradeNum}/>
-                                <Input id="classNum" text="班级" value={this.state.currentGradeClass.classNum}/>
+                                <Input id="entryYear" text="入学年级" value={this.state.currentGradeClass.entryYear}
+                                       onChange={this.onModalChange}/>
+                                <Input id="gradeNum" text="年级" value={this.state.currentGradeClass.gradeNum}
+                                       onChange={this.onModalChange}/>
+                                <Input id="classNum" text="班级" value={this.state.currentGradeClass.classNum}
+                                       onChange={this.onModalChange}/>
                             </form>
                         </ModalBody>
                         <ModalFooter>
                             <button className='btn btn-default' onClick={this.hideModal}>
                                 取消
                             </button>
-                            <button className='btn btn-primary'>
+                            <button className='btn btn-primary' onClick={this.handleConfirm}>
                                 确定修改
                             </button>
                         </ModalFooter>

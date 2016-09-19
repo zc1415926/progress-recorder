@@ -5,8 +5,9 @@ module.exports = {
 	CREATE_STUDENT: 'create_student',
     UPDATE_STUDENT: 'update_student',
     DELETE_STUDENT: 'delete_student',
+    GET_STUDENTS_BY_GRADE_CLASS: 'get_students_by_grade_class',
 
     GET_GRADE_CLASSES: 'get_grade_classes',
-    GET_STUDENTS_BY_GRADE_CLASS: 'get_students_by_grade_class',
-    DELETE_GRADE_CLASS: 'delete grade class'
+    UPDATE_GRADE_CLASS: 'update_grade_class,',
+    DELETE_GRADE_CLASS: 'delete_grade_class'
 };

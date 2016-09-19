@@ -17,7 +17,7 @@ var GradeClassStore = assign({}, EventEmitter.prototype, {
     DELETE_EVENT : 'delete',
     UPDATE_EVENT : 'update',
     RETRIEVE_EVENT : 'retrieve',
-    CHANGE_EVENT : 'change',
+    //CHANGE_EVENT : 'change',
 
     addEventListener: function (event, callback) {
         this.addListener(event, callback);
@@ -46,12 +46,13 @@ Dispatcher.register(function (action) {
             _gradeClasses = action.gradeClasses;
             GradeClassStore.emitEvent(GradeClassStore.RETRIEVE_EVENT);
             break;
+        case ActionTypes.UPDATE_GRADE_CLASS:
+            _gradeClasses = action.gradeClass;
+            GradeClassStore.emitEvent(GradeClassStore.UPDATE_EVENT);
+            break;
         case ActionTypes.DELETE_GRADE_CLASS:
             _gradeClassCode = action.gradeClassCode;
             GradeClassStore.emitEvent(GradeClassStore.DELETE_EVENT);
-            //console.log(GradeClassStore.DELETE_EVENT);
-            //console.log(_gradeClasses);
-            //console.log(GradeClassStore.DELETE_EVENT);
             break;
         default:
         //nothing to do...
