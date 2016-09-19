@@ -48,7 +48,6 @@ var ReactModal = React.createClass({
     },
 
     componentDidMount: function () {
-
         gradeClassStore.addEventListener(gradeClassStore.DELETE_EVENT, this.handleDeleteSuccess);
     },
 

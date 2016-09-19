@@ -46,6 +46,10 @@ Dispatcher.register(function (action) {
             _gradeClasses = action.gradeClasses;
             GradeClassStore.emitEvent(GradeClassStore.RETRIEVE_EVENT);
             break;
+        case ActionTypes.CREATE_STUDENT:
+            _gradeClasses = action.gradeClass;
+            GradeClassStore.emitEvent(GradeClassStore.CREATE_EVENT);
+            break;
         case ActionTypes.UPDATE_GRADE_CLASS:
             _gradeClasses = action.gradeClass;
             GradeClassStore.emitEvent(GradeClassStore.UPDATE_EVENT);

@@ -30,19 +30,16 @@ var GradeClassActions = {
             data: gradeClass
         })
             .then(function(response){
-
-                console.log(response['data']);
-                /*
-
                 if(response['data']['status'] == "success"){
-                    getStudentsByGradeClass(stuObj['student_grade'], stuObj['student_class']);
+
+                    getGradeClasses();
                     Dispatcher.dispatch({
                         actionType: ActionTypes.CREATE_STUDENT,
-                        student: response['data']
-                    });
+                        gradeClass: response['data']['data']});
+
                 }else{
                     console.log(response['data']['data']);
-                }*/
+                }
             })
             .catch(function(error){
                 console.log(error);

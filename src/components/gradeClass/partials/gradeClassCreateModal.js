@@ -12,7 +12,8 @@ var ModalClose = require('react-modal-bootstrap').ModalClose;
 var ModalBody = require('react-modal-bootstrap').ModalBody;
 var ModalFooter = require('react-modal-bootstrap').ModalFooter;
 var Input = require('./inputGroup');
-var GradeClassActions = require('../../../actions/gradeClassActions');
+var gradeClassActions = require('../../../actions/gradeClassActions');
+var gradeClassStore = require('../../../stores/gradeClassStore');
 
 var ReactModal = React.createClass({
 
@@ -46,20 +47,30 @@ var ReactModal = React.createClass({
         }
     },
 
-    hideModal:function () {
+    componentDidMount: function () {
+        gradeClassStore.addEventListener(gradeClassStore.CREATE_EVENT, this.handleCreateSuccess);
+    },
+
+    componentWillUnmount: function () {
+        gradeClassStore.removeEventListener(gradeClassStore.CREATE_EVENT, this.handleCreateSuccess);
+    },
+
+    hideModal: function () {
         this.setState({isOpen: false});
     },
 
     handleConfirm: function () {
-        GradeClassActions.createGradeClass(this.state.currentGradeClass);
+        gradeClassActions.createGradeClass(this.state.currentGradeClass);
     },
 
-    onModalChange:function(e){
+    onModalChange: function(e){
         this.state.currentGradeClass[e.target.id] = e.target.value;
         return this.setState({currentGradeClass: this.state.currentGradeClass});
     },
 
-
+    handleCreateSuccess: function () {
+        this.setState({isOpen: false});
+    },
 
     render: function () {
         return (
