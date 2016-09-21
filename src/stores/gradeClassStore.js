@@ -10,6 +10,8 @@ var assign = require('lodash.assign');
 
 var _gradeClasses = {};
 var _gradeClassCode = {};
+var _grades = [];
+var _classes = [];
 
 var GradeClassStore = assign({}, EventEmitter.prototype, {
 
@@ -17,6 +19,8 @@ var GradeClassStore = assign({}, EventEmitter.prototype, {
     DELETE_EVENT : 'delete',
     UPDATE_EVENT : 'update',
     RETRIEVE_EVENT : 'retrieve',
+    GET_GRADES_EVENT: 'get_grade',
+    GET_CLASSES_EVENT: 'get_classes_event',
     //CHANGE_EVENT : 'change',
 
     addEventListener: function (event, callback) {
@@ -37,6 +41,14 @@ var GradeClassStore = assign({}, EventEmitter.prototype, {
 
     getGradeClassCode: function () {
         return _gradeClassCode;
+    },
+
+    getGrades: function () {
+        return _grades;
+    },
+
+    getClasses: function () {
+        return _classes;
     }
 });
 
@@ -57,6 +69,14 @@ Dispatcher.register(function (action) {
         case ActionTypes.DELETE_GRADE_CLASS:
             _gradeClassCode = action.gradeClassCode;
             GradeClassStore.emitEvent(GradeClassStore.DELETE_EVENT);
+            break;
+        case ActionTypes.GET_GRADES:
+            _grades = action.grades;
+            GradeClassStore.emitEvent(GradeClassStore.GET_GRADES_EVENT);
+            break;
+        case ActionTypes.GET_CLASSES:
+            _classes = action.classes;
+            GradeClassStore.emitEvent(GradeClassStore.GET_CLASSES_EVENT);
             break;
         default:
         //nothing to do...

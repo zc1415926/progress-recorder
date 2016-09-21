@@ -13,7 +13,7 @@ var GradeClassSelector = React.createClass({
 
     getInitialState: function () {
         return {
-            gradeClasses: {},
+            gradeClasses: [],
             gradeText: "请选择",
             classText: "请选择",
             grades: ["暂无数据"],
@@ -22,21 +22,29 @@ var GradeClassSelector = React.createClass({
     },
 
     componentDidMount: function () {
-        GradeClassStore.addEventListener(GradeClassStore.RETRIEVE_EVENT, this._onChange);
-        GradeClassActions.getGradeClasses();
+        GradeClassStore.addEventListener(GradeClassStore.GET_GRADES_EVENT, this.onGetGrades);
+        GradeClassStore.addEventListener(GradeClassStore.GET_CLASSES_EVENT, this.onGetClasses);
+        GradeClassActions.getGrades();
     },
 
     componentWillUnmount: function () {
-        GradeClassStore.removeEventListener(GradeClassStore.RETRIEVE_EVENT, this._onChange);
+        GradeClassStore.removeEventListener(GradeClassStore.GET_GRADES_EVENT, this.onGetGrades);
+        GradeClassStore.removeEventListener(GradeClassStore.GET_CLASSES_EVENT, this.onGetClasses);
     },
 
-    _onChange: function () {
-        this.setState({grades: _.keys(GradeClassStore.getGradeClasses())});
+    onGetGrades: function () {
+        this.setState({grades: GradeClassStore.getGrades()});
+    },
+
+    onGetClasses: function () {
+        this.setState({classes: GradeClassStore.getClasses()});
     },
 
     onGradeSelect: function (gradeNum) {
-        this.setState({classes: GradeClassStore.getGradeClasses()[gradeNum]});
+        GradeClassActions.getClassesByGradeNum(gradeNum);
+
         this.setState({classText: "请选择"});
+        this.setState({classes: ["暂无数据"]});
         this.setState({gradeText: gradeNum});
     },
 

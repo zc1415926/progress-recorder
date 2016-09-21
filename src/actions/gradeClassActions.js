@@ -86,6 +86,39 @@ var GradeClassActions = {
             .catch(function(error){
                 console.log(error);
             });
+    },
+
+    getGrades: function () {
+        axios.get(env.SERVER_BASE_URL + '/gradeClasses/getGrades')
+            .then(function(response){
+                Dispatcher.dispatch({
+                    actionType: ActionTypes.GET_GRADES,
+                    grades: response['data']
+                });
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+    },
+
+    getClassesByGradeNum: function (gradeNum) {
+        axios.post(env.SERVER_BASE_URL + '/gradeClasses/getClassesByGradeNum', {
+            data: gradeNum
+        })
+            .then(function(response){
+                if(response['data']['status'] == "success"){
+
+                    Dispatcher.dispatch({
+                        actionType: ActionTypes.GET_CLASSES,
+                        classes: response['data']['data']});
+
+                }else{
+                    console.log(response['data']['data']);
+                }
+            })
+            .catch(function(error){
+                console.log(error);
+            });
     }
 };
 
