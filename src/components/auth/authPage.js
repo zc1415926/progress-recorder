@@ -14,7 +14,8 @@ var AuthPage = React.createClass({
             credential:{
                 email: "",
                 password: "",
-            }
+            },
+            token:"",
         };
     },
 
@@ -26,8 +27,19 @@ var AuthPage = React.createClass({
         return this.setState({credential:this.state.credential});
     },
 
+    onTokenChange:function(e){
+        this.state.token = e.target.value;
+        return this.setState({token:this.state.token});
+    },
+
     onLoginClicked:function () {
         authActions.login(this.state.credential);
+    },
+
+    onTokenClicked:function () {
+       // authActions.login(this.state.credential);
+        console.log(this.state.token);
+        authActions.getUsers(this.state.token);
     },
 
     render : function(){
@@ -40,6 +52,15 @@ var AuthPage = React.createClass({
                 </form>
                 <button className='btn btn-primary' onClick={this.onLoginClicked}>
                     登录
+                </button>
+
+
+                <h1>GET测试</h1>
+                <form>
+                    <Input id="token" text="Token：" onChange={this.onTokenChange}/>
+                </form>
+                <button className='btn btn-primary' onClick={this.onTokenClicked}>
+                    测试
                 </button>
             </div>
         )
