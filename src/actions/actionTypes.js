@@ -11,5 +11,7 @@ module.exports = {
     UPDATE_GRADE_CLASS: 'update_grade_class,',
     DELETE_GRADE_CLASS: 'delete_grade_class',
     GET_GRADES: 'get_grades',
-    GET_CLASSES: 'get_classes'
+    GET_CLASSES: 'get_classes',
+
+    AUTHENTICATION: 'authentication',
 };

@@ -13,13 +13,14 @@ console.log('服务器端地址：' + env.SERVER_BASE_URL);
 var AuthAction = {
 
     login: function (credential) {
-        //console.log(credential)
         axios.post(env.SERVER_BASE_URL + '/auth/authenticate', {
             email: credential.email,
             password: credential.password
         })
-            .then(function (respone) {
-                console.log(respone['data']);
+            .then(function (response) {
+                Dispatcher.dispatch({
+                    actionType: ActionTypes.AUTHENTICATION,
+                    token: response['data']['token']});
             })
             .catch(function (error) {
                 console.log(error);

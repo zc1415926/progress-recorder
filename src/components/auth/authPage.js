@@ -6,6 +6,7 @@
 var React = require('react');
 var Input = require('./partials/inputGroup');
 var authActions = require('../../actions/authActions');
+var AuthStore = require('../../stores/authStore');
 
 var AuthPage = React.createClass({
 
@@ -17,6 +18,22 @@ var AuthPage = React.createClass({
             },
             token:"",
         };
+    },
+
+    componentDidMount: function () {
+        AuthStore.addEventListener(AuthStore.AUTH_SUCCESS, this.onAuthSuccess);
+       // this.setState({to});
+        //初次打开页面，获取一次数据
+       // GradeClassActions.getGradeClasses();
+    },
+
+    componentWillUnmount: function () {
+        AuthStore.removeEventListener(AuthStore.AUTH_SUCCESS, this.onAuthSuccess);
+    },
+
+    onAuthSuccess: function () {
+        console.log('auth success!');
+        console.log(AuthStore.getToken());
     },
 
     onModalChange:function(e){
