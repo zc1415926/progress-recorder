@@ -33,8 +33,22 @@ var AuthAction = {
                 token: token
             }
         })
-            .then(function (respone) {
-                console.log(respone['data']);
+            .then(function (response) {
+                console.log(response['data']);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
+    
+    getUserFromToken: function (token) {
+        axios.get(env.SERVER_BASE_URL + '/auth/getUserFromToken', {
+            params:{
+                token: token
+            }
+        })
+            .then(function (response) {
+                console.log(response['data']);
             })
             .catch(function (error) {
                 console.log(error);

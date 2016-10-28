@@ -59,6 +59,11 @@ var AuthPage = React.createClass({
         authActions.getUsers(this.state.token);
     },
 
+    onGetUserFromTokenClicked: function () {
+        console.log(this.state.token);
+        authActions.getUserFromToken(this.state.token);
+    },
+
     render : function(){
         return (
             <div className="container">
@@ -71,12 +76,11 @@ var AuthPage = React.createClass({
                     登录
                 </button>
 
-
-                <h1>GET测试</h1>
+                <h1>GetUserFromToken测试</h1>
                 <form>
                     <Input id="token" text="Token：" onChange={this.onTokenChange}/>
                 </form>
-                <button className='btn btn-primary' onClick={this.onTokenClicked}>
+                <button className='btn btn-primary' onClick={this.onGetUserFromTokenClicked}>
                     测试
                 </button>
             </div>
