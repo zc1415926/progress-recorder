@@ -14,4 +14,5 @@ module.exports = {
     GET_CLASSES: 'get_classes',
 
     AUTHENTICATION: 'authentication',
+    GET_USER_FROM_TOKEN: 'get_user_from_token',
 };
