@@ -29,6 +29,15 @@ var Nav = React.createClass({
         this.setState({authenticatedUser: AuthStore.getAuthenticatedUser()['user']});
     },
 
+    teacherAuthHandler: function (authenticatedUser) {
+        if(!authenticatedUser['name']){
+            return (<NavTab to="/auth">教师登录</NavTab>);
+        }
+        else {
+            return <NavTab to="/never">{authenticatedUser['name']}</NavTab>
+        }
+    },
+
     render: function () {
         return (
             <nav className="navbar navbar-default">
@@ -45,7 +54,7 @@ var Nav = React.createClass({
                             <NavTab to="/behaviour">平时表现</NavTab>
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
-                            <NavTab to="/neverhave">{this.state.authenticatedUser.name}</NavTab>
+                            {this.teacherAuthHandler(this.state.authenticatedUser)}
                         </ul>
                     </div>
                 </div>
