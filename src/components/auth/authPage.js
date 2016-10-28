@@ -33,7 +33,8 @@ var AuthPage = React.createClass({
 
     onAuthSuccess: function () {
         console.log('auth success!');
-        console.log(AuthStore.getToken());
+
+        authActions.getUserFromToken(AuthStore.getToken());
     },
 
     onModalChange:function(e){
