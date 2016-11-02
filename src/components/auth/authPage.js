@@ -7,6 +7,7 @@ var React = require('react');
 var Input = require('./partials/inputGroup');
 var authActions = require('../../actions/authActions');
 var AuthStore = require('../../stores/authStore');
+var browserHistory = require('react-router').browserHistory;
 
 var AuthPage = React.createClass({
 
@@ -33,8 +34,9 @@ var AuthPage = React.createClass({
 
     onAuthSuccess: function () {
         console.log('auth success!');
-
         authActions.getUserFromToken(AuthStore.getToken());
+
+        browserHistory.push('/');
     },
 
     onModalChange:function(e){
@@ -45,24 +47,8 @@ var AuthPage = React.createClass({
         return this.setState({credential:this.state.credential});
     },
 
-    onTokenChange:function(e){
-        this.state.token = e.target.value;
-        return this.setState({token:this.state.token});
-    },
-
     onLoginClicked:function () {
         authActions.login(this.state.credential);
-    },
-
-    onTokenClicked:function () {
-       // authActions.login(this.state.credential);
-        console.log(this.state.token);
-        authActions.getUsers(this.state.token);
-    },
-
-    onGetUserFromTokenClicked: function () {
-        console.log(this.state.token);
-        authActions.getUserFromToken(this.state.token);
     },
 
     render : function(){
@@ -75,14 +61,6 @@ var AuthPage = React.createClass({
                 </form>
                 <button className='btn btn-primary' onClick={this.onLoginClicked}>
                     登录
-                </button>
-
-                <h1>GetUserFromToken测试</h1>
-                <form>
-                    <Input id="token" text="Token：" onChange={this.onTokenChange}/>
-                </form>
-                <button className='btn btn-primary' onClick={this.onGetUserFromTokenClicked}>
-                    测试
                 </button>
             </div>
         )

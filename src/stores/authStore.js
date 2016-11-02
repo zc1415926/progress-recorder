@@ -8,9 +8,6 @@ var Dispatcher = require('../dispatcher/appDispatcher');
 var ActionTypes = require('../actions/actionTypes');
 var assign = require('lodash.assign');
 
-var _token = '';
-var _authenticatedUser = {};
-
 var AuthStore = assign({}, EventEmitter.prototype, {
 
     AUTH_SUCCESS : 'auth_success',
@@ -29,16 +26,11 @@ var AuthStore = assign({}, EventEmitter.prototype, {
     },
 
     getToken: function () {
-        //return _token;
         return sessionStorage.getItem('token');
     },
 
     getAuthenticatedUser: function () {
-        return _authenticatedUser;
-    },
-
-    clearToken: function () {
-        _token = '';
+        return sessionStorage.getItem('userName');
     },
 });
 
@@ -46,13 +38,11 @@ Dispatcher.register(function (action) {
     //console.log(action);
     switch (action.actionType){
         case ActionTypes.AUTHENTICATION:
-            //_token = action.token;
             sessionStorage.setItem('token', action.token);
             AuthStore.emitEvent(AuthStore.AUTH_SUCCESS);
             break;
         case ActionTypes.GET_USER_FROM_TOKEN:
-            //console.log(action);
-            _authenticatedUser = action.user;
+            sessionStorage.setItem('userName', action.userName);
             AuthStore.emitEvent(AuthStore.GET_USER_FROM_TOKEN_SUCCESS);
             break;
         default:

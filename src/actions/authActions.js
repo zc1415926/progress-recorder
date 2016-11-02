@@ -27,6 +27,11 @@ var AuthAction = {
             });
     },
 
+    logout: function () {
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('userName');
+    },
+
     getUsers: function (token) {
         axios.get(env.SERVER_BASE_URL + '/users', {
             params:{
@@ -48,10 +53,10 @@ var AuthAction = {
             }
         })
             .then(function (response) {
-                //console.log(response['data']);
+                //console.log(response['data']['user']['name']);
                 Dispatcher.dispatch({
                     actionType: ActionTypes.GET_USER_FROM_TOKEN,
-                    user: response['data']});
+                    userName: response['data']['user']['name']});
             })
             .catch(function (error) {
                 console.log(error);
