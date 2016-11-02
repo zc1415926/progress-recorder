@@ -6,11 +6,17 @@
 var React = require('react');
 //var NavTab = require('./navTab');
 var NavTab = require('react-router-navtab');
+var authActions = require('../../../actions/authActions');
 var AuthStore = require('../../../stores/authStore');
 
 var Nav = React.createClass({
 
     getInitialState: function () {
+        var tempToken = sessionStorage.getItem('token');
+        if(tempToken){
+            authActions.getUserFromToken(tempToken);
+        }
+
         return {
             authenticatedUser: {},
         };
@@ -25,16 +31,34 @@ var Nav = React.createClass({
     },
 
     onGetUserSuccess: function () {
-        console.log(AuthStore.getAuthenticatedUser()['user']['name']);
+        //console.log(AuthStore.getAuthenticatedUser()['user']['name']);
         this.setState({authenticatedUser: AuthStore.getAuthenticatedUser()['user']});
+    },
+
+    onLogoutClicked: function () {
+        sessionStorage.removeItem('token');
     },
 
     teacherAuthHandler: function (authenticatedUser) {
         if(!authenticatedUser['name']){
-            return (<NavTab to="/auth">教师登录</NavTab>);
+            return (
+                <ul className="nav navbar-nav navbar-right">
+                    <NavTab to="/auth">教师登录</NavTab>
+                </ul>);
         }
         else {
-            return <NavTab to="/never">{authenticatedUser['name']}</NavTab>
+            return (
+                <ul className="nav navbar-nav navbar-right">
+                    <li><a href="#"></a></li>
+                    <li className="dropdown">
+                        <a href="#" className="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            {authenticatedUser['name']} <span className="caret"></span></a>
+                        <ul className="dropdown-menu" role="menu">
+                            <li><a href="" onClick={this.onLogoutClicked}>退出登录</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            )
         }
     },
 
@@ -53,9 +77,7 @@ var Nav = React.createClass({
                             <NavTab to="/gradeClass">班级管理</NavTab>
                             <NavTab to="/behaviour">平时表现</NavTab>
                         </ul>
-                        <ul className="nav navbar-nav navbar-right">
-                            {this.teacherAuthHandler(this.state.authenticatedUser)}
-                        </ul>
+                        {this.teacherAuthHandler(this.state.authenticatedUser)}
                     </div>
                 </div>
             </nav>

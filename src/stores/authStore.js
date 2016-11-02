@@ -29,7 +29,8 @@ var AuthStore = assign({}, EventEmitter.prototype, {
     },
 
     getToken: function () {
-        return _token;
+        //return _token;
+        return sessionStorage.getItem('token');
     },
 
     getAuthenticatedUser: function () {
@@ -45,7 +46,8 @@ Dispatcher.register(function (action) {
     //console.log(action);
     switch (action.actionType){
         case ActionTypes.AUTHENTICATION:
-            _token = action.token;
+            //_token = action.token;
+            sessionStorage.setItem('token', action.token);
             AuthStore.emitEvent(AuthStore.AUTH_SUCCESS);
             break;
         case ActionTypes.GET_USER_FROM_TOKEN:
