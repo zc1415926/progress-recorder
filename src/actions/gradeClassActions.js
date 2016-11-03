@@ -13,22 +13,12 @@ var AuthStore = require('../stores/authStore');
 var GradeClassActions = {
 
     getGradeClasses: function(){
-        /*axios.get(env.SERVER_BASE_URL + '/gradeClasses')
-            .then(function(response){
-                Dispatcher.dispatch({
-                    actionType: ActionTypes.GET_GRADE_CLASSES,
-                    gradeClasses: response['data']
-                });
-            })
-            .catch(function(error){
-                console.log(error);
-            });*/
-        getGradeClasses(AuthStore.getToken());
+        getGradeClasses();
     },
 
     createGradeClass: function (gradeClass) {
-        axios.post(env.SERVER_BASE_URL + '/gradeClasses/create', {
-            data: gradeClass
+        axios.post(env.SERVER_BASE_URL + '/gradeClasses/create'+'?token='+AuthStore.getToken(), {
+            data: gradeClass,
         })
             .then(function(response){
                 if(response['data']['status'] == "success"){
@@ -39,16 +29,14 @@ var GradeClassActions = {
                         gradeClass: response['data']['data']});
 
                 }else{
-                    console.log(response['data']['data']);
+                    console.log(response['data']);
                 }
             })
-            .catch(function(error){
-                console.log(error);
-            });
+            .catch(errorHandler);
     },
 
     updateGradeClass: function (gradeClass) {
-        axios.post(env.SERVER_BASE_URL + '/gradeClasses/update', {
+        axios.post(env.SERVER_BASE_URL + '/gradeClasses/update'+'?token='+AuthStore.getToken(), {
             data: gradeClass
         })
             .then(function(response){
@@ -63,13 +51,11 @@ var GradeClassActions = {
                     console.log(response['data']['data']);
                 }
             })
-            .catch(function(error){
-                console.log(error);
-            });
+            .catch(errorHandler);
     },
 
     deleteGradeClass: function (classCode) {
-        axios.post(env.SERVER_BASE_URL + '/gradeClasses/delete', {
+        axios.post(env.SERVER_BASE_URL + '/gradeClasses/delete'+'?token='+AuthStore.getToken(), {
             data: classCode
         })
             .then(function(response){
@@ -84,9 +70,7 @@ var GradeClassActions = {
                      console.log(response['data']['data']);
                  }
             })
-            .catch(function(error){
-                console.log(error);
-            });
+            .catch(errorHandler);
     },
 
     getGrades: function () {
@@ -97,9 +81,7 @@ var GradeClassActions = {
                     grades: response['data']
                 });
             })
-            .catch(function(error){
-                console.log(error);
-            });
+            .catch(errorHandler);
     },
 
     getClassesByGradeNum: function (gradeNum) {
@@ -117,16 +99,14 @@ var GradeClassActions = {
                     console.log(response['data']['data']);
                 }
             })
-            .catch(function(error){
-                console.log(error);
-            });
+            .catch(errorHandler);
     }
 };
 
-var getGradeClasses = function(token){
+var getGradeClasses = function(){
     axios.get(env.SERVER_BASE_URL + '/gradeClasses', {
         params:{
-            token: token
+            token: AuthStore.getToken()
         }
     })
         .then(function(response){
@@ -135,12 +115,14 @@ var getGradeClasses = function(token){
                 gradeClasses: response['data']
             });
         })
-        .catch(function(error){
-            console.log(error);
-            if(error == "Error: Request failed with status code 400"){
-                toastr.error("请您重新登录")
-            }
-        });
+        .catch(errorHandler);
+};
+
+var errorHandler = function (error) {
+    console.log(error);
+    if(error == "Error: Request failed with status code 400"){
+        toastr.error("请您重新登录")
+    }
 };
 
 module.exports = GradeClassActions;
