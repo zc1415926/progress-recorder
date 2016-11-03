@@ -6,12 +6,12 @@
 var Dispatcher = require('../dispatcher/appDispatcher');
 var ActionTypes = require('../actions/actionTypes');
 var axios = require('axios');
-
+var toastr = require('toastr');
 var env = require('../env.json');
 
 var GradeClassActions = {
 
-    getGradeClasses: function(){
+    getGradeClasses: function(token){
         /*axios.get(env.SERVER_BASE_URL + '/gradeClasses')
             .then(function(response){
                 Dispatcher.dispatch({
@@ -22,7 +22,7 @@ var GradeClassActions = {
             .catch(function(error){
                 console.log(error);
             });*/
-        getGradeClasses();
+        getGradeClasses(token);
     },
 
     createGradeClass: function (gradeClass) {
@@ -122,8 +122,12 @@ var GradeClassActions = {
     }
 };
 
-var getGradeClasses = function(){
-    axios.get(env.SERVER_BASE_URL + '/gradeClasses')
+var getGradeClasses = function(token){
+    axios.get(env.SERVER_BASE_URL + '/gradeClasses', {
+        params:{
+            token: token
+        }
+    })
         .then(function(response){
             Dispatcher.dispatch({
                 actionType: ActionTypes.GET_GRADE_CLASSES,
@@ -132,6 +136,9 @@ var getGradeClasses = function(){
         })
         .catch(function(error){
             console.log(error);
+            if(error == "Error: Request failed with status code 400"){
+                toastr.error("请您重新登录")
+            }
         });
 };
 
