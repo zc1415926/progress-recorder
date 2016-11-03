@@ -11,7 +11,6 @@ var GradeClassCreateModal = require('./partials/gradeClassCreateModal');
 var GradeClassUpdateModal = require('./partials/gradeClassUpdateModal');
 var GradeClassDeleteModal = require('./partials/gradeClassDeleteModal');
 var toastr = require('toastr');
-var AuthStore = require('../../stores/authStore');
 
 var GradeClassManager = React.createClass({
 
@@ -36,7 +35,7 @@ var GradeClassManager = React.createClass({
         GradeClassStore.addEventListener(GradeClassStore.UPDATE_EVENT, this.onUpdated);
         GradeClassStore.addEventListener(GradeClassStore.DELETE_EVENT, this.onDeleted);
         //初次打开页面，获取一次数据
-        GradeClassActions.getGradeClasses(AuthStore.getToken());
+        GradeClassActions.getGradeClasses();
     },
 
     componentWillUnmount: function () {

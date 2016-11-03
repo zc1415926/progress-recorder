@@ -8,10 +8,11 @@ var ActionTypes = require('../actions/actionTypes');
 var axios = require('axios');
 var toastr = require('toastr');
 var env = require('../env.json');
+var AuthStore = require('../stores/authStore');
 
 var GradeClassActions = {
 
-    getGradeClasses: function(token){
+    getGradeClasses: function(){
         /*axios.get(env.SERVER_BASE_URL + '/gradeClasses')
             .then(function(response){
                 Dispatcher.dispatch({
@@ -22,7 +23,7 @@ var GradeClassActions = {
             .catch(function(error){
                 console.log(error);
             });*/
-        getGradeClasses(token);
+        getGradeClasses(AuthStore.getToken());
     },
 
     createGradeClass: function (gradeClass) {
