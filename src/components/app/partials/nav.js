@@ -29,7 +29,7 @@ var Nav = React.createClass({
     },
 
     teacherAuthHandler: function (authenticatedUser) {
-        console.log(authenticatedUser);
+        //console.log(authenticatedUser);
         if(!authenticatedUser){
             return (
                 <ul className="nav navbar-nav navbar-right">

@@ -6,6 +6,7 @@
 var Dispatcher = require('../dispatcher/appDispatcher');
 var ActionTypes = require('../actions/actionTypes');
 var axios = require('axios');
+var toastr = require('toastr');
 
 var env = require('../env.json');
 console.log('服务器端地址：' + env.SERVER_BASE_URL);
@@ -24,6 +25,9 @@ var AuthAction = {
             })
             .catch(function (error) {
                 console.log(error);
+                if(error == "Error: Network Error"){
+                    toastr.error("网络不给力...");
+                }
             });
     },
 
