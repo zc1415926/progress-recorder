@@ -28,6 +28,9 @@ var AuthAction = {
                 if(error == "Error: Network Error"){
                     toastr.error("网络不给力...");
                 }
+                else if(error == "Error: Request failed with status code 401"){
+                    toastr.error("用户名或密码错误");
+                }
             });
     },
 
