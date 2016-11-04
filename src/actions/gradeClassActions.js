@@ -9,6 +9,8 @@ var axios = require('axios');
 var toastr = require('toastr');
 var env = require('../env.json');
 var AuthStore = require('../stores/authStore');
+var AuthActions = require('./authActions');
+var browserHistory = require('react-router').browserHistory;
 
 var GradeClassActions = {
 
@@ -74,7 +76,11 @@ var GradeClassActions = {
     },
 
     getGrades: function () {
-        axios.get(env.SERVER_BASE_URL + '/gradeClasses/getGrades')
+        axios.get(env.SERVER_BASE_URL + '/gradeClasses/getGrades', {
+            params:{
+                token: AuthStore.getToken()
+            }
+        })
             .then(function(response){
                 Dispatcher.dispatch({
                     actionType: ActionTypes.GET_GRADES,
@@ -85,7 +91,7 @@ var GradeClassActions = {
     },
 
     getClassesByGradeNum: function (gradeNum) {
-        axios.post(env.SERVER_BASE_URL + '/gradeClasses/getClassesByGradeNum', {
+        axios.post(env.SERVER_BASE_URL + '/gradeClasses/getClassesByGradeNum'+'?token='+AuthStore.getToken(), {
             data: gradeNum
         })
             .then(function(response){
@@ -120,8 +126,16 @@ var getGradeClasses = function(){
 
 var errorHandler = function (error) {
     console.log(error);
-    if(error == "Error: Request failed with status code 400"){
-        toastr.error("请您重新登录")
+    /*if(error == "Error: Request failed with status code 400"){
+        toastr.error("请您重新登录");
+        AuthActions.logout();
+        browserHistory.push('/auth');
+    }
+    else */
+    if(error == "Error: Request failed with status code 401"){
+        toastr.error("请您重新登录");
+        AuthActions.logout();
+        browserHistory.push('/auth');
     }
 };
 
