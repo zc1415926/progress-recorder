@@ -6,13 +6,14 @@
 var Dispatcher = require('../dispatcher/appDispatcher');
 var ActionTypes = require('../actions/actionTypes');
 var axios = require('axios');
+var AuthStore = require('../stores/authStore');
 
 var env = require('../env.json');
 console.log('服务器端地址：' + env.SERVER_BASE_URL);
 
 var StudentAction = {
     createStudent: function (stuObj) {
-        axios.post(env.SERVER_BASE_URL + '/student/create', {
+        axios.post(env.SERVER_BASE_URL + '/student/create'+'?token='+AuthStore.getToken(), {
             data: stuObj
         })
             .then(function(response){
@@ -35,7 +36,7 @@ var StudentAction = {
             });
     },
 
-    getAllStudents: function () {
+    /*getAllStudents: function () {
         axios.get(env.SERVER_BASE_URL + '/student/index')
             .then(function(response){
                 Dispatcher.dispatch({
@@ -49,7 +50,7 @@ var StudentAction = {
     },
     getStudentById: function () {
 
-    },
+    },*/
 
     getStudentsByGradeClass: function(gradeNum, classNum){
         /*
@@ -60,7 +61,7 @@ var StudentAction = {
     },
 
     updateStudent: function (stuObj) {
-        axios.post(env.SERVER_BASE_URL + '/student/update', {
+        axios.post(env.SERVER_BASE_URL + '/student/update'+'?token='+AuthStore.getToken(), {
             data: stuObj
         })
             .then(function(response){
@@ -81,7 +82,7 @@ var StudentAction = {
     },
 
     deleteStudent: function (stuObj) {
-        axios.post(env.SERVER_BASE_URL + '/student/delete', {
+        axios.post(env.SERVER_BASE_URL + '/student/delete'+'?token='+AuthStore.getToken(), {
             data: stuObj['student_number']
         })
             .then(function(response){
@@ -102,7 +103,11 @@ var StudentAction = {
 };
 
 var getStudentsByGradeClass = function(gradeNum, classNum){
-    axios.get(env.SERVER_BASE_URL + '/student/' + gradeNum + '/' + classNum)
+    axios.get(env.SERVER_BASE_URL + '/student/' + gradeNum + '/' + classNum, {
+        params:{
+            token: AuthStore.getToken()
+        }
+    })
         .then(function(response){
             /*
             在成功查询到学生信息后，发射dispatch向studentStore传送新的学生信息，
