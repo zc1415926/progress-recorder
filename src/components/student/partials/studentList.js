@@ -25,9 +25,6 @@ var StudentList = React.createClass({
             <tr key={student.id}>
                 <td>{student.student_number}</td>
                 <td>{student.student_name}</td>
-                <td>{student.student_entry_year}</td>
-                <td>{student.student_grade}</td>
-                <td>{student.student_class}</td>
                 <td>
                     <button type="button" className="btn btn-link btn-student-operation"
                             onClick={this.props.onEditClick.bind(null, student)}>
@@ -65,9 +62,6 @@ var StudentList = React.createClass({
                     <tr>
                         <th>学号</th>
                         <th>姓名</th>
-                        <th>入学年</th>
-                        <th>年级</th>
-                        <th>班级</th>
                         <th>操作</th>
                     </tr>
                     </thead>
