@@ -16,8 +16,8 @@ var GradeClassSelector = React.createClass({
             gradeClasses: [],
             gradeText: "请选择",
             classText: "请选择",
-            grades: ["暂无数据"],
-            classes: ["暂无数据"],
+            grades: [],
+            classes: [],
         };
     },
 
@@ -44,13 +44,14 @@ var GradeClassSelector = React.createClass({
         GradeClassActions.getClassesByGradeNum(gradeNum);
 
         this.setState({classText: "请选择"});
-        this.setState({classes: ["暂无数据"]});
+        this.setState({classes: []});
         this.setState({gradeText: gradeNum});
     },
 
     onClassSelect: function (classNum) {
         this.setState({classText: classNum});
         this.props.getStudentsByGradeClass(this.state.gradeText, classNum);
+        //this.props.getClassCode(this.state.gradeText, classNum);
     },
 
     render: function () {
