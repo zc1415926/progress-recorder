@@ -12,6 +12,7 @@ module.exports = {
     DELETE_GRADE_CLASS: 'delete_grade_class',
     GET_GRADES: 'get_grades',
     GET_CLASSES: 'get_classes',
+    GET_CLASS_CODE: 'get_class_code',
 
     AUTHENTICATION: 'authentication',
     GET_USER_FROM_TOKEN: 'get_user_from_token',

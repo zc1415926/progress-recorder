@@ -22,7 +22,7 @@ var StudentAction = {
                 这样就可以在成功添加一个学生后，自动刷新该年班学生列表
                  */
                 if(response['data']['status'] == "success"){
-                    getStudentsByGradeClass(stuObj['student_grade'], stuObj['student_class']);
+                    getStudentsByClassCode(stuObj['classCode']);
                     Dispatcher.dispatch({
                         actionType: ActionTypes.CREATE_STUDENT,
                         student: response['data']
@@ -66,8 +66,7 @@ var StudentAction = {
         })
             .then(function(response){
                 if(response['data']['status'] == "success"){
-                    getStudentsByGradeClass(stuObj['student_grade'], stuObj['student_class']);
-
+                    getStudentsByClassCode(stuObj['classCode']);
                     Dispatcher.dispatch({
                         actionType: ActionTypes.UPDATE_STUDENT,
                         student: response['data']
@@ -87,7 +86,7 @@ var StudentAction = {
         })
             .then(function(response){
                 if(response['data']['status'] == "success"){
-                    getStudentsByGradeClass(stuObj['student_grade'], stuObj['student_class']);
+                    getStudentsByClassCode(stuObj['classCode']);
                     Dispatcher.dispatch({
                         actionType: ActionTypes.DELETE_STUDENT,
                         student: response['data']
@@ -114,10 +113,42 @@ var getStudentsByGradeClass = function(gradeNum, classNum){
             并使studentStore发生一个学生信息被修改事件，订阅了这一消息的组件，
             收到消息后，就会从studentStore中读取新的学生信息，更新学生列表
              */
-            Dispatcher.dispatch({
-                actionType: ActionTypes.GET_STUDENTS_BY_GRADE_CLASS,
-                students: response['data']
-            });
+            if(response['data']['status']=='success')
+            {
+                Dispatcher.dispatch({
+                    actionType: ActionTypes.GET_CLASS_CODE,
+                    classCode: response['data']['data']['classCode']
+                });
+
+                Dispatcher.dispatch({
+                    actionType: ActionTypes.GET_STUDENTS_BY_GRADE_CLASS,
+                    students: response['data']['data']['student']
+                });
+            }else{
+                //
+            }
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+};
+
+var getStudentsByClassCode = function(classCode){
+    axios.get(env.SERVER_BASE_URL + '/student/' + classCode, {
+        params:{
+            token: AuthStore.getToken()
+        }
+    })
+        .then(function(response){
+            if(response['data']['status']=='success')
+            {
+                Dispatcher.dispatch({
+                    actionType: ActionTypes.GET_STUDENTS_BY_GRADE_CLASS,
+                    students: response['data']['data']['student']
+                });
+            }else{
+                //
+            }
         })
         .catch(function(error){
             console.log(error);

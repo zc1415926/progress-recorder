@@ -17,9 +17,7 @@ var StudentInfoModal = React.createClass({
             student: {
                 student_number      : '',
                 student_name        : '',
-                student_entry_year  : '',
-                student_grade       : '',
-                student_class       : '',
+                classCode           : '',
             },
         };
     },
@@ -79,16 +77,12 @@ var StudentInfoModal = React.createClass({
                     </div>
                     <div className="modal-body">
                         <form>
-                            <Input id="student_number" text="学号：" value={this.state.student.student_number}
-                                   disabled="disabled"/>
-                            <Input id="student_name" text="姓名：" value={this.state.student.student_name}
-                                   disabled="disabled"/>
-                            <Input id="student_entry_year" text="入学年：" value={this.state.student.student_entry_year}
-                                   disabled="disabled"/>
-                            <Input id="student_grade" text="年级：" value={this.state.student.student_grade}
-                                   disabled="disabled"/>
-                            <Input id="student_class" text="班级：" value={this.state.student.student_class}
-                                   disabled="disabled"/>
+                            <Input id="classCode" text="班级代码：" value={this.state.student.classCode} disabled="disabled"
+                                   onChange={this.onModalChange}/>
+                            <Input id="student_number" text="学号：" value={this.state.student.student_number} disabled="disabled"
+                                   onChange={this.onModalChange}/>
+                            <Input id="student_name" text="姓名：" value={this.state.student.student_name} disabled="disabled"
+                                   onChange={this.onModalChange}/>
                         </form>
                     </div>
                     <div className="modal-footer">

@@ -106,7 +106,25 @@ var GradeClassActions = {
                 }
             })
             .catch(errorHandler);
-    }
+    },
+    
+    getClassCode: function (gradeNum, classNum) {
+        axios.get(env.SERVER_BASE_URL + '/gradeClasses/getClassCode', {
+            params:{
+                token: AuthStore.getToken(),
+                gradeNum: gradeNum,
+                classNum: classNum,
+            }
+        })
+            .then(function(response){
+                console.log(response['data']);
+                /*Dispatcher.dispatch({
+                    actionType: ActionTypes.GET_GRADES,
+                    grades: response['data']
+                });*/
+            })
+            .catch(errorHandler);
+    },
 };
 
 var getGradeClasses = function(){

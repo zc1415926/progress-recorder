@@ -5,8 +5,8 @@
 
 var React = require('react');
 var StudentStore = require('../../stores/studentStore');
+var GradeClassStore = require('../../stores/gradeClassStore');
 var StudentActions = require('../../actions/studentActions');
-
 var StuCreateModal = require('./partials/studentCreateModal');
 var StuUpdateModal = require('./partials/studentUpdateModal');
 var StuDelModal = require('./partials/studentDeleteModal');
@@ -23,20 +23,27 @@ var HomePage = React.createClass({
             isStuCreateModalOpen: false,
             isEditModalOpen: false,
             isStuDelModalOpen: false,
+            selectedClassCode: '',
         };
     },
 
     componentDidMount: function () {
         StudentStore.addEventListener(StudentStore.CHANGE_EVENT, this._onChange);
+        //GradeClassStore.addEventListener(GradeClassStore.GET_CLASS_CODE_EVENT, this.onGetClassCode);
     },
 
     componentWillUnmount: function () {
         StudentStore.removeEventListener(StudentStore.CHANGE_EVENT, this._onChange);
+        //GradeClassStore.removeEventListener(GradeClassStore.GET_CLASS_CODE_EVENT, this.onGetClassCode);
     },
 
     _onChange: function () {
         this.setState({students: StudentStore.getStudents()});
     },
+
+    /*onGetClassCode: function () {
+        this.setState({classCode: GradeClassStore.getClassCode()});
+    },*/
 
     openStuCreateModal: function(){
         this.setState({
@@ -56,9 +63,7 @@ var HomePage = React.createClass({
             currentStudent: {
                 student_number      : stu['student_number'],
                 student_name        : stu['student_name'],
-                student_entry_year  : stu['student_entry_year'],
-                student_grade       : stu['student_grade'],
-                student_class       : stu['student_class']}
+                classCode  : GradeClassStore.getClassCode()}
         });
     },
 
@@ -90,7 +95,8 @@ var HomePage = React.createClass({
                 <div className="jumbotron subPage">
                     <h1>学生管理</h1>
                     <p>您可以在这里添加、删除、修改学生信息。</p>
-                    <GradeClass getStudentsByGradeClass={this.getStudentsByGradeClass}/>
+                    <GradeClass getStudentsByGradeClass={this.getStudentsByGradeClass}
+                                getClassCode={this.getClassCode}/>
                 </div>
 
                 <StudentList students={this.state.students}
@@ -99,9 +105,9 @@ var HomePage = React.createClass({
                              onDeleteClick={this.openStuDelModal}/>
 
                 <StuCreateModal isOpen={this.state.isStuCreateModalOpen} currentStudent={this.state.currentStudent}
-                                callbackParent={this.onModalCloseNoteParent}/>
+                                classCode={GradeClassStore.getClassCode()} callbackParent={this.onModalCloseNoteParent}/>
                 <StuUpdateModal isOpen={this.state.isEditModalOpen} currentStudent={this.state.currentStudent}
-                              callbackParent={this.onModalCloseNoteParent}/>
+                                callbackParent={this.onModalCloseNoteParent}/>
                 <StuDelModal isOpen={this.state.isStuDelModalOpen} currentStudent={this.state.currentStudent}
                               callbackParent={this.onModalCloseNoteParent}/>
             </div>

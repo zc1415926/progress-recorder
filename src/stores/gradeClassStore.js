@@ -12,6 +12,7 @@ var _gradeClasses = {};
 var _gradeClassCode = {};
 var _grades = [];
 var _classes = [];
+var _classCode = '';
 
 var GradeClassStore = assign({}, EventEmitter.prototype, {
 
@@ -21,7 +22,7 @@ var GradeClassStore = assign({}, EventEmitter.prototype, {
     RETRIEVE_EVENT : 'retrieve',
     GET_GRADES_EVENT: 'get_grade',
     GET_CLASSES_EVENT: 'get_classes_event',
-    //CHANGE_EVENT : 'change',
+    GET_CLASS_CODE_EVENT : 'get_class_code_event',
 
     addEventListener: function (event, callback) {
         this.addListener(event, callback);
@@ -49,6 +50,10 @@ var GradeClassStore = assign({}, EventEmitter.prototype, {
 
     getClasses: function () {
         return _classes;
+    },
+    
+    getClassCode: function () {
+        return _classCode;
     }
 });
 
@@ -77,6 +82,10 @@ Dispatcher.register(function (action) {
         case ActionTypes.GET_CLASSES:
             _classes = action.classes;
             GradeClassStore.emitEvent(GradeClassStore.GET_CLASSES_EVENT);
+            break;
+        case ActionTypes.GET_CLASS_CODE:
+            _classCode = action.classCode;
+            GradeClassStore.emitEvent(GradeClassStore.GET_CLASS_CODE_EVENT);
             break;
         default:
         //nothing to do...

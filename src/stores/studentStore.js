@@ -38,10 +38,10 @@ var StudentStore = assign({}, EventEmitter.prototype, {
 
 Dispatcher.register(function (action) {
     switch (action.actionType){
-        case ActionTypes.GET_ALL_STUDENTS:
+        /*case ActionTypes.GET_ALL_STUDENTS:
             _students = action.students;
             StudentStore.emitEvent(StudentStore.CHANGE_EVENT);
-            break;
+            break;*/
         case ActionTypes.GET_STUDENTS_BY_GRADE_CLASS:
             _students = action.students;
             StudentStore.emitEvent(StudentStore.CHANGE_EVENT);
