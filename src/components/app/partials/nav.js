@@ -64,6 +64,7 @@ var Nav = React.createClass({
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
                             <NavTab to="/">首页</NavTab>
+                            <NavTab to="/dashboard">仪表板</NavTab>
                             <NavTab to="/students">学生管理</NavTab>
                             <NavTab to="/gradeClass">班级管理</NavTab>
                             <NavTab to="/behaviour">平时表现</NavTab>

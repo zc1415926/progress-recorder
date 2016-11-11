@@ -95,8 +95,7 @@ var HomePage = React.createClass({
                 <div className="jumbotron subPage">
                     <h1>学生管理</h1>
                     <p>您可以在这里添加、删除、修改学生信息。</p>
-                    <GradeClass getStudentsByGradeClass={this.getStudentsByGradeClass}
-                                getClassCode={this.getClassCode}/>
+                    <GradeClass getStudentsByGradeClass={this.getStudentsByGradeClass}/>
                 </div>
 
                 <StudentList students={this.state.students}
