@@ -17,4 +17,6 @@ module.exports = {
 
     AUTHENTICATION: 'authentication',
     GET_USER_FROM_TOKEN: 'get_user_from_token',
+    
+    GET_PERF_RECORDS_BY_STUDENT_NUMBER: 'get_perf_records_by_student_number',
 };
