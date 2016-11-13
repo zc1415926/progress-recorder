@@ -20,8 +20,9 @@ var StudentList = React.createClass({
     createStudentRow: function(student)
     {
         return (
-            <tr key={student.id}>
+            <tr key={student.student_number}>
                 <td>{student.student_name}</td>
+                <td>{student.total_performance_score}</td>
                 <td>
                     <button type="button" className="btn btn-link btn-student-operation"
                             >
@@ -44,6 +45,7 @@ var StudentList = React.createClass({
                         <thead>
                         <tr>
                             <th>姓名</th>
+                            <th>表现分</th>
                             <th>操作</th>
                         </tr>
                         </thead>

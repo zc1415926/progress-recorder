@@ -10,6 +10,7 @@ var assign = require('lodash.assign');
 
 var _students = [];
 var _student = {};
+var _dashboardStudents = [];
 
 var StudentStore = assign({}, EventEmitter.prototype, {
 
@@ -18,6 +19,7 @@ var StudentStore = assign({}, EventEmitter.prototype, {
     UPDATE_EVENT : 'update',
     RETRIEVE_EVENT : 'retrieve',
     CHANGE_EVENT : 'change',
+    DASHBOARD_EVENT: 'dashboard',
 
     addEventListener: function (event, callback) {
         this.addListener(event, callback);
@@ -33,6 +35,10 @@ var StudentStore = assign({}, EventEmitter.prototype, {
 
     getStudents: function () {
         return _students;
+    },
+    
+    getDashboardStudents: function(){
+        return _dashboardStudents;
     },
 });
 
@@ -58,6 +64,9 @@ Dispatcher.register(function (action) {
             _student = action.student;
             StudentStore.emitEvent(StudentStore.UPDATE_EVENT);
             break;
+        case ActionTypes.DASHBOARD_STUDENTS_BY_GRADE_CLASS:
+            _dashboardStudents = action.dashboardStudents;
+            StudentStore.emitEvent(StudentStore.DASHBOARD_EVENT);
         default:
             //nothing to do...
     }

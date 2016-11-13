@@ -59,6 +59,29 @@ var StudentAction = {
          */
         getStudentsByGradeClass(gradeNum, classNum);
     },
+    
+    dashboardStudentsByGradeClass: function(gradeNum, classNum){
+        axios.get(env.SERVER_BASE_URL + '/student/dashboard/'
+                                      + gradeNum + '/' + classNum, {
+        params:{
+            token: AuthStore.getToken()
+        }
+    })
+        .then(function(response){
+            if(response['data']['status']=='success')
+            {
+                Dispatcher.dispatch({
+                    actionType: ActionTypes.DASHBOARD_STUDENTS_BY_GRADE_CLASS,
+                    dashboardStudents: response['data']['data']
+                });
+            }else{
+                //
+            }
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+    },
 
     updateStudent: function (stuObj) {
         axios.post(env.SERVER_BASE_URL + '/student/update'+'?token='+AuthStore.getToken(), {
