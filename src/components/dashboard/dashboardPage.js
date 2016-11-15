@@ -11,9 +11,9 @@ var GradeClass = require('../student/partials/gradeClassSelector');
 var StudentActions = require('../../actions/studentActions');
 var StudentStore = require('../../stores/studentStore');
 var DashbStuList = require('./partials/dashboardStudentList');
-var PerformanceScoreActions = require('../../actions/performanceScoreActions');
-var PerformanceScoreStore = require('../../stores/performanceScoreStore');
-var PerfScorePerStudentModal = require('../performanceScore/partials/perfScorePerStudentModal');
+var PerformanceActions = require('../../actions/PerformanceActions');
+var PerformanceStore = require('../../stores/PerformanceStore');
+var PerformanceOfStudentModal = require('../Performance/partials/performanceOfStudentModal');
 
 var DashboardPage = React.createClass({
 
@@ -22,29 +22,29 @@ var DashboardPage = React.createClass({
             isPerStudentModalOpen: false,
             selectedClassCode: '',
             dashboardStudents: [],
-            perfRecordsOfStudent: [],
+            performance: [],
         };
     },
 
     componentDidMount: function () {
         StudentStore.addEventListener(StudentStore.DASHBOARD_EVENT, this.onDashboard);
-        PerformanceScoreStore.addEventListener(PerformanceScoreStore.GET_PERF_RECORDS_OF_STUDENT, 
-            this.onGetPerfRecordsOfStudent);
+        PerformanceStore.addEventListener(PerformanceStore.GET_PERFORMANCE_OF_STUDENT,
+            this.onGetPerformanceOfStudent);
     },
 
     componentWillUnmount: function () {
         StudentStore.removeEventListener(StudentStore.DASHBOARD_EVENT, this.onDashboard);
-        PerformanceScoreStore.removeEventListener(PerformanceScoreStore.GET_PERF_RECORDS_OF_STUDENT, 
-            this.onGetPerfRecordsOfStudent);
+        PerformanceStore.removeEventListener(PerformanceStore.GET_PERFORMANCE_OF_STUDENT,
+            this.onGetPerformanceOfStudent);
     },
     
     onDashboard: function(){
         this.setState({dashboardStudents: StudentStore.getDashboardStudents()});
     },
-    
-    onGetPerfRecordsOfStudent: function () {
+
+    onGetPerformanceOfStudent: function () {
         this.setState({isPerStudentModalOpen: true,
-            perfRecordsOfStudent: PerformanceScoreStore.getRecordsOfStudent()
+            performance: PerformanceStore.getRecordsOfStudent()
         });
     },
 
@@ -52,8 +52,8 @@ var DashboardPage = React.createClass({
         StudentActions.dashboardStudentsByGradeClass(currentGrade, currentClass);
     },
 
-    onPerfScoreClicked: function(studentNumber){
-        PerformanceScoreActions.getPerformanceScoreByStudentNumber(studentNumber);
+    onTotalScoreClicked: function(studentNumber){
+        PerformanceActions.getPerformanceByStudentNumber(studentNumber);
     },
     
     closePerStudentModal: function () {
@@ -68,12 +68,12 @@ var DashboardPage = React.createClass({
                     <p>Hi! I'm dashboard.</p>
                     <GradeClass getStudentsByGradeClass={this.dashboardStudentsByGradeClass}/>
                 </div>
-                <DashbStuList onPerfScoreClicked={this.onPerfScoreClicked}
+                <DashbStuList onPerfScoreClicked={this.onTotalScoreClicked}
                               students={this.state.dashboardStudents}/>
                               
-                <PerfScorePerStudentModal isOpen={this.state.isPerStudentModalOpen}
+                <PerformanceOfStudentModal isOpen={this.state.isPerStudentModalOpen}
                     closeModal={this.closePerStudentModal}
-                    records={this.state.perfRecordsOfStudent}/>
+                    records={this.state.performance}/>
             </div>
         );
     }

@@ -24,7 +24,7 @@ var StudentList = React.createClass({
                 <td>{student.student_name}</td>
                 <td><button type="button" className="btn btn-link btn-student-operation" 
                     onClick={this.props.onPerfScoreClicked.bind(null, student.student_number)}>
-                    {student.total_performance_score}</button></td>
+                    {student.total_score}</button></td>
                 <td>
                     <button type="button" className="btn btn-link btn-student-operation"
                             >

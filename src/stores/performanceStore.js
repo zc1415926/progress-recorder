@@ -5,11 +5,11 @@ var Dispatcher = require('../dispatcher/appDispatcher');
 var ActionTypes = require('../actions/actionTypes');
 var assign = require('lodash.assign');
 
-var _perfScoreRecordsOfStudent = [];
+var _performanceOfStudent = [];
 
 var PerformanceScoreStore = assign({}, EventEmitter.prototype, {
 
-    GET_PERF_RECORDS_OF_STUDENT : 'get_perf_records_of_student',
+    GET_PERFORMANCE_OF_STUDENT : 'get_performance_of_student',
 
     addEventListener: function (event, callback) {
         this.addListener(event, callback);
@@ -24,7 +24,7 @@ var PerformanceScoreStore = assign({}, EventEmitter.prototype, {
     },
 
     getRecordsOfStudent: function () {
-        return _perfScoreRecordsOfStudent;
+        return _performanceOfStudent;
     }
 });
 
@@ -32,8 +32,8 @@ Dispatcher.register(function (action) {
     //console.log(action);
     switch (action.actionType){
         case ActionTypes.GET_PERF_RECORDS_BY_STUDENT_NUMBER:
-            _perfScoreRecordsOfStudent = action.records;
-            PerformanceScoreStore.emitEvent(PerformanceScoreStore.GET_PERF_RECORDS_OF_STUDENT);
+            _performanceOfStudent = action.records;
+            PerformanceScoreStore.emitEvent(PerformanceScoreStore.GET_PERFORMANCE_OF_STUDENT);
             break;
         default:
         //nothing to do...
