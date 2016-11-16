@@ -29,11 +29,6 @@ var ListPerformanceModal = React.createClass({
         );
     },
 
-    onCreatePerfClicked: function () {
-        this.setState({'isOpen': false});
-        this.props.openCreatePerfModal();
-    },
-
     render: function () {
         return (
         <div className="container">
@@ -56,7 +51,7 @@ var ListPerformanceModal = React.createClass({
                     </table>
                 </ModalBody>
                 <ModalFooter>
-                    <button className="btn btn-primary" onClick={this.onCreatePerfClicked}>
+                    <button className="btn btn-primary" onClick={this.props.openCreatePerfModal}>
                         添加
                     </button>
                     <button className="btn btn-default" onClick={this.props.closeModal}>
