@@ -8,16 +8,6 @@ var ModalBody = require('react-modal-bootstrap').ModalBody;
 var ModalFooter = require('react-modal-bootstrap').ModalFooter;
 
 var PerfScorePerStudentModal = React.createClass({
-
-    onUpdatePerfClicked: function (performance) {
-        this.props.onUpdateClick(performance)
-        this.setState({'isOpen': false});
-    },
-
-    onDeletePerfClicked: function (performance) {
-        this.props.onDeleteClick(performance)
-        this.setState({'isOpen': false});
-    },
     
     createRecordsRow: function (performance) {
         return (
@@ -27,11 +17,11 @@ var PerfScorePerStudentModal = React.createClass({
                 <td>{performance.comment}</td>
                 <td>
                     <button type="button" className="btn btn-link btn-student-operation"
-                            onClick={this.onUpdatePerfClicked.bind(null, performance)}>
+                            onClick={this.props.openUpdatePerfModal.bind(null, performance)}>
                         <span className="glyphicon glyphicon-pencil"></span>
                     </button>
                     <button type="button" className="btn btn-link btn-student-operation"
-                            onClick={this.onDeletePerfClicked.bind(null, performance)}>
+                            onClick={this.props.openDeletePerfModal.bind(null, performance)}>
                         <span className="glyphicon glyphicon-remove"></span>
                     </button>
                 </td>
