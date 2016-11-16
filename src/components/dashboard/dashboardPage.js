@@ -73,6 +73,11 @@ var DashboardPage = React.createClass({
         this.setState({isCreatePerfModalOpen: true});
     },
 
+    confirmCreatePerfModal: function () {
+        console.log('create performance');
+        console.log(this.state.targetPerformance);
+    },
+
     closeCreatePerfModal: function () {
         this.setState({isCreatePerfModalOpen: false});
     },
@@ -98,6 +103,10 @@ var DashboardPage = React.createClass({
     },
     //end region
 
+    onInputValueChanged: function (e) {
+        this.state.targetPerformance[e.target.id] = e.target.value;
+    },
+
     render: function () {
         return (
             <div>
@@ -115,11 +124,16 @@ var DashboardPage = React.createClass({
                     openCreatePerfModal={this.openCreatePerfModal}
                     openUpdatePerfModal={this.openUpdatePerfModal}
                     openDeletePerfModal={this.openDeletePerfModal}/>
+
                 <CreatePerfModal isOpen={this.state.isCreatePerfModalOpen}
-                                 closeModal={this.closeCreatePerfModal}/>
+                                 confirmModal={this.confirmCreatePerfModal}
+                                 closeModal={this.closeCreatePerfModal}
+                                 onInputValueChanged={this.onInputValueChanged}/>
+
                 <UpdatePerfModal isOpen={this.state.isUpdatePerfModalOpen}
                                  performance={this.state.targetPerformance}
                                  closeModal={this.closeUpdatePerfModal}/>
+
                 <DeletePerfModal isOpen={this.state.isDeletePerfModalOpen}
                                  performance={this.state.targetPerformance}
                                  closeModal={this.closeDeletePerfModal}/>
