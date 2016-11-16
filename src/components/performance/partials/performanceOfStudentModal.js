@@ -19,19 +19,19 @@ var PerfScorePerStudentModal = React.createClass({
         this.setState({'isOpen': false});
     },
     
-    createRecordsRow: function (record) {
+    createRecordsRow: function (performance) {
         return (
-            <tr key={record.id}>
-                <td>{record.created_at}</td>
-                <td>{record.delta_score}</td>
-                <td>{record.comment}</td>
+            <tr key={performance.id}>
+                <td>{performance.created_at}</td>
+                <td>{performance.delta_score}</td>
+                <td>{performance.comment}</td>
                 <td>
                     <button type="button" className="btn btn-link btn-student-operation"
-                            onClick={this.onUpdatePerfClicked.bind(null, record)}>
+                            onClick={this.onUpdatePerfClicked.bind(null, performance)}>
                         <span className="glyphicon glyphicon-pencil"></span>
                     </button>
                     <button type="button" className="btn btn-link btn-student-operation"
-                            onClick={this.onDeletePerfClicked.bind(null, record)}>
+                            onClick={this.onDeletePerfClicked.bind(null, performance)}>
                         <span className="glyphicon glyphicon-remove"></span>
                     </button>
                 </td>

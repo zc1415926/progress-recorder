@@ -63,7 +63,7 @@ var DashboardPage = React.createClass({
         PerformanceActions.getPerformanceByStudentNumber(studentNumber);
     },
     
-    closePerStudentModal: function () {
+    closePerfStudentModal: function () {
         this.setState({isPerStudentModalOpen: false});
     },
 
@@ -105,13 +105,13 @@ var DashboardPage = React.createClass({
                               students={this.state.dashboardStudents}/>
                               
                 <PerformanceOfStudentModal isOpen={this.state.isPerStudentModalOpen}
-                    closeModal={this.closePerStudentModal}
-                    openCreatePerfModal={this.openUpdatePerfModal}
-                    records={this.state.performance}
-                    onUpdateClick={this.openUpdatePerfModal}
-                    onDeleteClick={this.openDeletePerfModal}/>
+                                           closeModal={this.closePerfStudentModal}
+                                           performance={this.state.performance}
+                                           openCreatePerfModal={this.openUpdatePerfModal}
+                                           onUpdateClick={this.openUpdatePerfModal}
+                                           onDeleteClick={this.openDeletePerfModal}/>
                 <CreatePerfModal isOpen={this.state.isCreatePerfModalOpen}
-                    closeModal={this.closeCreatePerfModal}/>
+                                 closeModal={this.closeCreatePerfModal}/>
                 <UpdatePerfModal isOpen={this.state.isUpdatePerfModalOpen}
                                  performance={this.state.targetPerformance}
                                  closeModal={this.closeUpdatePerfModal}/>
