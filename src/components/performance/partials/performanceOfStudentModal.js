@@ -9,36 +9,6 @@ var ModalFooter = require('react-modal-bootstrap').ModalFooter;
 
 var PerfScorePerStudentModal = React.createClass({
 
-    getInitialState: function () {
-        return {
-            isOpen: this.props.isOpen,
-            records: [{
-                id: 0,
-                created_at: 0,
-                delta_score: 0,
-                comment: 'Oh yeah!'
-            }]
-        };
-    },
-
-    shouldComponentUpdate: function (nextProps) {
-        if(nextProps['records']){
-            this.state.records = nextProps['records'];
-        }
-        return this.state.isOpen = nextProps.isOpen;
-    },
-
-    componentDidUpdate: function(){
-        //close the open flag in the parent
-        if(!this.state.isOpen){
-            this.props.closeModal();
-        }
-    },
-
-    handleModalCloseRequest: function () {
-        this.setState({'isOpen': false});
-    },
-
     onUpdatePerfClicked: function (performance) {
         this.props.onUpdateClick(performance)
         this.setState({'isOpen': false});
@@ -77,9 +47,9 @@ var PerfScorePerStudentModal = React.createClass({
     render: function () {
         return (
         <div className="container">
-            <Modal isOpen={this.state.isOpen} onRequestHide={this.handleModalCloseRequest}>
+            <Modal isOpen={this.props.isOpen} onRequestHide={this.props.closeModal}>
                 <ModalHeader>
-                    <ModalClose onClick={this.handleModalCloseRequest}/>
+                    <ModalClose onClick={this.props.closeModal}/>
                     <ModalTitle>表现分记录</ModalTitle>
                 </ModalHeader>
                 <ModalBody>
@@ -92,14 +62,14 @@ var PerfScorePerStudentModal = React.createClass({
                             <th>操作</th>
                         </tr>
                         </thead>
-                        <tbody>{this.state.records.map(this.createRecordsRow, this)}</tbody>
+                        <tbody>{this.props.performance.map(this.createRecordsRow, this)}</tbody>
                     </table>
                 </ModalBody>
                 <ModalFooter>
                     <button className="btn btn-primary" onClick={this.onCreatePerfClicked}>
                         添加
                     </button>
-                    <button className="btn btn-default" onClick={this.handleModalCloseRequest}>
+                    <button className="btn btn-default" onClick={this.props.closeModal}>
                         关闭
                     </button>
                 </ModalFooter>
