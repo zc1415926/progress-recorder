@@ -36,23 +36,17 @@ var DashboardPage = React.createClass({
     componentDidMount: function () {
         StudentStore.addEventListener(StudentStore.DASHBOARD_EVENT, this.onDashboard);
         PerformanceStore.addEventListener(PerformanceStore.GET_PERFORMANCE_OF_STUDENT,
-            this.onGetPerformanceOfStudent);
+            this.openListPerfModal);
     },
 
     componentWillUnmount: function () {
         StudentStore.removeEventListener(StudentStore.DASHBOARD_EVENT, this.onDashboard);
         PerformanceStore.removeEventListener(PerformanceStore.GET_PERFORMANCE_OF_STUDENT,
-            this.onGetPerformanceOfStudent);
+            this.openListPerfModal);
     },
     
     onDashboard: function(){
         this.setState({dashboardStudents: StudentStore.getDashboardStudents()});
-    },
-
-    onGetPerformanceOfStudent: function () {
-        this.setState({isPerStudentModalOpen: true,
-            performance: PerformanceStore.getRecordsOfStudent()
-        });
     },
 
     dashboardStudentsByGradeClass: function (currentGrade, currentClass) {
@@ -62,8 +56,15 @@ var DashboardPage = React.createClass({
     onTotalScoreClicked: function(studentNumber){
         PerformanceActions.getPerformanceByStudentNumber(studentNumber);
     },
-    
-    closePerfStudentModal: function () {
+
+    //region: open and close function of modals
+    openListPerfModal: function () {
+        this.setState({isPerStudentModalOpen: true,
+            performance: PerformanceStore.getRecordsOfStudent()
+        });
+    },
+
+    closeListPerfModal: function () {
         this.setState({isPerStudentModalOpen: false});
     },
 
@@ -95,6 +96,7 @@ var DashboardPage = React.createClass({
     closeDeletePerfModal: function () {
         this.setState({isDeletePerfModalOpen: false});
     },
+    //end region
 
     render: function () {
         return (
@@ -108,7 +110,7 @@ var DashboardPage = React.createClass({
                               students={this.state.dashboardStudents}/>
                               
                 <ListPerfModal isOpen={this.state.isPerStudentModalOpen}
-                    closeModal={this.closePerfStudentModal}
+                    closeModal={this.closeListPerfModal}
                     performance={this.state.performance}
                     openCreatePerfModal={this.openCreatePerfModal}
                     openUpdatePerfModal={this.openUpdatePerfModal}
