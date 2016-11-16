@@ -7,9 +7,9 @@ var ModalClose = require('react-modal-bootstrap').ModalClose;
 var ModalBody = require('react-modal-bootstrap').ModalBody;
 var ModalFooter = require('react-modal-bootstrap').ModalFooter;
 
-var PerfScorePerStudentModal = React.createClass({
-    
-    createRecordsRow: function (performance) {
+var ListPerformanceModal = React.createClass({
+
+    createPerformanceRow: function (performance) {
         return (
             <tr key={performance.id}>
                 <td>{performance.created_at}</td>
@@ -52,7 +52,7 @@ var PerfScorePerStudentModal = React.createClass({
                             <th>操作</th>
                         </tr>
                         </thead>
-                        <tbody>{this.props.performance.map(this.createRecordsRow, this)}</tbody>
+                        <tbody>{this.props.performance.map(this.createPerformanceRow, this)}</tbody>
                     </table>
                 </ModalBody>
                 <ModalFooter>
@@ -69,4 +69,4 @@ var PerfScorePerStudentModal = React.createClass({
     }
 });
 
-module.exports = PerfScorePerStudentModal;
+module.exports = ListPerformanceModal;
