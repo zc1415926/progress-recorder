@@ -1,12 +1,17 @@
 'use strict';
 var React = require('react');
-var Modal = require('react-modal');
+var Modal = require('react-modal-bootstrap').Modal;
+var ModalHeader = require('react-modal-bootstrap').ModalHeader;
+var ModalTitle = require('react-modal-bootstrap').ModalTitle;
+var ModalClose = require('react-modal-bootstrap').ModalClose;
+var ModalBody = require('react-modal-bootstrap').ModalBody;
+var ModalFooter = require('react-modal-bootstrap').ModalFooter;
 
 var PerfScorePerStudentModal = React.createClass({
 
     getInitialState: function () {
         return {
-            modalIsOpen: this.props.isOpen,
+            isOpen: this.props.isOpen,
             records: [{
                 id: 0,
                 created_at: 0,
@@ -20,18 +25,28 @@ var PerfScorePerStudentModal = React.createClass({
         if(nextProps['records']){
             this.state.records = nextProps['records'];
         }
-        return this.state.modalIsOpen = nextProps.isOpen;
+        return this.state.isOpen = nextProps.isOpen;
     },
 
     componentDidUpdate: function(){
         //close the open flag in the parent
-        if(!this.state.modalIsOpen){
+        if(!this.state.isOpen){
             this.props.closeModal();
         }
     },
 
     handleModalCloseRequest: function () {
-        this.setState({'modalIsOpen': false});
+        this.setState({'isOpen': false});
+    },
+
+    onUpdatePerfClicked: function (performance) {
+        this.props.onUpdateClick(performance)
+        this.setState({'isOpen': false});
+    },
+
+    onDeletePerfClicked: function (performance) {
+        this.props.onDeleteClick(performance)
+        this.setState({'isOpen': false});
     },
     
     createRecordsRow: function (record) {
@@ -40,45 +55,56 @@ var PerfScorePerStudentModal = React.createClass({
                 <td>{record.created_at}</td>
                 <td>{record.delta_score}</td>
                 <td>{record.comment}</td>
+                <td>
+                    <button type="button" className="btn btn-link btn-student-operation"
+                            onClick={this.onUpdatePerfClicked.bind(null, record)}>
+                        <span className="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <button type="button" className="btn btn-link btn-student-operation"
+                            onClick={this.onDeletePerfClicked.bind(null, record)}>
+                        <span className="glyphicon glyphicon-remove"></span>
+                    </button>
+                </td>
             </tr>
         );
     },
 
+    onCreatePerfClicked: function () {
+        this.setState({'isOpen': false});
+        this.props.openCreatePerfModal();
+    },
+
     render: function () {
         return (
-            <Modal
-                className="Modal__Bootstrap modal-dialog"
-                closeTimeoutMS={150}
-                isOpen={this.state.modalIsOpen}
-                onRequestClose={this.handleModalCloseRequest}
-            >
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <button type="button" className="close" onClick={this.handleModalCloseRequest}>
-                            <span aria-hidden="true">&times;</span>
-                            <span className="sr-only">Close</span>
-                        </button>
-                        <h4 className="modal-title">表现分记录</h4>
-                    </div>
-                    <div className="modal-body">
-                        <table id="studentListTable" className="table listTable">
-                            <thead>
-                                <tr>
-                                    <th>时间</th>
-                                    <th>分数</th>
-                                    <th>备注</th>
-                                </tr>
-                            </thead>
-                            <tbody>{this.state.records.map(this.createRecordsRow, this)}</tbody>
-                        </table>
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-default" onClick={this.handleModalCloseRequest}>
-                            确定
-                        </button>
-                    </div>
-                </div>
+        <div className="container">
+            <Modal isOpen={this.state.isOpen} onRequestHide={this.handleModalCloseRequest}>
+                <ModalHeader>
+                    <ModalClose onClick={this.handleModalCloseRequest}/>
+                    <ModalTitle>表现分记录</ModalTitle>
+                </ModalHeader>
+                <ModalBody>
+                    <table id="studentListTable" className="table listTable">
+                        <thead>
+                        <tr>
+                            <th>时间</th>
+                            <th>分数</th>
+                            <th>备注</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>{this.state.records.map(this.createRecordsRow, this)}</tbody>
+                    </table>
+                </ModalBody>
+                <ModalFooter>
+                    <button className="btn btn-primary" onClick={this.onCreatePerfClicked}>
+                        添加
+                    </button>
+                    <button className="btn btn-default" onClick={this.handleModalCloseRequest}>
+                        关闭
+                    </button>
+                </ModalFooter>
             </Modal>
+        </div>
         );
     }
 });

@@ -13,16 +13,23 @@ var StudentStore = require('../../stores/studentStore');
 var DashbStuList = require('./partials/dashboardStudentList');
 var PerformanceActions = require('../../actions/PerformanceActions');
 var PerformanceStore = require('../../stores/PerformanceStore');
-var PerformanceOfStudentModal = require('../Performance/partials/performanceOfStudentModal');
+var PerformanceOfStudentModal = require('../performance/partials/performanceOfStudentModal');
+var CreatePerfModal = require('../performance/partials/createPerformanceModal');
+var UpdatePerfModal = require('../performance/partials/updatePerformanceModal');
+var DeletePerfModal = require('../performance/partials/deletePerformanceModal');
 
 var DashboardPage = React.createClass({
 
     getInitialState: function () {
         return {
             isPerStudentModalOpen: false,
+            isCreatePerfModalOpen: false,
+            isUpdatePerfModalOpen: false,
+            isDeletePerfModalOpen: false,
             selectedClassCode: '',
             dashboardStudents: [],
             performance: [],
+            targetPerformance: {},
         };
     },
 
@@ -59,7 +66,33 @@ var DashboardPage = React.createClass({
     closePerStudentModal: function () {
         this.setState({isPerStudentModalOpen: false});
     },
-    
+
+    openCreatePerfModal: function () {
+        this.setState({isCreatePerfModalOpen: true});
+    },
+
+    closeCreatePerfModal: function () {
+        this.setState({isCreatePerfModalOpen: false});
+    },
+
+    openUpdatePerfModal: function (performance) {
+        this.setState({isUpdatePerfModalOpen: true,
+            targetPerformance: performance});
+    },
+
+    closeUpdatePerfModal: function () {
+        this.setState({isUpdatePerfModalOpen: false});
+    },
+
+    openDeletePerfModal: function (performance) {
+        this.setState({isDeletePerfModalOpen: true,
+            targetPerformance: performance});
+    },
+
+    closeDeletePerfModal: function () {
+        this.setState({isDeletePerfModalOpen: false});
+    },
+
     render: function () {
         return (
             <div>
@@ -73,7 +106,18 @@ var DashboardPage = React.createClass({
                               
                 <PerformanceOfStudentModal isOpen={this.state.isPerStudentModalOpen}
                     closeModal={this.closePerStudentModal}
-                    records={this.state.performance}/>
+                    openCreatePerfModal={this.openUpdatePerfModal}
+                    records={this.state.performance}
+                    onUpdateClick={this.openUpdatePerfModal}
+                    onDeleteClick={this.openDeletePerfModal}/>
+                <CreatePerfModal isOpen={this.state.isCreatePerfModalOpen}
+                    closeModal={this.closeCreatePerfModal}/>
+                <UpdatePerfModal isOpen={this.state.isUpdatePerfModalOpen}
+                                 performance={this.state.targetPerformance}
+                                 closeModal={this.closeUpdatePerfModal}/>
+                <DeletePerfModal isOpen={this.state.isDeletePerfModalOpen}
+                                 performance={this.state.targetPerformance}
+                                 closeModal={this.closeDeletePerfModal}/>
             </div>
         );
     }
