@@ -80,6 +80,11 @@ var DashboardPage = React.createClass({
         console.log(this.state.targetPerformance);
     },
 
+    confirmDeletePerfModal: function () {
+        console.log('delete performance');
+        console.log(this.state.targetPerformance);
+    },
+
     openCrudModal: function (modalName, performance) {
 
         this.setState({isPerStudentModalOpen: false});
