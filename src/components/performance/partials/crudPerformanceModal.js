@@ -11,25 +11,28 @@ var ModalBody = require('react-modal-bootstrap').ModalBody;
 var ModalFooter = require('react-modal-bootstrap').ModalFooter;
 var Input = require('../../app/partials/inputGroup');
 
-var CreatePerformanceModal = React.createClass({
-
+var CrudPerformanceModal = React.createClass({
     render: function () {
         return (
         <div className="container">
             <Modal isOpen={this.props.isOpen} onRequestHide={this.props.closeModal}>
                 <ModalHeader>
                     <ModalClose onClick={this.props.closeModal}/>
-                    <ModalTitle>新建学生表现记录</ModalTitle>
+                    <ModalTitle>{this.props.title}</ModalTitle>
                 </ModalHeader>
                 <ModalBody>
                     <form>
-                        <Input id="delta_score" text="评分" onChange={this.props.onInputValueChanged}/>
-                        <Input id="comment" text="备注" onChange={this.props.onInputValueChanged}/>
+                        <Input id="delta_score" text="评分" disabled={this.props.disableArray?this.props.disableArray[0]:''}
+                               value={this.props.performance.delta_score?this.props.performance.delta_score:''}
+                               onChange={this.props.onInputValueChanged}/>
+                        <Input id="comment" text="备注" disabled={this.props.disableArray?this.props.disableArray[1]:''}
+                               value={this.props.performance.comment?this.props.performance.comment:''}
+                               onChange={this.props.onInputValueChanged}/>
                     </form>
                 </ModalBody>
                 <ModalFooter>
                     <button className="btn btn-primary" onClick={this.props.confirmModal}>
-                        保存
+                        确定
                     </button>
                     <button className="btn btn-default" onClick={this.props.closeModal}>
                         取消
@@ -41,4 +44,4 @@ var CreatePerformanceModal = React.createClass({
     }
 });
 
-module.exports = CreatePerformanceModal;
+module.exports = CrudPerformanceModal;

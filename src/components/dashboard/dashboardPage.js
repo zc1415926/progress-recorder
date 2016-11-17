@@ -14,9 +14,9 @@ var DashbStuList = require('./partials/dashboardStudentList');
 var PerformanceActions = require('../../actions/PerformanceActions');
 var PerformanceStore = require('../../stores/PerformanceStore');
 var ListPerfModal = require('../performance/partials/listPerformanceModal');
-var CreatePerfModal = require('../performance/partials/createPerformanceModal');
-var UpdatePerfModal = require('../performance/partials/updatePerformanceModal');
-var DeletePerfModal = require('../performance/partials/deletePerformanceModal');
+var CreatePerfModal = require('../performance/partials/crudPerformanceModal');
+var UpdatePerfModal = require('../performance/partials/crudPerformanceModal');
+var DeletePerfModal = require('../performance/partials/crudPerformanceModal');
 
 var DashboardPage = React.createClass({
 
@@ -30,6 +30,7 @@ var DashboardPage = React.createClass({
             dashboardStudents: [],
             performance: [],
             targetPerformance: {},
+            targetStudentNumber: '',
         };
     },
 
@@ -54,6 +55,7 @@ var DashboardPage = React.createClass({
     },
 
     onTotalScoreClicked: function(studentNumber){
+        this.setState({targetStudentNumber: studentNumber});
         PerformanceActions.getPerformanceByStudentNumber(studentNumber);
     },
 
@@ -69,8 +71,10 @@ var DashboardPage = React.createClass({
     },
 
     openCreatePerfModal: function () {
+        this.state.targetPerformance.student_number = this.state.targetStudentNumber;
         this.setState({isPerStudentModalOpen: false});
-        this.setState({isCreatePerfModalOpen: true});
+        this.setState({isCreatePerfModalOpen: true,
+            targetPerformance: this.state.targetPerformance});
     },
 
     confirmCreatePerfModal: function () {
@@ -80,6 +84,7 @@ var DashboardPage = React.createClass({
 
     closeCreatePerfModal: function () {
         this.setState({isCreatePerfModalOpen: false});
+        this.setState({targetPerformance: {}});
     },
 
     openUpdatePerfModal: function (performance) {
@@ -88,8 +93,14 @@ var DashboardPage = React.createClass({
             targetPerformance: performance});
     },
 
+    confirmUpdatePerfModal: function () {
+        console.log('update performance');
+        console.log(this.state.targetPerformance);
+    },
+
     closeUpdatePerfModal: function () {
         this.setState({isUpdatePerfModalOpen: false});
+        this.setState({targetPerformance: {}});
     },
 
     openDeletePerfModal: function (performance) {
@@ -100,11 +111,13 @@ var DashboardPage = React.createClass({
 
     closeDeletePerfModal: function () {
         this.setState({isDeletePerfModalOpen: false});
+        this.setState({targetPerformance: {}});
     },
     //end region
 
     onInputValueChanged: function (e) {
         this.state.targetPerformance[e.target.id] = e.target.value;
+        this.setState({targetPerformance: this.state.targetPerformance});
     },
 
     render: function () {
@@ -126,17 +139,26 @@ var DashboardPage = React.createClass({
                     openDeletePerfModal={this.openDeletePerfModal}/>
 
                 <CreatePerfModal isOpen={this.state.isCreatePerfModalOpen}
+                                 title={'新建表现分记录'}
+                                 performance={this.state.targetPerformance}
                                  confirmModal={this.confirmCreatePerfModal}
                                  closeModal={this.closeCreatePerfModal}
                                  onInputValueChanged={this.onInputValueChanged}/>
 
                 <UpdatePerfModal isOpen={this.state.isUpdatePerfModalOpen}
+                                 title={'修改表现分记录'}
                                  performance={this.state.targetPerformance}
-                                 closeModal={this.closeUpdatePerfModal}/>
+                                 confirmModal={this.confirmUpdatePerfModal}
+                                 closeModal={this.closeUpdatePerfModal}
+                                 onInputValueChanged={this.onInputValueChanged}/>
 
                 <DeletePerfModal isOpen={this.state.isDeletePerfModalOpen}
+                                 title={'删除表现分记录'}
+                                 disableArray={['disabled', 'disabled']}
                                  performance={this.state.targetPerformance}
-                                 closeModal={this.closeDeletePerfModal}/>
+                                 confirmModal={this.confirmDeletePerfModal}
+                                 closeModal={this.closeDeletePerfModal}
+                                 onInputValueChanged={this.onInputValueChanged}/>
             </div>
         );
     }

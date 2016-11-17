@@ -51,7 +51,8 @@ var ListPerformanceModal = React.createClass({
                     </table>
                 </ModalBody>
                 <ModalFooter>
-                    <button className="btn btn-primary" onClick={this.props.openCreatePerfModal}>
+                    <button className="btn btn-primary"
+                            onClick={this.props.openCreatePerfModal}>
                         添加
                     </button>
                     <button className="btn btn-default" onClick={this.props.closeModal}>
