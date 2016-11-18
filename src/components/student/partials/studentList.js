@@ -19,10 +19,9 @@ var StudentList = React.createClass({
         return this.state.students = nextProps.students;
     },
 
-    createStudentRow: function(student)
-    {
+    createStudentRow: function(student){
         return (
-            <tr key={student.id}>
+            <tr key={student.student_number}>
                 <td>{student.student_number}</td>
                 <td>{student.student_name}</td>
                 <td>

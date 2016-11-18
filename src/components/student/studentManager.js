@@ -7,9 +7,9 @@ var React = require('react');
 var StudentStore = require('../../stores/studentStore');
 var GradeClassStore = require('../../stores/gradeClassStore');
 var StudentActions = require('../../actions/studentActions');
-var StuCreateModal = require('./partials/studentCreateModal');
-var StuUpdateModal = require('./partials/studentUpdateModal');
-var StuDelModal = require('./partials/studentDeleteModal');
+var CreateStudentModal = require('./partials/crudStudentModal');
+var UpdateStudentModal = require('./partials/crudStudentModal');
+var DeleteStudentModal = require('./partials/crudStudentModal');
 var GradeClass = require('./partials/gradeClassSelector');
 var StudentList = require('./partials/studentList');
 
@@ -24,6 +24,7 @@ var HomePage = React.createClass({
             isEditModalOpen: false,
             isStuDelModalOpen: false,
             selectedClassCode: '',
+            targetStudent: {},
         };
     },
 
@@ -60,7 +61,7 @@ var HomePage = React.createClass({
             使得当在修改学生信息对话框中修改了文本框中的内容并点击“取消”后，
             学生列表中的相应位置在内存中被修改，使用下面的代码打断引用的传递解决该问题
              */
-            currentStudent: {
+            targetStudent: {
                 student_number      : stu['student_number'],
                 student_name        : stu['student_name'],
                 classCode  : GradeClassStore.getClassCode()}
@@ -69,24 +70,29 @@ var HomePage = React.createClass({
 
     openStuDelModal: function(stu, event){
         this.setState({
-            currentStudent: stu,
+            targetStudent: stu,
             isStuDelModalOpen: true
         });
     },
 
-
-    onModalCloseNoteParent:function(modalName){
-        // 使用obj.'is'+modalName+'ModalOpen'的方法不能定义一个object的key
-        // 要定义一个由表达式组成的object的key，要先声明var stateObject = {}
-        // 再用obj[obj.'is'+modalName+'ModalOpen']=false赋值
-        stateObject['is'+modalName+'ModalOpen'] = false;
-        //console.log(stateObject);
-        //browserHistory.push('/');
-        this.setState(stateObject);
-    },
-
     getStudentsByGradeClass: function (currentGrade, currentClass) {
         StudentActions.getStudentsByGradeClass(currentGrade, currentClass);
+    },
+
+    closeCrudModal: function (modalName) {
+        switch (modalName){
+            case 'create':
+                this.setState({isStuCreateModalOpen: false});
+                break;
+            case 'update':
+                this.setState({isEditModalOpen: false});
+                break;
+            case 'delete':
+                this.setState({isStuDelModalOpen: false});
+                break;
+        }
+
+        this.setState({targetStudent: {}});
     },
 
     render: function () {
@@ -103,12 +109,20 @@ var HomePage = React.createClass({
                              onEditClick={this.openEditModal}
                              onDeleteClick={this.openStuDelModal}/>
 
-                <StuCreateModal isOpen={this.state.isStuCreateModalOpen} currentStudent={this.state.currentStudent}
-                                classCode={GradeClassStore.getClassCode()} callbackParent={this.onModalCloseNoteParent}/>
-                <StuUpdateModal isOpen={this.state.isEditModalOpen} currentStudent={this.state.currentStudent}
-                                callbackParent={this.onModalCloseNoteParent}/>
-                <StuDelModal isOpen={this.state.isStuDelModalOpen} currentStudent={this.state.currentStudent}
-                              callbackParent={this.onModalCloseNoteParent}/>
+                <CreateStudentModal isOpen={this.state.isStuCreateModalOpen}
+                                    student={this.state.targetStudent}
+                                    title={'添加学生信息'}
+                                    closeModal={this.closeCrudModal.bind(null, 'create')}/>
+
+                <UpdateStudentModal isOpen={this.state.isEditModalOpen}
+                                    student={this.state.targetStudent}
+                                    title={'修改学生信息'}
+                                    closeModal={this.closeCrudModal.bind(null, 'update')}/>
+
+                <DeleteStudentModal isOpen={this.state.isStuDelModalOpen}
+                                    student={this.state.targetStudent}
+                                    title={'删除学生信息'}
+                                    closeModal={this.closeCrudModal.bind(null, 'delete')}/>
             </div>
         );
     }
