@@ -15,7 +15,7 @@ var StudentList = require('./partials/studentList');
 
 var stateObject = {};
 
-var HomePage = React.createClass({
+var StudentManager = React.createClass({
 
     getInitialState: function () {
         return {
@@ -128,4 +128,4 @@ var HomePage = React.createClass({
     }
 });
 
-module.exports = HomePage;
+module.exports = StudentManager;
