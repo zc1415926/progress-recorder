@@ -12,6 +12,7 @@ var UpdateStudentModal = require('./partials/crudStudentModal');
 var DeleteStudentModal = require('./partials/crudStudentModal');
 var GradeClass = require('./partials/gradeClassSelector');
 var StudentList = require('./partials/studentList');
+var GradeClassDropdown = require('../app/ui/gradeClassDropdown');
 
 var stateObject = {};
 
@@ -102,6 +103,7 @@ var StudentManager = React.createClass({
                     <h1>学生管理</h1>
                     <p>您可以在这里添加、删除、修改学生信息。</p>
                     <GradeClass getStudentsByGradeClass={this.getStudentsByGradeClass}/>
+                    <GradeClassDropdown />
                 </div>
 
                 <StudentList students={this.state.students}

@@ -19,7 +19,7 @@ var GradeClassStore = assign({}, EventEmitter.prototype, {
     CREATE_EVENT : 'create',
     DELETE_EVENT : 'delete',
     UPDATE_EVENT : 'update',
-    RETRIEVE_EVENT : 'retrieve',
+    GET_GRADE_CLASSES_EVENT : 'get_grade_classes_event',
     GET_GRADES_EVENT: 'get_grade',
     GET_CLASSES_EVENT: 'get_classes_event',
     GET_CLASS_CODE_EVENT : 'get_class_code_event',
@@ -61,7 +61,7 @@ Dispatcher.register(function (action) {
     switch (action.actionType){
         case ActionTypes.GET_GRADE_CLASSES:
             _gradeClasses = action.gradeClasses;
-            GradeClassStore.emitEvent(GradeClassStore.RETRIEVE_EVENT);
+            GradeClassStore.emitEvent(GradeClassStore.GET_GRADE_CLASSES_EVENT);
             break;
         case ActionTypes.CREATE_STUDENT:
             _gradeClasses = action.gradeClass;
