@@ -7,7 +7,7 @@
 'use strict';
 
 var React = require('react');
-var GradeClass = require('../student/partials/gradeClassSelector');
+var GradeClassDropdown = require('../app/ui/gradeClassDropdown');
 var StudentActions = require('../../actions/studentActions');
 var StudentStore = require('../../stores/studentStore');
 var DashbStuList = require('./partials/dashboardStudentList');
@@ -134,7 +134,7 @@ var DashboardPage = React.createClass({
                 <div className="jumbotron subPage">
                     <h1>Dashboard</h1>
                     <p>Hi! I'm dashboard.</p>
-                    <GradeClass getStudentsByGradeClass={this.dashboardStudentsByGradeClass}/>
+                    <GradeClassDropdown onGradeClassSelected={this.dashboardStudentsByGradeClass}/>
                 </div>
                 <DashbStuList onPerfScoreClicked={this.onTotalScoreClicked}
                               students={this.state.dashboardStudents}/>

@@ -12,14 +12,16 @@ var GradeClassStore = require('../../../stores/gradeClassStore');
 var GradeClassDropdown = React.createClass({
 
     getInitialState: function () {
-        //GradeClassAction.getGradeClasses();
         return {
             listGradeNums: [],
             listClassNums: [],
             targetGradeNum: '',
-            targetClassNum: '',
+            //targetClassNum: '',
+            gradeDropdownText: '请选择',
+            classDropdownText: '请选择',
         };
     },
+
     componentWillMount: function () {
         GradeClassAction.getGrades();
     },
@@ -44,23 +46,33 @@ var GradeClassDropdown = React.createClass({
 
     onGradeSelected: function (item) {
         GradeClassAction.getClassesByGradeNum(item);
-        this.setState({targetGradeNum: item});
+        this.setState({
+            targetGradeNum: item,
+            gradeDropdownText: item,
+            listClassNums: [],
+            classDropdownText: '请选择'
+        });
     },
     
     onClassSelected: function (item) {
-        console.log('onClassSelected');
+        this.setState({
+            //targetClassNum: item,
+            classDropdownText:item
+        });
 
-        this.setState({targetClassNum: item});
-
-        console.log(this.state.targetGradeNum);
-        console.log(this.state.targetClassNum);
+        this.props.onGradeClassSelected(this.state.targetGradeNum, item);
     },
 
     render: function () {
         return (
             <div>
-                <GradeDropdown text={'Grade'} items={this.state.listGradeNums} onItemClicked={this.onGradeSelected}/>
-                <ClassDropdown text={'Class'} items={this.state.listClassNums} onItemClicked={this.onClassSelected}/>
+                <label>年级：</label>
+                <GradeDropdown text={this.state.gradeDropdownText} items={this.state.listGradeNums}
+                               onItemClicked={this.onGradeSelected}/>
+
+                <label>班级：</label>
+                <ClassDropdown text={this.state.classDropdownText} items={this.state.listClassNums}
+                               onItemClicked={this.onClassSelected}/>
             </div>
         );
     }

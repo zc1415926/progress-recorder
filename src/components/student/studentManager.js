@@ -10,7 +10,6 @@ var StudentActions = require('../../actions/studentActions');
 var CreateStudentModal = require('./partials/crudStudentModal');
 var UpdateStudentModal = require('./partials/crudStudentModal');
 var DeleteStudentModal = require('./partials/crudStudentModal');
-var GradeClass = require('./partials/gradeClassSelector');
 var StudentList = require('./partials/studentList');
 var GradeClassDropdown = require('../app/ui/gradeClassDropdown');
 
@@ -76,8 +75,8 @@ var StudentManager = React.createClass({
         });
     },
 
-    getStudentsByGradeClass: function (currentGrade, currentClass) {
-        StudentActions.getStudentsByGradeClass(currentGrade, currentClass);
+    onGradeClassSelected: function (gradeNum, classNum) {
+        StudentActions.getStudentsByGradeClass(gradeNum, classNum);
     },
 
     closeCrudModal: function (modalName) {
@@ -102,8 +101,7 @@ var StudentManager = React.createClass({
                 <div className="jumbotron subPage">
                     <h1>学生管理</h1>
                     <p>您可以在这里添加、删除、修改学生信息。</p>
-                    <GradeClass getStudentsByGradeClass={this.getStudentsByGradeClass}/>
-                    <GradeClassDropdown />
+                    <GradeClassDropdown onGradeClassSelected={this.onGradeClassSelected}/>
                 </div>
 
                 <StudentList students={this.state.students}
