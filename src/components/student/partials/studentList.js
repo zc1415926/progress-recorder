@@ -6,19 +6,6 @@
 var React = require('react');
 
 var StudentList = React.createClass({
-
-    getInitialState: function () {
-        return {
-            students: this.props.students,
-        };
-    },
-
-    shouldComponentUpdate: function (nextProps) {
-        //console.log('StudentList nextProps');
-        //console.log(nextProps);
-        return this.state.students = nextProps.students;
-    },
-
     createStudentRow: function(student){
         return (
             <tr key={student.student_number}>
@@ -64,7 +51,7 @@ var StudentList = React.createClass({
                         <th>操作</th>
                     </tr>
                     </thead>
-                    <tbody>{this.state.students.map(this.createStudentRow, this)}</tbody>
+                    <tbody>{this.props.students.map(this.createStudentRow, this)}</tbody>
                 </table>
             </div>
         );
