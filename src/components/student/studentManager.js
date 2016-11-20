@@ -13,8 +13,6 @@ var DeleteStudentModal = require('./partials/crudStudentModal');
 var StudentList = require('./partials/studentList');
 var GradeClassDropdown = require('../app/ui/gradeClassDropdown');
 
-var stateObject = {};
-
 var StudentManager = React.createClass({
 
     getInitialState: function () {
