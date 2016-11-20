@@ -4,7 +4,7 @@
 'use strict';
 
 var React = require('react');
-var Input = require('./partials/inputGroup');
+var Input = require('../app/ui/inputGroup');
 var authActions = require('../../actions/authActions');
 var AuthStore = require('../../stores/authStore');
 var browserHistory = require('react-router').browserHistory;
