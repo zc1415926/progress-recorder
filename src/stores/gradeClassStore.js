@@ -32,8 +32,8 @@ var GradeClassStore = assign({}, EventEmitter.prototype, {
         this.removeListener(event, callback);
     },
 
-    emitEvent: function (event) {
-        this.emit(event);
+    emitEvent: function (event, actionName) {
+        this.emit(event, actionName);
     },
 
     getGradeClasses: function(){
@@ -65,15 +65,15 @@ Dispatcher.register(function (action) {
             break;
         case ActionTypes.CREATE_STUDENT:
             _gradeClasses = action.gradeClass;
-            GradeClassStore.emitEvent(GradeClassStore.CREATE_EVENT);
+            GradeClassStore.emitEvent(GradeClassStore.CREATE_EVENT, 'create');
             break;
         case ActionTypes.UPDATE_GRADE_CLASS:
             _gradeClasses = action.gradeClass;
-            GradeClassStore.emitEvent(GradeClassStore.UPDATE_EVENT);
+            GradeClassStore.emitEvent(GradeClassStore.UPDATE_EVENT, 'update');
             break;
         case ActionTypes.DELETE_GRADE_CLASS:
             _gradeClassCode = action.gradeClassCode;
-            GradeClassStore.emitEvent(GradeClassStore.DELETE_EVENT);
+            GradeClassStore.emitEvent(GradeClassStore.DELETE_EVENT, 'delete');
             break;
         case ActionTypes.GET_GRADES:
             _grades = action.grades;

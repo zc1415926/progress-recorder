@@ -7,9 +7,11 @@ var React = require('react');
 var GradeClassActions = require('../../actions/gradeClassActions');
 var GradeClassStore = require('../../stores/gradeClassStore');
 var GradeClassList = require('./partials/gradeClassList');
-var GradeClassCreateModal = require('./partials/gradeClassCreateModal');
-var GradeClassUpdateModal = require('./partials/gradeClassUpdateModal');
-var GradeClassDeleteModal = require('./partials/gradeClassDeleteModal');
+var CreateGradeClassModal = require('./partials/crudGradeClassModal');
+var UpdateGradeClassModal = require('./partials/crudGradeClassModal');
+var DeleteGradeClassModal = require('./partials/crudGradeClassModal');
+var gradeClassActions = require('../../actions/gradeClassActions');
+
 var toastr = require('toastr');
 
 var GradeClassManager = React.createClass({
@@ -22,7 +24,7 @@ var GradeClassManager = React.createClass({
                 gradeNum: '加载',
                 classNum: '!',
             }],
-
+            gradeClass: {},
             isCreateModalOpen: false,
             isUpdateModalOpen: false,
             isDeleteModalOpen: false,
@@ -30,70 +32,95 @@ var GradeClassManager = React.createClass({
     },
 
     componentDidMount: function () {
-        GradeClassStore.addEventListener(GradeClassStore.RETRIEVE_EVENT, this.onRetrieved);
-        GradeClassStore.addEventListener(GradeClassStore.CREATE_EVENT, this.onCreated);
-        GradeClassStore.addEventListener(GradeClassStore.UPDATE_EVENT, this.onUpdated);
-        GradeClassStore.addEventListener(GradeClassStore.DELETE_EVENT, this.onDeleted);
+        GradeClassStore.addEventListener(GradeClassStore.GET_GRADE_CLASSES_EVENT, this.onRetrieved);
+        GradeClassStore.addEventListener(GradeClassStore.CREATE_EVENT, this.onChanged);
+        GradeClassStore.addEventListener(GradeClassStore.UPDATE_EVENT, this.onChanged);
+        GradeClassStore.addEventListener(GradeClassStore.DELETE_EVENT, this.onChanged);
         //初次打开页面，获取一次数据
         GradeClassActions.getGradeClasses();
     },
 
     componentWillUnmount: function () {
-        GradeClassStore.removeEventListener(GradeClassStore.RETRIEVE_EVENT, this.onRetrieved);
-        GradeClassStore.removeEventListener(GradeClassStore.CREATE_EVENT, this.onCreated);
-        GradeClassStore.removeEventListener(GradeClassStore.UPDATE_EVENT, this.onUpdated);
-        GradeClassStore.removeEventListener(GradeClassStore.DELETE_EVENT, this.onDeleted);
+        GradeClassStore.removeEventListener(GradeClassStore.GET_GRADE_CLASSES_EVENT, this.onRetrieved);
+        GradeClassStore.removeEventListener(GradeClassStore.CREATE_EVENT, this.onChanged);
+        GradeClassStore.removeEventListener(GradeClassStore.UPDATE_EVENT, this.onChanged);
+        GradeClassStore.removeEventListener(GradeClassStore.DELETE_EVENT, this.onChanged);
     },
 
     onRetrieved: function () {
         this.setState({gradeClasses: GradeClassStore.getGradeClasses()});
     },
 
-    onCreated: function () {
-        toastr.success('已经成功创建班级');
-        this.setState({isCreateModalOpen: false,
-            currentGradeClass: {}});
+    onChanged: function (actionName) {
+        switch (actionName){
+            case 'create':
+                toastr.success('已经成功创建班级');
+                this.setState({isCreateModalOpen: false});
+                break;
+            case 'update':
+                toastr.success('已经成功修改班级');
+                this.setState({isUpdateModalOpen: false});
+                break;
+            case 'delete':
+                toastr.success('已经成功删除班级，班级代码：' + GradeClassStore.getGradeClassCode());
+                this.setState({isDeleteModalOpen: false});
+                break;
+        }
+
+        this.setState({gradeClass: {}});
     },
 
-    onUpdated: function () {
-        toastr.success('已经成功修改班级');
-        this.setState({isUpdateModalOpen: false,
-            currentGradeClass: {}});
+    openModal: function (modalName, gradeClass) {
+        switch (modalName){
+            case 'create':
+                this.setState({isCreateModalOpen: true});
+                break;
+            case 'update':
+                this.setState({
+                    isUpdateModalOpen: true,
+                    gradeClass: gradeClass});
+                break;
+            case 'delete':
+                this.setState({
+                    isDeleteModalOpen: true,
+                    gradeClass: gradeClass});
+                break;
+        }
     },
 
-    onDeleted: function () {
-        toastr.success('已经成功删除班级，班级代码：' + GradeClassStore.getGradeClassCode());
-        this.setState({isDeleteModalOpen: false,
-            currentGradeClass: {}});
+    closeModal: function (modalName) {
+        switch (modalName){
+            case 'create':
+                this.setState({isCreateModalOpen: false});
+                break;
+            case 'update':
+                this.setState({isUpdateModalOpen: false});
+                break;
+            case 'delete':
+                this.setState({isDeleteModalOpen: false});
+                break;
+        }
+
+        this.setState({gradeClass: {}});
+    },
+    
+    confirmModal: function (modalName) {
+        switch (modalName){
+            case 'create':
+                gradeClassActions.createGradeClass(this.state.gradeClass);
+                break;
+            case 'update':
+                gradeClassActions.updateGradeClass(this.state.gradeClass);
+                break;
+            case 'delete':
+                gradeClassActions.deleteGradeClass(this.state.gradeClass.classCode);
+                break;
+        }
     },
 
-    openCreateModal: function () {
-        this.setState({isCreateModalOpen: true});
-    },
-
-    closeCreateModal: function () {
-        this.setState({isCreateModalOpen: false,
-            currentGradeClass: {}});
-    },
-
-    openUpdateModal: function (gradeClass) {
-        this.setState({isUpdateModalOpen: true,
-            currentGradeClass: gradeClass});
-    },
-
-    closeUpdateModal: function () {
-        this.setState({isUpdateModalOpen: false,
-            currentGradeClass: {}});
-    },
-
-    openDeleteModal: function (gradeClass) {
-        this.setState({isDeleteModalOpen: true,
-            currentGradeClass: gradeClass});
-    },
-
-    closeDeleteModal: function () {
-        this.setState({isDeleteModalOpen: false,
-            currentGradeClass: {}});
+    onInputValueChanged: function (e) {
+        this.state.gradeClass[e.target.id] = e.target.value;
+        this.setState({gradeClass: this.state.gradeClass});
     },
 
     render: function () {
@@ -106,18 +133,30 @@ var GradeClassManager = React.createClass({
                 </div>
 
                 <GradeClassList gradeClasses={this.state.gradeClasses}
-                                openCreateModal={this.openCreateModal}
-                                openUpdateModal={this.openUpdateModal}
-                                openDeleteModal={this.openDeleteModal}/>
+                                openCreateModal={this.openModal.bind(null, 'create')}
+                                openUpdateModal={this.openModal.bind(null, 'update')}
+                                openDeleteModal={this.openModal.bind(null, 'delete')}/>
 
-                <GradeClassCreateModal isOpen={this.state.isCreateModalOpen}
-                                       closeModal={this.closeCreateModal}/>
-                <GradeClassUpdateModal isOpen={this.state.isUpdateModalOpen}
-                                       currentGradeClass={this.state.currentGradeClass}
-                                       closeModal={this.closeUpdateModal}/>
-                <GradeClassDeleteModal isOpen={this.state.isDeleteModalOpen}
-                                       currentGradeClass={this.state.currentGradeClass}
-                                       closeModal={this.closeDeleteModal}/>
+                <CreateGradeClassModal isOpen={this.state.isCreateModalOpen}
+                                       closeModal={this.closeModal.bind(null, 'create')}
+                                       title={'添加学生信息'}
+                                       gradeClass={this.state.gradeClass}
+                                       onInputValueChanged={this.onInputValueChanged}
+                                       confirmModal={this.confirmModal.bind(null, 'create')}/>
+
+                <UpdateGradeClassModal isOpen={this.state.isUpdateModalOpen}
+                                       closeModal={this.closeModal.bind(null, 'update')}
+                                       title={'修改学生信息'}
+                                       gradeClass={this.state.gradeClass}
+                                       onInputValueChanged={this.onInputValueChanged}
+                                       confirmModal={this.confirmModal.bind(null, 'update')}/>
+
+                <DeleteGradeClassModal isOpen={this.state.isDeleteModalOpen}
+                                       closeModal={this.closeModal.bind(null, 'delete')}
+                                       title={'删除学生信息'}
+                                       gradeClass={this.state.gradeClass}
+                                       onInputValueChanged={this.onInputValueChanged}
+                                       confirmModal={this.confirmModal.bind(null, 'delete')}/>
             </div>
         );
     }
