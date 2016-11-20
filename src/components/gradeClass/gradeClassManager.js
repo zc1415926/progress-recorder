@@ -11,7 +11,6 @@ var CreateGradeClassModal = require('./partials/crudGradeClassModal');
 var UpdateGradeClassModal = require('./partials/crudGradeClassModal');
 var DeleteGradeClassModal = require('./partials/crudGradeClassModal');
 var gradeClassActions = require('../../actions/gradeClassActions');
-
 var toastr = require('toastr');
 
 var GradeClassManager = React.createClass({

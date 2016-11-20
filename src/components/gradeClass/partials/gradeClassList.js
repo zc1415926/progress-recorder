@@ -4,29 +4,9 @@
 'use strict';
 
 var React = require('react');
-//var _ = require('lodash');
 
-var GradeClassComponent = React.createClass({
-
-    getInitialState: function () {
-
-        //console.log(this.props.gradeClasses);
-        return {
-            gradeClasses: this.props.gradeClasses,
-        };
-    },
-
-    shouldComponentUpdate: function (nextProps) {
-        //console.log('StudentList nextProps');
-        //console.log(nextProps.gradeClasses);
-        return this.state.gradeClasses = nextProps.gradeClasses;
-    },
-
+var GradeClassList = React.createClass({
     createGradeClassRow: function (gradeClass) {
-       /* _.forOwn(gradeClasses, function(value, key) {
-            console.log(key);
-            console.log(value);
-        });*/
         return (
             <tr key={gradeClass.classCode}>
                 <td>{gradeClass.classCode}</td>
@@ -72,11 +52,11 @@ var GradeClassComponent = React.createClass({
                         <th>操作</th>
                     </tr>
                     </thead>
-                    <tbody>{this.state.gradeClasses.map(this.createGradeClassRow, this)}</tbody>
+                    <tbody>{this.props.gradeClasses.map(this.createGradeClassRow, this)}</tbody>
                 </table>
             </div>
         );
     }
 });
 
-module.exports = GradeClassComponent;
+module.exports = GradeClassList;
