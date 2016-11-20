@@ -9,7 +9,7 @@ var ModalTitle = require('react-modal-bootstrap').ModalTitle;
 var ModalClose = require('react-modal-bootstrap').ModalClose;
 var ModalBody = require('react-modal-bootstrap').ModalBody;
 var ModalFooter = require('react-modal-bootstrap').ModalFooter;
-var Input = require('../../app/partials/inputGroup');
+var Input = require('../../app/ui/inputGroup');
 
 var CrudPerformanceModal = React.createClass({
     render: function () {
