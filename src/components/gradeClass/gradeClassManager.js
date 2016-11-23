@@ -10,7 +10,6 @@ var GradeClassList = require('./partials/gradeClassList');
 var CreateGradeClassModal = require('./partials/crudGradeClassModal');
 var UpdateGradeClassModal = require('./partials/crudGradeClassModal');
 var DeleteGradeClassModal = require('./partials/crudGradeClassModal');
-var gradeClassActions = require('../../actions/gradeClassActions');
 var toastr = require('toastr');
 
 var GradeClassManager = React.createClass({
@@ -106,13 +105,13 @@ var GradeClassManager = React.createClass({
     confirmModal: function (modalName) {
         switch (modalName){
             case 'create':
-                gradeClassActions.createGradeClass(this.state.gradeClass);
+                GradeClassActions.createGradeClass(this.state.gradeClass);
                 break;
             case 'update':
-                gradeClassActions.updateGradeClass(this.state.gradeClass);
+                GradeClassActions.updateGradeClass(this.state.gradeClass);
                 break;
             case 'delete':
-                gradeClassActions.deleteGradeClass(this.state.gradeClass.classCode);
+                GradeClassActions.deleteGradeClass(this.state.gradeClass.classCode);
                 break;
         }
     },
