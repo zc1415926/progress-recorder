@@ -5,13 +5,13 @@
 
 var React = require('react');
 var StudentStore = require('../../stores/studentStore');
-var GradeClassStore = require('../../stores/gradeClassStore');
 var StudentActions = require('../../actions/studentActions');
 var CreateStudentModal = require('./partials/crudStudentModal');
 var UpdateStudentModal = require('./partials/crudStudentModal');
 var DeleteStudentModal = require('./partials/crudStudentModal');
 var StudentList = require('./partials/studentList');
 var GradeClassDropdown = require('../app/ui/gradeClassDropdown');
+var toastr = require('toastr');
 
 var StudentManager = React.createClass({
 
@@ -23,22 +23,52 @@ var StudentManager = React.createClass({
             isStuDelModalOpen: false,
             selectedClassCode: '',
             targetStudent: {},
+            targetGradeNum: '',
+            targetClassNum: '',
         };
     },
 
     componentDidMount: function () {
-        StudentStore.addEventListener(StudentStore.CHANGE_EVENT, this._onChange);
+        StudentStore.addEventListener(StudentStore.CHANGE_EVENT, this.onStudentChange);
     },
 
     componentWillUnmount: function () {
-        StudentStore.removeEventListener(StudentStore.CHANGE_EVENT, this._onChange);
+        StudentStore.removeEventListener(StudentStore.CHANGE_EVENT, this.onStudentChange);
     },
 
-    _onChange: function () {
+    onStudentChange: function (actionName) {
+        /*
+        按年班查学生，添加、修改、删除学生都会引发CHANGE_EVENT并
+        进入到这个函数，如果是添加、修改、删除其中的一种，则还要
+        关闭相应的对话框，并清除targetStudent
+        */
         this.setState({students: StudentStore.getStudents()});
+
+        switch (actionName){
+            case 'create':
+                toastr.success('已经成功添加学生');
+                this.setState({isStuCreateModalOpen: false});
+                this.setState({targetStudent: {}});
+                break;
+            case 'update':
+                toastr.success('已经成功修改学生');
+                this.setState({isEditModalOpen: false});
+                this.setState({targetStudent: {}});
+                break;
+            case 'delete':
+                toastr.success('已经成功删除学生');
+                this.setState({isStuDelModalOpen: false});
+                this.setState({targetStudent: {}});
+                break;
+        }
+
     },
 
     onGradeClassSelected: function (gradeNum, classNum) {
+
+        this.state.targetGradeNum = gradeNum;
+        this.state.targetClassNum = classNum;
+
         StudentActions.getStudentsByGradeClass(gradeNum, classNum);
     },
 
@@ -54,11 +84,12 @@ var StudentManager = React.createClass({
                      如果不这样进行一次操作，传返回的stu的话，会导致这stu一直是“传引用（瞎猜的）”，
                      使得当在修改学生信息对话框中修改了文本框中的内容并点击“取消”后，
                      学生列表中的相应位置在内存中被修改，使用下面的代码打断引用的传递解决该问题
+                     In a word: 解除绑定
                      */
                     targetStudent: {
                         student_number      : student['student_number'],
                         student_name        : student['student_name'],
-                        classCode  : GradeClassStore.getClassCode()
+                        classCode           : student['classCode']
                     }
                 });
                 break;
@@ -84,6 +115,22 @@ var StudentManager = React.createClass({
         this.setState({targetStudent: {}});
     },
 
+    confirmModal: function (modalName) {
+        switch (modalName){
+            case 'create':
+                this.state.targetStudent.gradeNum = this.state.targetGradeNum;
+                this.state.targetStudent.classNum = this.state.targetClassNum;
+                StudentActions.createStudent(this.state.targetStudent);
+                break;
+            case 'update':
+                StudentActions.updateStudent(this.state.targetStudent);
+                break;
+            case 'delete':
+                StudentActions.deleteStudent(this.state.targetStudent);
+                break;
+        }
+    },
+
     onInputValueChanged: function (e) {
         this.state.targetStudent[e.target.id] = e.target.value;
         this.setState({targetStudent: this.state.targetStudent});
@@ -107,18 +154,23 @@ var StudentManager = React.createClass({
                                     student={this.state.targetStudent}
                                     title={'添加学生信息'}
                                     onInputValueChanged={this.onInputValueChanged}
+                                    confirmModal={this.confirmModal.bind(null, 'create')}
                                     closeModal={this.closeCrudModal.bind(null, 'create')}/>
 
                 <UpdateStudentModal isOpen={this.state.isEditModalOpen}
                                     student={this.state.targetStudent}
                                     title={'修改学生信息'}
+                                    disableArray={['disabled', '']}
                                     onInputValueChanged={this.onInputValueChanged}
+                                    confirmModal={this.confirmModal.bind(null, 'update')}
                                     closeModal={this.closeCrudModal.bind(null, 'update')}/>
 
                 <DeleteStudentModal isOpen={this.state.isStuDelModalOpen}
                                     student={this.state.targetStudent}
                                     title={'删除学生信息'}
+                                    disableArray={['disabled', 'disabled']}
                                     onInputValueChanged={this.onInputValueChanged}
+                                    confirmModal={this.confirmModal.bind(null, 'delete')}
                                     closeModal={this.closeCrudModal.bind(null, 'delete')}/>
             </div>
         );

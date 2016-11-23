@@ -12,6 +12,15 @@ var env = require('../env.json');
 console.log('服务器端地址：' + env.SERVER_BASE_URL);
 
 var StudentAction = {
+
+    getStudentsByGradeClass: function(gradeNum, classNum){
+        /*
+         将依据年级和班级查询学生的代码独立出去，因为在添加、更新、删除学生后，
+         也要使用这一部分代码刷新学生列表
+         */
+        getStudentsByGradeClass(gradeNum, classNum);
+    },
+
     createStudent: function (stuObj) {
         axios.post(env.SERVER_BASE_URL + '/student/create'+'?token='+AuthStore.getToken(), {
             data: stuObj
@@ -21,14 +30,14 @@ var StudentAction = {
                 如果成功添加了一个学生，则重新读取一次该年班学生，之后由getStudentsByGradeClass发射Dispatch
                 这样就可以在成功添加一个学生后，自动刷新该年班学生列表
                  */
-                if(response['data']['status'] == "success"){
-                    getStudentsByClassCode(stuObj['classCode']);
+                if(response.status == 201){
+                    getStudentsByGradeClass(stuObj['gradeNum'], stuObj['classNum']);
                     Dispatcher.dispatch({
                         actionType: ActionTypes.CREATE_STUDENT,
                         student: response['data']
                     });
                 }else{
-                    console.log(response['data']['data']);
+                    console.log(response);
                 }
             })
             .catch(function(error){
@@ -36,30 +45,47 @@ var StudentAction = {
             });
     },
 
-    /*getAllStudents: function () {
-        axios.get(env.SERVER_BASE_URL + '/student/index')
+    updateStudent: function (stuObj) {
+        axios.post(env.SERVER_BASE_URL + '/student/update'+'?token='+AuthStore.getToken(), {
+            data: stuObj
+        })
             .then(function(response){
-                Dispatcher.dispatch({
-                    actionType: ActionTypes.GET_ALL_STUDENTS,
-                    students: response['data']
-                });
+                if(response.status == 201){
+                    getStudentsByClassCode(stuObj['classCode']);
+                    Dispatcher.dispatch({
+                        actionType: ActionTypes.UPDATE_STUDENT,
+                        student: response['data']
+                    });
+                }else{
+                    console.log(response);
+                }
+            })
+            .catch(function(error){
+                console.log(error);
+                console.log(response);
+            });
+    },
+
+    deleteStudent: function (stuObj) {
+        axios.post(env.SERVER_BASE_URL + '/student/delete'+'?token='+AuthStore.getToken(), {
+            data: stuObj['student_number']
+        })
+            .then(function(response){
+                if(response.status == 204){
+                    getStudentsByClassCode(stuObj['classCode']);
+                    Dispatcher.dispatch({
+                        actionType: ActionTypes.DELETE_STUDENT,
+                        student: response['data']
+                    });
+                }else{
+                    console.log(response);
+                }
             })
             .catch(function(error){
                 console.log(error);
             });
     },
-    getStudentById: function () {
 
-    },*/
-
-    getStudentsByGradeClass: function(gradeNum, classNum){
-        /*
-        将依据年级和班级查询学生的代码独立出去，因为在添加、更新、删除学生后，
-        也要使用这一部分代码刷新学生列表
-         */
-        getStudentsByGradeClass(gradeNum, classNum);
-    },
-    
     dashboardStudentsByGradeClass: function(gradeNum, classNum){
         axios.get(env.SERVER_BASE_URL + '/student/dashboard/'
                                       + gradeNum + '/' + classNum, {
@@ -82,46 +108,6 @@ var StudentAction = {
             console.log(error);
         });
     },
-
-    updateStudent: function (stuObj) {
-        axios.post(env.SERVER_BASE_URL + '/student/update'+'?token='+AuthStore.getToken(), {
-            data: stuObj
-        })
-            .then(function(response){
-                if(response['data']['status'] == "success"){
-                    getStudentsByClassCode(stuObj['classCode']);
-                    Dispatcher.dispatch({
-                        actionType: ActionTypes.UPDATE_STUDENT,
-                        student: response['data']
-                    });
-                }else{
-                    console.log(response['data']['data']);
-                }
-            })
-            .catch(function(error){
-                console.log(error);
-            });
-    },
-
-    deleteStudent: function (stuObj) {
-        axios.post(env.SERVER_BASE_URL + '/student/delete'+'?token='+AuthStore.getToken(), {
-            data: stuObj['student_number']
-        })
-            .then(function(response){
-                if(response['data']['status'] == "success"){
-                    getStudentsByClassCode(stuObj['classCode']);
-                    Dispatcher.dispatch({
-                        actionType: ActionTypes.DELETE_STUDENT,
-                        student: response['data']
-                    });
-                }else{
-                    console.log(response['data']['data']);
-                }
-            })
-            .catch(function(error){
-                console.log(error);
-            });
-    },
 };
 
 var getStudentsByGradeClass = function(gradeNum, classNum){
@@ -139,13 +125,8 @@ var getStudentsByGradeClass = function(gradeNum, classNum){
             if(response['data']['status']=='success')
             {
                 Dispatcher.dispatch({
-                    actionType: ActionTypes.GET_CLASS_CODE,
-                    classCode: response['data']['data']['classCode']
-                });
-
-                Dispatcher.dispatch({
                     actionType: ActionTypes.GET_STUDENTS_BY_GRADE_CLASS,
-                    students: response['data']['data']['student']
+                    students: response['data']['data']
                 });
             }else{
                 //

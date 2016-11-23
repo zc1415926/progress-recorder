@@ -14,9 +14,9 @@ var _dashboardStudents = [];
 
 var StudentStore = assign({}, EventEmitter.prototype, {
 
-    CREATE_EVENT : 'create',
-    DELETE_EVENT : 'delete',
-    UPDATE_EVENT : 'update',
+    //CREATE_EVENT : 'create',
+    //DELETE_EVENT : 'delete',
+    //UPDATE_EVENT : 'update',
     RETRIEVE_EVENT : 'retrieve',
     CHANGE_EVENT : 'change',
     DASHBOARD_EVENT: 'dashboard',
@@ -29,8 +29,8 @@ var StudentStore = assign({}, EventEmitter.prototype, {
         this.removeListener(event, callback);
     },
 
-    emitEvent: function (event) {
-        this.emit(event);
+    emitEvent: function (event, actionName) {
+        this.emit(event, actionName);
     },
 
     getStudents: function () {
@@ -54,15 +54,15 @@ Dispatcher.register(function (action) {
             break;
         case ActionTypes.CREATE_STUDENT:
             _student = action.student;
-            StudentStore.emitEvent(StudentStore.CREATE_EVENT);
-            break;
-        case ActionTypes.DELETE_STUDENT:
-            _student = action.student;
-            StudentStore.emitEvent(StudentStore.DELETE_EVENT);
+            StudentStore.emitEvent(StudentStore.CHANGE_EVENT, 'create');
             break;
         case ActionTypes.UPDATE_STUDENT:
             _student = action.student;
-            StudentStore.emitEvent(StudentStore.UPDATE_EVENT);
+            StudentStore.emitEvent(StudentStore.CHANGE_EVENT, 'update');
+            break;
+        case ActionTypes.DELETE_STUDENT:
+            _student = action.student;
+            StudentStore.emitEvent(StudentStore.CHANGE_EVENT, 'delete');
             break;
         case ActionTypes.DASHBOARD_STUDENTS_BY_GRADE_CLASS:
             _dashboardStudents = action.dashboardStudents;

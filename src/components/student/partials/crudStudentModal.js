@@ -22,15 +22,11 @@ var CrudStudentModal = React.createClass({
                     </ModalHeader>
                     <ModalBody>
                         <form>
-                            <Input id="classCode" text="班级代码：" disabled={this.props.disableArray?this.props.disableArray[0]:''}
-                                   value={this.props.student.classCode?this.props.student.classCode:''}
-                                   onChange={this.props.onInputValueChanged}/>
-
-                            <Input id="student_number" text="学号：" disabled={this.props.disableArray?this.props.disableArray[1]:''}
+                            <Input id="student_number" text="学号：" disabled={this.props.disableArray?this.props.disableArray[0]:''}
                                    value={this.props.student.student_number?this.props.student.student_number:''}
                                    onChange={this.props.onInputValueChanged}/>
 
-                            <Input id="student_name" text="姓名："  disabled={this.props.disableArray?this.props.disableArray[2]:''}
+                            <Input id="student_name" text="姓名："  disabled={this.props.disableArray?this.props.disableArray[1]:''}
                                    value={this.props.student.student_name?this.props.student.student_name:''}
                                    onChange={this.props.onInputValueChanged}/>
                         </form>
