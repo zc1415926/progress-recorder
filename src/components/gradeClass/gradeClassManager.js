@@ -152,6 +152,7 @@ var GradeClassManager = React.createClass({
                 <DeleteGradeClassModal isOpen={this.state.isDeleteModalOpen}
                                        closeModal={this.closeModal.bind(null, 'delete')}
                                        title={'删除学生信息'}
+                                       disableArray={['disabled', 'disabled', 'disabled']}
                                        gradeClass={this.state.gradeClass}
                                        onInputValueChanged={this.onInputValueChanged}
                                        confirmModal={this.confirmModal.bind(null, 'delete')}/>
