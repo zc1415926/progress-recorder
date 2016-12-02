@@ -32,7 +32,7 @@ var CrudTermModal = React.createClass({
                         </form>
                     </ModalBody>
                     <ModalFooter>
-                        <button className="btn btn-primary" onClick={this.props.confirmModal}>
+                        <button className={this.props.confirmBtnClassName?this.props.confirmBtnClassName:"btn btn-primary"} onClick={this.props.confirmModal}>
                             确定
                         </button>
                         <button className="btn btn-default" onClick={this.props.closeModal}>

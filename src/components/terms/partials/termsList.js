@@ -14,15 +14,15 @@ var TermsList = React.createClass({
                 <td>{term.season=='0' ? '春季' : '秋季'}</td>
                 <td>
                     <button type="button" className="btn btn-link btn-student-operation"
-                            >
+                            onClick={this.props.onSetCurrentClick.bind(null, term)}>
                         <span className="glyphicon glyphicon-star"></span>
                     </button>
                     <button type="button" className="btn btn-link btn-student-operation"
-                            >
+                            onClick={this.props.onUpdateClick.bind(null, term)}>
                         <span className="glyphicon glyphicon-pencil"></span>
                     </button>
                     <button type="button" className="btn btn-link btn-student-operation"
-                            >
+                            onClick={this.props.onDeleteClick.bind(null, term)}>
                         <span className="glyphicon glyphicon-remove"></span>
                     </button>
                 </td>
