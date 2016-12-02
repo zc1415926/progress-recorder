@@ -12,6 +12,20 @@ var TermsList = React.createClass({
                 <td>{term.term_code}</td>
                 <td>{term.year}</td>
                 <td>{term.season=='0' ? '春季' : '秋季'}</td>
+                <td>
+                    <button type="button" className="btn btn-link btn-student-operation"
+                            >
+                        <span className="glyphicon glyphicon-star"></span>
+                    </button>
+                    <button type="button" className="btn btn-link btn-student-operation"
+                            >
+                        <span className="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <button type="button" className="btn btn-link btn-student-operation"
+                            >
+                        <span className="glyphicon glyphicon-remove"></span>
+                    </button>
+                </td>
             </tr>
         );
     },
@@ -25,6 +39,7 @@ var TermsList = React.createClass({
                         <th>学期代码</th>
                         <th>学年</th>
                         <th>学期</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>{this.props.terms.map(this.createTermRow, this)}</tbody>
