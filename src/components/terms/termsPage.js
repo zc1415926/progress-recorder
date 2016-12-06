@@ -110,11 +110,15 @@ var TermsPage = React.createClass({
         this.setState({targetTerm: this.state.targetTerm});
     },
 
+    onSeasonSelect: function (selectItem) {
+
+        console.log(selectItem);
+    },
+
     render: function () {
         return (
             <div>
                 <div className="container">
-
                     <CurrentTerm currentTerm={this.state.currentTerm} />
                     <button type="button" className="btn btn-primary btn-block "
                             onClick={this.openCrudModal.bind(null, 'create')}>
@@ -129,6 +133,7 @@ var TermsPage = React.createClass({
                                      title={'添加学期'}
                                      term={this.state.targetTerm}
                                      onInputValueChanged={this.onInputValueChanged}
+                                     onDropdownSelect={this.onSeasonSelect}
                                      confirmModal={this.confirmModal.bind(null, 'create')}
                                      closeModal={this.closeCrudModal.bind(null, 'create')}/>
 
@@ -136,6 +141,7 @@ var TermsPage = React.createClass({
                                      title={'修改学期'}
                                      term={this.state.targetTerm}
                                      onInputValueChanged={this.onInputValueChanged}
+                                     onDropdownSelect={this.onSeasonSelect}
                                      confirmModal={this.confirmModal.bind(null, 'update')}
                                      closeModal={this.closeCrudModal.bind(null, 'update')}/>
 

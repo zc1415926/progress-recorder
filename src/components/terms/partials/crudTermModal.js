@@ -29,7 +29,7 @@ var CrudTermModal = React.createClass({
                             <Input id="season" text="学期："  disabled={this.props.disableArray?this.props.disableArray[1]:''}
                                    value={this.props.term.season?this.props.term.season:''}
                                    onChange={this.props.onInputValueChanged}/>
-                        </form>
+                            </form>
                     </ModalBody>
                     <ModalFooter>
                         <button className={this.props.confirmBtnClassName?this.props.confirmBtnClassName:"btn btn-primary"} onClick={this.props.confirmModal}>
