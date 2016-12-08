@@ -40,14 +40,14 @@ var TermsPage = React.createClass({
     },
 
     onGetCurrentTerm: function () {
-        //console.log(TermsStore.getCurrentTerm()[0]);
         this.setState({currentTerm: TermsStore.getCurrentTerm()[0]});
     },
 
     openCrudModal: function (modalName, term) {
         switch (modalName){
             case 'create':
-                this.setState({isCreateModalOpen: true});
+                this.setState({isCreateModalOpen: true,
+                    targetTerm: {}});
                 break;
             case 'update':
                 this.setState({
@@ -83,11 +83,14 @@ var TermsPage = React.createClass({
                 break;
         }
 
-        this.setState({targetStudent: {}});
+        this.setState({
+            targetTerm: {}});
     },
 
     confirmModal: function (modalName) {
-        switch (modalName){
+        console.log('confirmModal');
+        console.log(this.state.targetTerm);
+        /*switch (modalName){
             case 'create':
                 this.state.targetStudent.gradeNum = this.state.targetGradeNum;
                 this.state.targetStudent.classNum = this.state.targetClassNum;
@@ -102,17 +105,16 @@ var TermsPage = React.createClass({
             case 'setCurrent':
                 StudentActions.deleteStudent(this.state.targetStudent);
                 break;
-        }
+        }*/
     },
-
     onInputValueChanged: function (e) {
         this.state.targetTerm[e.target.id] = e.target.value;
         this.setState({targetTerm: this.state.targetTerm});
     },
 
     onSeasonSelect: function (selectItem) {
-
-        console.log(selectItem);
+        this.state.targetTerm.season = selectItem;
+        this.setState({targetTerm: this.state.targetTerm});
     },
 
     render: function () {

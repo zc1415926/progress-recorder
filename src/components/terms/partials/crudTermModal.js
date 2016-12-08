@@ -10,6 +10,7 @@ var ModalClose = require('react-modal-bootstrap').ModalClose;
 var ModalBody = require('react-modal-bootstrap').ModalBody;
 var ModalFooter = require('react-modal-bootstrap').ModalFooter;
 var Input = require('../../app/ui/inputGroup');
+var SeasonDropdown = require('./seasonDropdown');
 
 var CrudTermModal = React.createClass({
     render: function () {
@@ -26,10 +27,9 @@ var CrudTermModal = React.createClass({
                                    value={this.props.term.year?this.props.term.year:''}
                                    onChange={this.props.onInputValueChanged}/>
 
-                            <Input id="season" text="学期："  disabled={this.props.disableArray?this.props.disableArray[1]:''}
-                                   value={this.props.term.season?this.props.term.season:''}
-                                   onChange={this.props.onInputValueChanged}/>
-                            </form>
+                            <SeasonDropdown id="season" disabled={this.props.disableArray?this.props.disableArray[1]:''}
+                                            text={this.props.term.season} onItemSelect={this.props.onDropdownSelect} />
+                        </form>
                     </ModalBody>
                     <ModalFooter>
                         <button className={this.props.confirmBtnClassName?this.props.confirmBtnClassName:"btn btn-primary"} onClick={this.props.confirmModal}>

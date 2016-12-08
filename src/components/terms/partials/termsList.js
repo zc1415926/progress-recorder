@@ -4,6 +4,7 @@
 'use strict';
 
 var React = require('react');
+var TermConstants = require('./termConstants');
 
 var TermsList = React.createClass({
     createTermRow: function (term) {
@@ -11,7 +12,7 @@ var TermsList = React.createClass({
             <tr key={term.id}>
                 <td>{term.term_code}</td>
                 <td>{term.year}</td>
-                <td>{term.season=='0' ? '春季' : '秋季'}</td>
+                <td>{term.season=='0' ? TermConstants.FIRST_HALF_YEAR_SEASON : TermConstants.SECOND_HALF_YEAR_SEASON}</td>
                 <td>
                     <button type="button" className="btn btn-link btn-student-operation"
                             onClick={this.props.onSetCurrentClick.bind(null, term)}>
