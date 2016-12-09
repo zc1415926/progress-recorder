@@ -32,6 +32,30 @@ var TermsActions = {
                 console.log(error);
             });
     },
+    
+    create: function (termObj) {
+        axios.post(env.SERVER_BASE_URL + '/terms/create'+'?token='+AuthStore.getToken(), {
+            data: termObj
+        })
+            .then(function(response){
+
+                console.log('createTerm');
+                console.log(response);
+                if(response.status == 201){
+                    //getStudentsByGradeClass(stuObj['gradeNum'], stuObj['classNum']);
+                    Dispatcher.dispatch({
+                        actionType: ActionTypes.CREATE_STUDENT,
+                        student: response['data']
+                    });
+                }else{
+                    console.log(response);
+                }
+            })
+            .catch(function(error){
+                //当请求失败时，使用error.response获取返回的数据
+                console.log(error.response);
+            });
+    },
 };
 
 var indexTerms = function(){

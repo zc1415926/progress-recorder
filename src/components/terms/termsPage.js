@@ -90,11 +90,11 @@ var TermsPage = React.createClass({
     confirmModal: function (modalName) {
         console.log('confirmModal');
         console.log(this.state.targetTerm);
-        /*switch (modalName){
+        switch (modalName){
             case 'create':
-                this.state.targetStudent.gradeNum = this.state.targetGradeNum;
-                this.state.targetStudent.classNum = this.state.targetClassNum;
-                StudentActions.createStudent(this.state.targetStudent);
+                //this.state.targetStudent.gradeNum = this.state.targetGradeNum;
+                //this.state.targetStudent.classNum = this.state.targetClassNum;
+                TermsActions.create(this.state.targetTerm);
                 break;
             case 'update':
                 StudentActions.updateStudent(this.state.targetStudent);
@@ -105,7 +105,7 @@ var TermsPage = React.createClass({
             case 'setCurrent':
                 StudentActions.deleteStudent(this.state.targetStudent);
                 break;
-        }*/
+        }
     },
     onInputValueChanged: function (e) {
         this.state.targetTerm[e.target.id] = e.target.value;
