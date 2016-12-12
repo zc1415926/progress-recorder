@@ -6,13 +6,13 @@ var axios = require('axios');
 var env = require('../env.json');
 var AuthStore = require('../stores/authStore');
 
-var TermsActions = {
-    indexTerms: function () {
-        indexTerms();
+var TermActions = {
+    indexTerm: function () {
+        indexTerm();
     },
 
     getCurrentTerm: function () {
-        axios.get(env.SERVER_BASE_URL + '/terms/current', {
+        axios.get(env.SERVER_BASE_URL + '/term/current', {
             params:{
                 token: AuthStore.getToken()
             }
@@ -39,7 +39,7 @@ var TermsActions = {
         })
             .then(function(response){
                 if(response.status == 201){
-                    indexTerms();
+                    indexTerm();
                     Dispatcher.dispatch({
                         actionType: ActionTypes.TERM.CREATE,
                         term: response['data']
@@ -60,7 +60,7 @@ var TermsActions = {
         })
             .then(function(response){
                 if(response.status == 204){
-                    indexTerms();
+                    indexTerm();
                     Dispatcher.dispatch({
                         actionType: ActionTypes.TERM.DELETE,
                         term: response['data']
@@ -81,7 +81,7 @@ var TermsActions = {
         })
             .then(function(response){
                 if(response.status == 201){
-                    indexTerms();
+                    indexTerm();
                     Dispatcher.dispatch({
                         actionType: ActionTypes.TERM.SET_CURRENT,
                         term: response['data']
@@ -97,8 +97,8 @@ var TermsActions = {
     },
 };
 
-var indexTerms = function(){
-    axios.get(env.SERVER_BASE_URL + '/terms', {
+var indexTerm = function(){
+    axios.get(env.SERVER_BASE_URL + '/term/index', {
         params:{
             token: AuthStore.getToken()
         }
@@ -119,4 +119,4 @@ var indexTerms = function(){
         });
 };
 
-module.exports = TermsActions;
+module.exports = TermActions;

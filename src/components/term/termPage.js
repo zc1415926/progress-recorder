@@ -4,9 +4,9 @@
 'use strict';
 
 var React = require('react');
-var TermsActions = require('../../actions/termsActions');
-var TermsStore = require('../../stores/termsStore');
-var TermList = require('./partials/termsList');
+var TermActions = require('../../actions/termActions');
+var TermStore = require('../../stores/termStore');
+var TermList = require('./partials/termList');
 var CurrentTerm = require('./partials/currentTerm');
 var CreateTermModal = require('./partials/crudTermModal');
 var UpdateTermModal = require('./partials/crudTermModal');
@@ -24,22 +24,22 @@ var TermsPage = React.createClass({
     },
 
     componentDidMount: function () {
-        TermsStore.addEventListener(TermsStore.CHANGE_EVENT, this.onIndexTerms);
-        TermsStore.addEventListener(TermsStore.GET_CURRENT_EVENT, this.onGetCurrent);
-        TermsStore.addEventListener(TermsStore.SET_CURRENT_EVENT, this.onSetCurrent);
+        TermStore.addEventListener(TermStore.CHANGE_EVENT, this.onIndexTerm);
+        TermStore.addEventListener(TermStore.GET_CURRENT_EVENT, this.onGetCurrent);
+        TermStore.addEventListener(TermStore.SET_CURRENT_EVENT, this.onSetCurrent);
 
-        TermsActions.getCurrentTerm();
-        TermsActions.indexTerms();
+        TermActions.getCurrentTerm();
+        TermActions.indexTerm();
     },
 
     componentWillUnmount: function () {
-        TermsStore.removeEventListener(TermsStore.CHANGE_EVENT, this.onIndexTerms);
-        TermsStore.removeEventListener(TermsStore.GET_CURRENT_EVENT, this.onGetCurrent);
-        TermsStore.removeEventListener(TermsStore.SET_CURRENT_EVENT, this.onSetCurrent);
+        TermStore.removeEventListener(TermStore.CHANGE_EVENT, this.onIndexTerm);
+        TermStore.removeEventListener(TermStore.GET_CURRENT_EVENT, this.onGetCurrent);
+        TermStore.removeEventListener(TermStore.SET_CURRENT_EVENT, this.onSetCurrent);
     },
 
-    onIndexTerms: function (actionName) {
-        this.setState({terms: TermsStore.getTerms()});
+    onIndexTerm: function (actionName) {
+        this.setState({terms: TermStore.getTerms()});
 
         switch (actionName){
             case 'create':
@@ -61,11 +61,11 @@ var TermsPage = React.createClass({
     },
 
     onGetCurrent: function () {
-        this.setState({currentTerm: TermsStore.getCurrentTerm()[0]});
+        this.setState({currentTerm: TermStore.getCurrentTerm()[0]});
     },
 
     onSetCurrent: function () {
-        TermsActions.getCurrentTerm();
+        TermActions.getCurrentTerm();
         this.setState({isSetCurrentModalOpen: false});
         toastr.success('已经设置当前学期');
     },
@@ -117,16 +117,16 @@ var TermsPage = React.createClass({
     confirmModal: function (modalName) {
         switch (modalName){
             case 'create':
-                TermsActions.create(this.state.targetTerm);
+                TermActions.create(this.state.targetTerm);
                 break;
             case 'update':
-                TermsActions.update(this.state.targetTerm);
+                TermActions.update(this.state.targetTerm);
                 break;
             case 'delete':
-                TermsActions.delete(this.state.targetTerm);
+                TermActions.delete(this.state.targetTerm);
                 break;
             case 'setCurrent':
-                TermsActions.setCurrent(this.state.targetTerm);
+                TermActions.setCurrent(this.state.targetTerm);
                 break;
         }
     },

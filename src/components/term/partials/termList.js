@@ -6,7 +6,7 @@
 var React = require('react');
 var TermConstants = require('./termConstants');
 
-var TermsList = React.createClass({
+var TermList = React.createClass({
     createTermRow: function (term) {
         return (
             <tr key={term.id}>
@@ -46,4 +46,4 @@ var TermsList = React.createClass({
     }
 });
 
-module.exports = TermsList;
+module.exports = TermList;

@@ -22,7 +22,7 @@ ReactDOM.render((
             <Route path="/behaviour" component={require('./components/behaviour/behaviourPage')}/>
             <Route path="/auth" component={require('./components/auth/authPage')}/>
             <Route path="/dashboard" component={require('./components/dashboard/dashboardPage')}/>
-            <Route path="/terms" component={require('./components/terms/termsPage')}/>
+            <Route path="/term" component={require('./components/term/termPage')}/>
             <Route path="*" component={require('./components/app/pageNotFind')}/>
         </Route>
     </Router>

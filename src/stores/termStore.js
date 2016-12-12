@@ -11,7 +11,7 @@ var assign = require('lodash.assign');
 var _terms = [];
 var _currentTerm = [];
 
-var TermsStore = assign({}, EventEmitter.prototype, {
+var TermStore = assign({}, EventEmitter.prototype, {
 
     CHANGE_EVENT: 'change_event',
     GET_CURRENT_EVENT: 'get_current_event',
@@ -43,28 +43,28 @@ Dispatcher.register(function (action) {
 
         case ActionTypes.TERM.INDEX:
             _terms = action.terms;
-            TermsStore.emitEvent(TermsStore.CHANGE_EVENT);
+            TermStore.emitEvent(TermStore.CHANGE_EVENT);
             break;
 
         case ActionTypes.TERM.CREATE:
-            TermsStore.emitEvent(TermsStore.CHANGE_EVENT, 'create');
+            TermStore.emitEvent(TermStore.CHANGE_EVENT, 'create');
             break;
 
         case ActionTypes.TERM.DELETE:
-            TermsStore.emitEvent(TermsStore.CHANGE_EVENT, 'delete');
+            TermStore.emitEvent(TermStore.CHANGE_EVENT, 'delete');
             break;
 
         case ActionTypes.TERM.GET_CURRENT:
             _currentTerm = action.currentTerm;
-            TermsStore.emitEvent(TermsStore.GET_CURRENT_EVENT);
+            TermStore.emitEvent(TermStore.GET_CURRENT_EVENT);
             break;
 
         case ActionTypes.TERM.SET_CURRENT:
-            TermsStore.emitEvent(TermsStore.SET_CURRENT_EVENT, 'setCurrent');
+            TermStore.emitEvent(TermStore.SET_CURRENT_EVENT, 'setCurrent');
             break;
         default:
         //nothing to do...
     }
 });
 
-module.exports = TermsStore;
+module.exports = TermStore;
