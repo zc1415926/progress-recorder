@@ -74,6 +74,27 @@ var TermsActions = {
                 console.log(error.response);
             });
     },
+
+    setCurrent: function (termObj) {
+        axios.post(env.SERVER_BASE_URL + '/term/set_current'+'?token='+AuthStore.getToken(), {
+            data: termObj
+        })
+            .then(function(response){
+                if(response.status == 201){
+                    indexTerms();
+                    Dispatcher.dispatch({
+                        actionType: ActionTypes.TERM.SET_CURRENT,
+                        term: response['data']
+                    });
+                }else{
+                    console.log(response);
+                }
+            })
+            .catch(function(error){
+                console.log(error);
+                console.log(error.response);
+            });
+    },
 };
 
 var indexTerms = function(){

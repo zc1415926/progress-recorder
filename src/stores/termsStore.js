@@ -17,6 +17,7 @@ var TermsStore = assign({}, EventEmitter.prototype, {
     //CREATE_TERM_EVENT: 'create_term_event',
     CHANGE_EVENT: 'change_event',
     GET_CURRENT_TERM_EVENT: 'get_current_terms_event',
+    SET_CURRENT_EVENT: 'set_current_event',
 
     addEventListener: function (event, callback) {
         this.addListener(event, callback);
@@ -52,6 +53,10 @@ Dispatcher.register(function (action) {
         case ActionTypes.DELETE_TERM:
             //传送term
             TermsStore.emitEvent(TermsStore.CHANGE_EVENT, 'delete');
+            break;
+        case ActionTypes.TERM.SET_CURRENT:
+
+            TermsStore.emitEvent(TermsStore.SET_CURRENT_EVENT, 'setCurrent');
             break;
         case ActionTypes.GET_CURRENT_TERM:
             _currentTerm = action.currentTerm;

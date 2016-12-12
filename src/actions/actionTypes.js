@@ -24,4 +24,7 @@ module.exports = {
     GET_CURRENT_TERM: 'get_current_term',
     CREATE_TERM: 'create term',
     DELETE_TERM: 'delete term',
+    TERM: {
+	    SET_CURRENT: 'set_current_term',
+    },
 };

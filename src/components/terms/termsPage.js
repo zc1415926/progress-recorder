@@ -25,6 +25,7 @@ var TermsPage = React.createClass({
 
     componentDidMount: function () {
         TermsStore.addEventListener(TermsStore.CHANGE_EVENT, this.onIndexTerms);
+        TermsStore.addEventListener(TermsStore.SET_CURRENT_EVENT, this.onSetCurrent);
         TermsStore.addEventListener(TermsStore.GET_CURRENT_TERM_EVENT, this.onGetCurrentTerm);
 
         TermsActions.getCurrentTerm();
@@ -33,6 +34,7 @@ var TermsPage = React.createClass({
 
     componentWillUnmount: function () {
         TermsStore.removeEventListener(TermsStore.CHANGE_EVENT, this.onIndexTerms);
+        TermsStore.removeEventListener(TermsStore.SET_CURRENT_EVENT, this.onSetCurrent);
         TermsStore.removeEventListener(TermsStore.GET_CURRENT_TERM_EVENT, this.onGetCurrentTerm);
     },
 
@@ -55,11 +57,13 @@ var TermsPage = React.createClass({
                 this.setState({isDeleteModalOpen: false});
                 this.setState({targetStudent: {}});
                 break;
-            case 'setCurrent':
-                toastr.success('已经设置当前学期');
-                this.setState({isSetCurrentModalOpen: false});
-            break;
         }
+    },
+
+    onSetCurrent: function () {
+        TermsActions.getCurrentTerm();
+        this.setState({isSetCurrentModalOpen: false});
+        toastr.success('已经设置当前学期');
     },
 
     onGetCurrentTerm: function () {
@@ -124,7 +128,7 @@ var TermsPage = React.createClass({
                 TermsActions.delete(this.state.targetTerm);
                 break;
             case 'setCurrent':
-                StudentActions.deleteStudent(this.state.targetStudent);
+                TermsActions.setCurrent(this.state.targetTerm);
                 break;
         }
     },
