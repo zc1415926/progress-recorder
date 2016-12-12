@@ -19,12 +19,12 @@ module.exports = {
     GET_USER_FROM_TOKEN: 'get_user_from_token',
     
     GET_PERF_RECORDS_BY_STUDENT_NUMBER: 'get_perf_records_by_student_number',
-
-    INDEX_TERMS: 'index_terms',
-    GET_CURRENT_TERM: 'get_current_term',
-    CREATE_TERM: 'create term',
-    DELETE_TERM: 'delete term',
+    
     TERM: {
+	    INDEX: 'index_term',
+        CREATE: 'create_term',
+        DELETE: 'delete_term',
+	    GET_CURRENT: 'get_current_term',
 	    SET_CURRENT: 'set_current_term',
     },
 };

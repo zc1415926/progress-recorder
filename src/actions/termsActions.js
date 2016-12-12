@@ -21,7 +21,7 @@ var TermsActions = {
                 if(response.status == 200)
                 {
                     Dispatcher.dispatch({
-                        actionType: ActionTypes.GET_CURRENT_TERM,
+                        actionType: ActionTypes.TERM.GET_CURRENT,
                         currentTerm: response.data.currentTerm
                     });
                 }else{
@@ -41,7 +41,7 @@ var TermsActions = {
                 if(response.status == 201){
                     indexTerms();
                     Dispatcher.dispatch({
-                        actionType: ActionTypes.CREATE_TERM,
+                        actionType: ActionTypes.TERM.CREATE,
                         term: response['data']
                     });
                 }else{
@@ -62,7 +62,7 @@ var TermsActions = {
                 if(response.status == 204){
                     indexTerms();
                     Dispatcher.dispatch({
-                        actionType: ActionTypes.DELETE_TERM,
+                        actionType: ActionTypes.TERM.DELETE,
                         term: response['data']
                     });
                 }else{
@@ -107,7 +107,7 @@ var indexTerms = function(){
             if(response.status == 200)
             {
                 Dispatcher.dispatch({
-                    actionType: ActionTypes.INDEX_TERMS,
+                    actionType: ActionTypes.TERM.INDEX,
                     terms: response.data.terms
                 });
             }else{

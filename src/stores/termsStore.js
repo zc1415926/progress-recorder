@@ -42,15 +42,15 @@ var TermsStore = assign({}, EventEmitter.prototype, {
 
 Dispatcher.register(function (action) {
     switch (action.actionType){
-        case ActionTypes.INDEX_TERMS:
+        case ActionTypes.TERM.INDEX:
             _terms = action.terms;
             TermsStore.emitEvent(TermsStore.CHANGE_EVENT);
             break;
-        case ActionTypes.CREATE_TERM:
+        case ActionTypes.TERM.CREATE:
             //传送term
             TermsStore.emitEvent(TermsStore.CHANGE_EVENT, 'create');
             break;
-        case ActionTypes.DELETE_TERM:
+        case ActionTypes.TERM.DELETE:
             //传送term
             TermsStore.emitEvent(TermsStore.CHANGE_EVENT, 'delete');
             break;
@@ -58,7 +58,7 @@ Dispatcher.register(function (action) {
 
             TermsStore.emitEvent(TermsStore.SET_CURRENT_EVENT, 'setCurrent');
             break;
-        case ActionTypes.GET_CURRENT_TERM:
+        case ActionTypes.TERM.GET_CURRENT:
             _currentTerm = action.currentTerm;
             TermsStore.emitEvent(TermsStore.GET_CURRENT_TERM_EVENT);
             break;
