@@ -34,18 +34,15 @@ var TermsActions = {
     },
     
     create: function (termObj) {
-        axios.post(env.SERVER_BASE_URL + '/terms/create'+'?token='+AuthStore.getToken(), {
+        axios.post(env.SERVER_BASE_URL + '/term/create'+'?token='+AuthStore.getToken(), {
             data: termObj
         })
             .then(function(response){
-
-                console.log('createTerm');
-                console.log(response);
                 if(response.status == 201){
-                    //getStudentsByGradeClass(stuObj['gradeNum'], stuObj['classNum']);
+                    indexTerms();
                     Dispatcher.dispatch({
-                        actionType: ActionTypes.CREATE_STUDENT,
-                        student: response['data']
+                        actionType: ActionTypes.CREATE_TERM,
+                        term: response['data']
                     });
                 }else{
                     console.log(response);
@@ -53,6 +50,27 @@ var TermsActions = {
             })
             .catch(function(error){
                 //当请求失败时，使用error.response获取返回的数据
+                console.log(error.response);
+            });
+    },
+
+    delete: function (termObj) {
+        axios.post(env.SERVER_BASE_URL + '/term/delete'+'?token='+AuthStore.getToken(), {
+            data: termObj
+        })
+            .then(function(response){
+                if(response.status == 204){
+                    indexTerms();
+                    Dispatcher.dispatch({
+                        actionType: ActionTypes.DELETE_TERM,
+                        term: response['data']
+                    });
+                }else{
+                    console.log(response);
+                }
+            })
+            .catch(function(error){
+                console.log(error);
                 console.log(error.response);
             });
     },

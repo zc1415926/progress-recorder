@@ -22,4 +22,6 @@ module.exports = {
 
     INDEX_TERMS: 'index_terms',
     GET_CURRENT_TERM: 'get_current_term',
+    CREATE_TERM: 'create term',
+    DELETE_TERM: 'delete term',
 };

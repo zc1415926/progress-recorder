@@ -13,7 +13,9 @@ var _currentTerm = [];
 
 var TermsStore = assign({}, EventEmitter.prototype, {
 
-    INDEX_TERMS_EVENT: 'index_terms_event',
+    //INDEX_TERMS_EVENT: 'index_terms_event',
+    //CREATE_TERM_EVENT: 'create_term_event',
+    CHANGE_EVENT: 'change_event',
     GET_CURRENT_TERM_EVENT: 'get_current_terms_event',
 
     addEventListener: function (event, callback) {
@@ -24,8 +26,8 @@ var TermsStore = assign({}, EventEmitter.prototype, {
         this.removeListener(event, callback);
     },
 
-    emitEvent: function (event) {
-        this.emit(event);
+    emitEvent: function (event, actionName) {
+        this.emit(event, actionName);
     },
 
     getTerms: function () {
@@ -41,7 +43,15 @@ Dispatcher.register(function (action) {
     switch (action.actionType){
         case ActionTypes.INDEX_TERMS:
             _terms = action.terms;
-            TermsStore.emitEvent(TermsStore.INDEX_TERMS_EVENT);
+            TermsStore.emitEvent(TermsStore.CHANGE_EVENT);
+            break;
+        case ActionTypes.CREATE_TERM:
+            //传送term
+            TermsStore.emitEvent(TermsStore.CHANGE_EVENT, 'create');
+            break;
+        case ActionTypes.DELETE_TERM:
+            //传送term
+            TermsStore.emitEvent(TermsStore.CHANGE_EVENT, 'delete');
             break;
         case ActionTypes.GET_CURRENT_TERM:
             _currentTerm = action.currentTerm;

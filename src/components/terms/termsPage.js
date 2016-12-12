@@ -12,6 +12,7 @@ var CreateTermModal = require('./partials/crudTermModal');
 var UpdateTermModal = require('./partials/crudTermModal');
 var DeleteTermModal = require('./partials/crudTermModal');
 var SetCurrentTermModal = require('./partials/crudTermModal');
+var toastr = require('toastr');
 
 var TermsPage = React.createClass({
     getInitialState: function () {
@@ -23,7 +24,7 @@ var TermsPage = React.createClass({
     },
 
     componentDidMount: function () {
-        TermsStore.addEventListener(TermsStore.INDEX_TERMS_EVENT, this.onIndexTerms);
+        TermsStore.addEventListener(TermsStore.CHANGE_EVENT, this.onIndexTerms);
         TermsStore.addEventListener(TermsStore.GET_CURRENT_TERM_EVENT, this.onGetCurrentTerm);
 
         TermsActions.getCurrentTerm();
@@ -31,12 +32,34 @@ var TermsPage = React.createClass({
     },
 
     componentWillUnmount: function () {
-        TermsStore.removeEventListener(TermsStore.INDEX_TERMS_EVENT, this.onIndexTerms);
-        TermsStore.removeEventListener(TermsStore.GET_CURRENT_TERM_EVENT, this.onCurrentTerm);
+        TermsStore.removeEventListener(TermsStore.CHANGE_EVENT, this.onIndexTerms);
+        TermsStore.removeEventListener(TermsStore.GET_CURRENT_TERM_EVENT, this.onGetCurrentTerm);
     },
 
-    onIndexTerms: function () {
+    onIndexTerms: function (actionName) {
         this.setState({terms: TermsStore.getTerms()});
+
+        switch (actionName){
+            case 'create':
+                toastr.success('已经成功添加学期');
+                this.setState({isCreateModalOpen: false});
+                this.setState({targetStudent: {}});
+                break;
+            case 'update':
+                toastr.success('已经成功修改学期');
+                this.setState({isUpdateModalOpen: false});
+                this.setState({targetStudent: {}});
+                break;
+            case 'delete':
+                toastr.success('已经成功删除学期');
+                this.setState({isDeleteModalOpen: false});
+                this.setState({targetStudent: {}});
+                break;
+            case 'setCurrent':
+                toastr.success('已经设置当前学期');
+                this.setState({isSetCurrentModalOpen: false});
+            break;
+        }
     },
 
     onGetCurrentTerm: function () {
@@ -88,8 +111,6 @@ var TermsPage = React.createClass({
     },
 
     confirmModal: function (modalName) {
-        console.log('confirmModal');
-        console.log(this.state.targetTerm);
         switch (modalName){
             case 'create':
                 //this.state.targetStudent.gradeNum = this.state.targetGradeNum;
@@ -97,10 +118,10 @@ var TermsPage = React.createClass({
                 TermsActions.create(this.state.targetTerm);
                 break;
             case 'update':
-                StudentActions.updateStudent(this.state.targetStudent);
+                TermsActions.update(this.state.targetTerm);
                 break;
             case 'delete':
-                StudentActions.deleteStudent(this.state.targetStudent);
+                TermsActions.delete(this.state.targetTerm);
                 break;
             case 'setCurrent':
                 StudentActions.deleteStudent(this.state.targetStudent);
