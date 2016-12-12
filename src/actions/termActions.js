@@ -51,6 +51,13 @@ var TermActions = {
             .catch(function(error){
                 //当请求失败时，使用error.response获取返回的数据
                 console.log(error.response);
+
+                if(error.response.status == 422){
+                    Dispatcher.dispatch({
+                        actionType: ActionTypes.TERM.INVALIDATION,
+                        error: error.response.data.errors
+                    });
+                }
             });
     },
 

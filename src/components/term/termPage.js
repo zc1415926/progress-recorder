@@ -25,6 +25,7 @@ var TermsPage = React.createClass({
 
     componentDidMount: function () {
         TermStore.addEventListener(TermStore.CHANGE_EVENT, this.onIndexTerm);
+        TermStore.addEventListener(TermStore.INVALIDATION_EVENT, this.onInvalidation);
         TermStore.addEventListener(TermStore.GET_CURRENT_EVENT, this.onGetCurrent);
         TermStore.addEventListener(TermStore.SET_CURRENT_EVENT, this.onSetCurrent);
 
@@ -68,6 +69,11 @@ var TermsPage = React.createClass({
         TermActions.getCurrentTerm();
         this.setState({isSetCurrentModalOpen: false});
         toastr.success('已经设置当前学期');
+    },
+
+    onInvalidation: function () {
+        //console.log(TermStore.getError());
+        toastr.error('您输入的学期信息不完整');
     },
 
     openCrudModal: function (modalName, term) {

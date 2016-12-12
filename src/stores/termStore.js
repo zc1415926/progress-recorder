@@ -10,12 +10,14 @@ var assign = require('lodash.assign');
 
 var _terms = [];
 var _currentTerm = [];
+var _error = [];
 
 var TermStore = assign({}, EventEmitter.prototype, {
 
     CHANGE_EVENT: 'change_event',
     GET_CURRENT_EVENT: 'get_current_event',
     SET_CURRENT_EVENT: 'set_current_event',
+    INVALIDATION_EVENT: 'invalidation_event',
 
     addEventListener: function (event, callback) {
         this.addListener(event, callback);
@@ -35,6 +37,10 @@ var TermStore = assign({}, EventEmitter.prototype, {
 
     getCurrentTerm: function () {
         return _currentTerm;
+    },
+
+    getError: function () {
+        return _error;
     },
 });
 
@@ -60,7 +66,12 @@ Dispatcher.register(function (action) {
             break;
 
         case ActionTypes.TERM.SET_CURRENT:
-            TermStore.emitEvent(TermStore.SET_CURRENT_EVENT, 'setCurrent');
+            TermStore.emitEvent(TermStore.SET_CURRENT_EVENT);
+            break;
+
+        case ActionTypes.TERM.INVALIDATION:
+            _error = action.error;
+            TermStore.emitEvent(TermStore.INVALIDATION_EVENT);
             break;
         default:
         //nothing to do...

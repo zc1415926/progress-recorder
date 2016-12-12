@@ -26,5 +26,6 @@ module.exports = {
         DELETE: 'delete_term',
 	    GET_CURRENT: 'get_current_term',
 	    SET_CURRENT: 'set_current_term',
+        INVALIDATION: 'invalidation_term',
     },
 };
