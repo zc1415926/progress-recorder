@@ -25,8 +25,8 @@ var TermsPage = React.createClass({
 
     componentDidMount: function () {
         TermsStore.addEventListener(TermsStore.CHANGE_EVENT, this.onIndexTerms);
+        TermsStore.addEventListener(TermsStore.GET_CURRENT_EVENT, this.onGetCurrent);
         TermsStore.addEventListener(TermsStore.SET_CURRENT_EVENT, this.onSetCurrent);
-        TermsStore.addEventListener(TermsStore.GET_CURRENT_TERM_EVENT, this.onGetCurrentTerm);
 
         TermsActions.getCurrentTerm();
         TermsActions.indexTerms();
@@ -34,8 +34,8 @@ var TermsPage = React.createClass({
 
     componentWillUnmount: function () {
         TermsStore.removeEventListener(TermsStore.CHANGE_EVENT, this.onIndexTerms);
+        TermsStore.removeEventListener(TermsStore.GET_CURRENT_EVENT, this.onGetCurrent);
         TermsStore.removeEventListener(TermsStore.SET_CURRENT_EVENT, this.onSetCurrent);
-        TermsStore.removeEventListener(TermsStore.GET_CURRENT_TERM_EVENT, this.onGetCurrentTerm);
     },
 
     onIndexTerms: function (actionName) {
@@ -60,14 +60,14 @@ var TermsPage = React.createClass({
         }
     },
 
+    onGetCurrent: function () {
+        this.setState({currentTerm: TermsStore.getCurrentTerm()[0]});
+    },
+
     onSetCurrent: function () {
         TermsActions.getCurrentTerm();
         this.setState({isSetCurrentModalOpen: false});
         toastr.success('已经设置当前学期');
-    },
-
-    onGetCurrentTerm: function () {
-        this.setState({currentTerm: TermsStore.getCurrentTerm()[0]});
     },
 
     openCrudModal: function (modalName, term) {
@@ -117,8 +117,6 @@ var TermsPage = React.createClass({
     confirmModal: function (modalName) {
         switch (modalName){
             case 'create':
-                //this.state.targetStudent.gradeNum = this.state.targetGradeNum;
-                //this.state.targetStudent.classNum = this.state.targetClassNum;
                 TermsActions.create(this.state.targetTerm);
                 break;
             case 'update':
@@ -132,6 +130,7 @@ var TermsPage = React.createClass({
                 break;
         }
     },
+
     onInputValueChanged: function (e) {
         this.state.targetTerm[e.target.id] = e.target.value;
         this.setState({targetTerm: this.state.targetTerm});
