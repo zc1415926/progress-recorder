@@ -9,7 +9,6 @@ var axios = require('axios');
 var AuthStore = require('../stores/authStore');
 
 var env = require('../env.json');
-console.log('服务器端地址：' + env.SERVER_BASE_URL);
 
 var StudentAction = {
 
