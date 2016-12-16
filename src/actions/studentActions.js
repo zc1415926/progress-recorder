@@ -86,7 +86,7 @@ var StudentAction = {
             });
     },
 
-    dashboardStudentsByGradeClass: function(gradeNum, classNum, term){
+    dashboardStudent: function(gradeNum, classNum, term){
 
         axios.get(env.SERVER_BASE_URL + '/student/dashboard/'
                                       + gradeNum + '/' + classNum + '/' + term, {
@@ -100,7 +100,7 @@ var StudentAction = {
             if(response.status == 200)
             {
                 Dispatcher.dispatch({
-                    actionType: ActionTypes.DASHBOARD_STUDENTS_BY_GRADE_CLASS,
+                    actionType: ActionTypes.DASHBOARD_STUDENT,
                     dashboardStudents: response.data.dashboard
                 });
             }else{

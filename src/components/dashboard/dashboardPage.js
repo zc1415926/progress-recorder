@@ -84,8 +84,8 @@ var DashboardPage = React.createClass({
         this.setState({dashboardStudents: StudentStore.getDashboardStudents()});
     },
 
-    dashboardStudentsByGradeClass: function (currentGrade, currentClass) {
-        StudentActions.dashboardStudentsByGradeClass(currentGrade, currentClass, this.state.targetTerm);
+    dashboardStudent: function (currentGrade, currentClass) {
+        StudentActions.dashboardStudent(currentGrade, currentClass, this.state.targetTerm);
     },
 
     onTotalScoreClicked: function(studentNumber){
@@ -170,7 +170,7 @@ var DashboardPage = React.createClass({
                     <p>Hi! I'm dashboard.</p>
                     <CurrentTerm currentTerm={this.state.currentTerm} />
                     <TermSelectDropdown terms={this.state.terms} onTermSelect={this.onTermSelect}/>
-                    <GradeClassDropdown onGradeClassSelected={this.dashboardStudentsByGradeClass}/>
+                    <GradeClassDropdown onGradeClassSelected={this.dashboardStudent}/>
                 </div>
                 <DashbStuList onPerfScoreClicked={this.onTotalScoreClicked}
                               students={this.state.dashboardStudents}/>
