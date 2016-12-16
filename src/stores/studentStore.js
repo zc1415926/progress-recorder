@@ -10,7 +10,7 @@ var assign = require('lodash.assign');
 
 var _students = [];
 var _student = {};
-var _dashboardStudents = [];
+var _dashboardStudent = [];
 
 var StudentStore = assign({}, EventEmitter.prototype, {
 
@@ -37,8 +37,8 @@ var StudentStore = assign({}, EventEmitter.prototype, {
         return _students;
     },
     
-    getDashboardStudents: function(){
-        return _dashboardStudents;
+    getDashboardStudent: function(){
+        return _dashboardStudent;
     },
 });
 
@@ -64,8 +64,8 @@ Dispatcher.register(function (action) {
             _student = action.student;
             StudentStore.emitEvent(StudentStore.CHANGE_EVENT, 'delete');
             break;
-        case ActionTypes.DASHBOARD_STUDENTS_BY_GRADE_CLASS:
-            _dashboardStudents = action.dashboardStudents;
+        case ActionTypes.DASHBOARD_STUDENT:
+            _dashboardStudent = action.dashboardStudent;
             StudentStore.emitEvent(StudentStore.DASHBOARD_EVENT);
         default:
             //nothing to do...

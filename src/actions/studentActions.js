@@ -100,7 +100,7 @@ var StudentAction = {
             {
                 Dispatcher.dispatch({
                     actionType: ActionTypes.DASHBOARD_STUDENT,
-                    dashboardStudents: response.data.dashboard
+                    dashboardStudent: response.data.dashboard
                 });
             }else{
                 //

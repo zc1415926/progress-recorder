@@ -81,7 +81,7 @@ var DashboardPage = React.createClass({
     },
 
     onDashboard: function(){
-        this.setState({dashboardStudents: StudentStore.getDashboardStudents()});
+        this.setState({dashboardStudents: StudentStore.getDashboardStudent()});
     },
 
     dashboardStudent: function (currentGrade, currentClass) {
