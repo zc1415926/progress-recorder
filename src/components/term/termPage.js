@@ -62,7 +62,7 @@ var TermsPage = React.createClass({
     },
 
     onGetCurrent: function () {
-        this.setState({currentTerm: TermStore.getCurrentTerm()[0]});
+        this.setState({currentTerm: TermStore.getCurrentTerm()});
     },
 
     onSetCurrent: function () {

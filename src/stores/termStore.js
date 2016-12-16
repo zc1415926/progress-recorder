@@ -61,7 +61,8 @@ Dispatcher.register(function (action) {
             break;
 
         case ActionTypes.TERM.GET_CURRENT:
-            _currentTerm = action.currentTerm;
+            //在store中将数据整理，让component拿来直接就能用
+            _currentTerm = action.currentTerm[0];
             TermStore.emitEvent(TermStore.GET_CURRENT_EVENT);
             break;
 

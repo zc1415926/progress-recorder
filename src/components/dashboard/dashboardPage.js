@@ -64,14 +64,11 @@ var DashboardPage = React.createClass({
     },
 
     onGetCurrentTerm: function () {
-        this.setState({currentTerm: TermStore.getCurrentTerm()[0]});
-        //this.setState({targetTerm: TermStore.getCurrentTerm()[0].term_code});
-        this.state.targetTerm = TermStore.getCurrentTerm()[0].term_code;
-
+        this.setState({currentTerm: TermStore.getCurrentTerm()});
+        this.state.targetTerm = TermStore.getCurrentTerm().term_code;
     },
 
     onIndexTerm: function () {
-
         this.setState({terms: TermStore.getTerms()});
     },
 
