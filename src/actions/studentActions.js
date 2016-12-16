@@ -86,19 +86,22 @@ var StudentAction = {
             });
     },
 
-    dashboardStudentsByGradeClass: function(gradeNum, classNum){
+    dashboardStudentsByGradeClass: function(gradeNum, classNum, term){
+
         axios.get(env.SERVER_BASE_URL + '/student/dashboard/'
-                                      + gradeNum + '/' + classNum, {
+                                      + gradeNum + '/' + classNum + '/' + term, {
         params:{
             token: AuthStore.getToken()
         }
     })
         .then(function(response){
-            if(response['data']['status']=='success')
+            console.log('term response action');
+            console.log(response.data);
+            if(response.status == 200)
             {
                 Dispatcher.dispatch({
                     actionType: ActionTypes.DASHBOARD_STUDENTS_BY_GRADE_CLASS,
-                    dashboardStudents: response['data']['data']
+                    dashboardStudents: response.data.dashboard
                 });
             }else{
                 //

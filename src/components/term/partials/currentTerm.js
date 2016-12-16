@@ -11,9 +11,9 @@ var CurrentTerm = React.createClass({
     render: function () {
         return (
             <div>
-                <h1>
+                <label className="control-label">
                 当前学期：
-                </h1>
+                </label>
 
                 <ul className="nav nav-pills" role="tablist">
                     <li  className="active">

@@ -13,6 +13,10 @@ var StudentStore = require('../../stores/studentStore');
 var DashbStuList = require('./partials/dashboardStudentList');
 var PerformanceActions = require('../../actions/PerformanceActions');
 var PerformanceStore = require('../../stores/PerformanceStore');
+var TermActions = require('../../actions/termActions');
+var TermStore = require('../../stores/termStore');
+var CurrentTerm = require('../term/partials/currentTerm');
+var TermSelectDropdown = require('../term/partials/termSelectDropdown');
 var ListPerfModal = require('../performance/partials/listPerformanceModal');
 var CreatePerfModal = require('../performance/partials/crudPerformanceModal');
 var UpdatePerfModal = require('../performance/partials/crudPerformanceModal');
@@ -31,6 +35,11 @@ var DashboardPage = React.createClass({
             performance: [],
             targetPerformance: {},
             targetStudentNumber: '',
+
+            currentTerm: {},
+            terms: [],
+            //当前选中的学期
+            targetTermCode: {},
         };
     },
 
@@ -38,20 +47,45 @@ var DashboardPage = React.createClass({
         StudentStore.addEventListener(StudentStore.DASHBOARD_EVENT, this.onDashboard);
         PerformanceStore.addEventListener(PerformanceStore.GET_PERFORMANCE_OF_STUDENT,
             this.openListPerfModal);
+        TermStore.addEventListener(TermStore.GET_CURRENT_EVENT, this.onGetCurrentTerm);
+        TermStore.addEventListener(TermStore.CHANGE_EVENT, this.onIndexTerm);
+
+        TermActions.getCurrentTerm();
+        TermActions.indexTerm();
     },
 
     componentWillUnmount: function () {
         StudentStore.removeEventListener(StudentStore.DASHBOARD_EVENT, this.onDashboard);
         PerformanceStore.removeEventListener(PerformanceStore.GET_PERFORMANCE_OF_STUDENT,
             this.openListPerfModal);
+        TermStore.removeEventListener(TermStore.GET_CURRENT_EVENT, this.onGetCurrentTerm);
+        TermStore.removeEventListener(TermStore.CHANGE_EVENT, this.onIndexTerm);
+
     },
-    
+
+    onGetCurrentTerm: function () {
+        this.setState({currentTerm: TermStore.getCurrentTerm()[0]});
+        //this.setState({targetTerm: TermStore.getCurrentTerm()[0].term_code});
+        this.state.targetTerm = TermStore.getCurrentTerm()[0].term_code;
+
+    },
+
+    onIndexTerm: function () {
+
+        this.setState({terms: TermStore.getTerms()});
+    },
+
+    onTermSelect: function (item) {
+        //不触发render，可以马上赋值马上用
+        this.state.targetTerm = item;
+    },
+
     onDashboard: function(){
         this.setState({dashboardStudents: StudentStore.getDashboardStudents()});
     },
 
     dashboardStudentsByGradeClass: function (currentGrade, currentClass) {
-        StudentActions.dashboardStudentsByGradeClass(currentGrade, currentClass);
+        StudentActions.dashboardStudentsByGradeClass(currentGrade, currentClass, this.state.targetTerm);
     },
 
     onTotalScoreClicked: function(studentNumber){
@@ -134,6 +168,8 @@ var DashboardPage = React.createClass({
                 <div className="jumbotron subPage">
                     <h1>Dashboard</h1>
                     <p>Hi! I'm dashboard.</p>
+                    <CurrentTerm currentTerm={this.state.currentTerm} />
+                    <TermSelectDropdown terms={this.state.terms} onTermSelect={this.onTermSelect}/>
                     <GradeClassDropdown onGradeClassSelected={this.dashboardStudentsByGradeClass}/>
                 </div>
                 <DashbStuList onPerfScoreClicked={this.onTotalScoreClicked}
