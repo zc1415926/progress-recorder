@@ -7,6 +7,7 @@ var Dispatcher = require('../dispatcher/appDispatcher');
 var ActionTypes = require('../actions/actionTypes');
 var axios = require('axios');
 var toastr = require('toastr');
+var browserHistory = require('react-router').browserHistory;
 
 var env = require('../env.json');
 console.log('服务器端地址：' + env.SERVER_BASE_URL);
@@ -39,6 +40,8 @@ var AuthAction = {
         sessionStorage.removeItem('role');
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('userName');
+
+        browserHistory.push('/');
     },
 
     getUsers: function (token) {
