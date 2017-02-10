@@ -21,6 +21,10 @@ var SecondNav = React.createClass({
                     <AdminNav/>
                 );
             }
+            else{
+                //role == 'student'
+                return null;
+            }
         }
         else{
             return null;
