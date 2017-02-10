@@ -9,7 +9,7 @@ var NavTab = require('../../app/partials/navTab');
 var AdminNav = React.createClass({
     render: function () {
         return (
-                <nav className="navbar navbar-default">
+                <nav className="navbar navbar-inverse">
                     <div className="container-fluid">
                         <div className="navbar-header">
                             <a className="navbar-brand">管理员工具</a>

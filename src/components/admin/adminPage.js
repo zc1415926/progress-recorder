@@ -10,7 +10,6 @@ var AdminPage = React.createClass({
     render: function () {
         return (
             <div>
-                <AdminNav/>
                 <h1>AdminPage</h1>
             </div>
         );

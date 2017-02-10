@@ -5,6 +5,7 @@
 
 var React = require('react');
 var Nav = require('./partials/nav');
+var SecondNav = require('./partials/secondNav');
 var Footer = require('./partials/footer');
 
 var App = React.createClass({
@@ -12,6 +13,7 @@ var App = React.createClass({
         return (
             <div>
                 <Nav/>
+                <SecondNav/>
                 <div className="container">
                     {this.props.children}
                 </div>
