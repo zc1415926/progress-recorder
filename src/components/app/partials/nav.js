@@ -45,6 +45,9 @@ var Nav = React.createClass({
                         <a href="#" className="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             {authenticatedUser} <span className="caret"></span></a>
                         <ul className="dropdown-menu" role="menu">
+                            <li><a href="admin">管理首页</a></li>
+
+                            <li role="separator" className="divider"></li>
                             <li><a href="" onClick={this.onLogoutClicked}>退出登录</a></li>
                         </ul>
                     </li>
@@ -64,11 +67,6 @@ var Nav = React.createClass({
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
                             <NavTab to="/">首页</NavTab>
-                            <NavTab to="/dashboard">仪表板</NavTab>
-                            <NavTab to="/students">学生管理</NavTab>
-                            <NavTab to="/gradeClass">班级管理</NavTab>
-                            <NavTab to="/behaviour">平时表现</NavTab>
-                            <NavTab to="/term">学期管理</NavTab>
                         </ul>
                         {this.teacherAuthHandler(AuthStore.getAuthenticatedUser())}
                     </div>

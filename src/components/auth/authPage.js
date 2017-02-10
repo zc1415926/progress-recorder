@@ -31,10 +31,10 @@ var AuthPage = React.createClass({
     },
 
     onAuthSuccess: function () {
-        console.log('auth success!');
+        console.log('administrator auth success!');
         authActions.getUserFromToken(AuthStore.getToken());
 
-        browserHistory.push('/');
+        browserHistory.push('/admin');
     },
 
     onModalChange:function(e){
