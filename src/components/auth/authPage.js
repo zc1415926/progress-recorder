@@ -15,7 +15,7 @@ var AuthPage = React.createClass({
     getInitialState: function () {
         return {
             credential:{
-                email: "",
+                username: "",
                 password: "",
             },
             token:"",
@@ -30,11 +30,21 @@ var AuthPage = React.createClass({
         AuthStore.removeEventListener(AuthStore.AUTH_SUCCESS, this.onAuthSuccess);
     },
 
-    onAuthSuccess: function () {
-        console.log('administrator auth success!');
+    onAuthSuccess: function (role) {
+        console.log('Welcome, ' + role + '!');
         authActions.getUserFromToken(AuthStore.getToken());
 
-        browserHistory.push('/admin');
+        switch (role){
+            case 'admin':
+                browserHistory.push('/admin');
+                break;
+            case 'teacher':
+                browserHistory.push('/admin');
+                break;
+            case 'student':
+                browserHistory.push('/');
+                break;
+        }
     },
 
     onModalChange:function(e){
@@ -51,7 +61,7 @@ var AuthPage = React.createClass({
             <div className="container">
                 <h1>登录</h1>
                 <form>
-                    <Input id="email" text="用户名：" onChange={this.onModalChange}/>
+                    <Input id="username" text="用户名：" onChange={this.onModalChange}/>
                     <Password id="password" text="密码：" onChange={this.onModalChange}/>
                 </form>
                 <button className='btn btn-primary' onClick={this.onLoginClicked}>

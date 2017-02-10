@@ -28,8 +28,8 @@ var Nav = React.createClass({
         authActions.logout();
     },
 
+    //导航条最右侧的部分，用户未登录则显示登录按钮，若用户已登录则根据用户角色生成不同的下拉菜单
     teacherAuthHandler: function (authenticatedUser) {
-        //console.log(authenticatedUser);
         if(!authenticatedUser){
             return (
                 <ul className="nav navbar-nav navbar-right">
@@ -38,21 +38,50 @@ var Nav = React.createClass({
             );
         }
         else {
+
+            var userRole = sessionStorage.getItem('role');
+
             return (
                 <ul className="nav navbar-nav navbar-right">
                     <li><a href="#"></a></li>
                     <li className="dropdown">
                         <a href="#" className="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             {authenticatedUser} <span className="caret"></span></a>
-                        <ul className="dropdown-menu" role="menu">
-                            <li><a href="admin">管理首页</a></li>
-
-                            <li role="separator" className="divider"></li>
-                            <li><a href="" onClick={this.onLogoutClicked}>退出登录</a></li>
-                        </ul>
+                            {this.getUserRoleMenu(userRole)}
                     </li>
                 </ul>
-            )
+            );
+        }
+    },
+
+    //根据用户角色判定下拉菜单的内容
+    getUserRoleMenu:function (userRole) {
+        switch (userRole){
+            case 'admin':
+                return (
+                    <ul className="dropdown-menu" role="menu">
+                        <li><a href="admin">管理首页</a></li>
+                        <li role="separator" className="divider"></li>
+                        <li><a href="" onClick={this.onLogoutClicked}>退出登录</a></li>
+                    </ul>
+                );
+                break;
+            case 'teacher':
+                return (
+                    <ul className="dropdown-menu" role="menu">
+                        <li><a href="admin">管理首页</a></li>
+                        <li role="separator" className="divider"></li>
+                        <li><a href="" onClick={this.onLogoutClicked}>退出登录</a></li>
+                    </ul>
+                );
+                break;
+            case 'student':
+                return (
+                    <ul className="dropdown-menu" role="menu">
+                        <li><a href="" onClick={this.onLogoutClicked}>退出登录</a></li>
+                    </ul>
+                );
+                break;
         }
     },
 

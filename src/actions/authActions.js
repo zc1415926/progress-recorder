@@ -15,12 +15,13 @@ var AuthAction = {
 
     login: function (credential) {
         axios.post(env.SERVER_BASE_URL + '/auth/authenticate', {
-            email: credential.email,
+            username: credential.username,
             password: credential.password
         })
             .then(function (response) {
                 Dispatcher.dispatch({
                     actionType: ActionTypes.AUTHENTICATION,
+                    role:response['data']['role'],
                     token: response['data']['token']});
             })
             .catch(function (error) {
@@ -35,6 +36,7 @@ var AuthAction = {
     },
 
     logout: function () {
+        sessionStorage.removeItem('role');
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('userName');
     },

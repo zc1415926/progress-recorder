@@ -21,8 +21,8 @@ var AuthStore = assign({}, EventEmitter.prototype, {
         this.removeListener(event, callback);
     },
 
-    emitEvent: function (event) {
-        this.emit(event);
+    emitEvent: function (event, role) {
+        this.emit(event, role);
     },
 
     getToken: function () {
@@ -38,8 +38,9 @@ Dispatcher.register(function (action) {
     //console.log(action);
     switch (action.actionType){
         case ActionTypes.AUTHENTICATION:
+            sessionStorage.setItem('role', action.role);
             sessionStorage.setItem('token', action.token);
-            AuthStore.emitEvent(AuthStore.AUTH_SUCCESS);
+            AuthStore.emitEvent(AuthStore.AUTH_SUCCESS, action.role);
             break;
         case ActionTypes.GET_USER_FROM_TOKEN:
             sessionStorage.setItem('userName', action.userName);
