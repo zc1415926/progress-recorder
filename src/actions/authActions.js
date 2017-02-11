@@ -65,10 +65,9 @@ var AuthAction = {
             }
         })
             .then(function (response) {
-                //console.log(response['data']['user']['name']);
                 Dispatcher.dispatch({
                     actionType: ActionTypes.GET_USER_FROM_TOKEN,
-                    userName: response['data']['user']['name']});
+                    user: response['data']['user']});
             })
             .catch(function (error) {
                 console.log(error);

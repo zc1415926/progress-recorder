@@ -29,13 +29,17 @@ var AuthStore = assign({}, EventEmitter.prototype, {
         return sessionStorage.getItem('token');
     },
 
+    getAuthenticatedUserShowName: function () {
+        return sessionStorage.getItem('showName');
+    },
+
     getAuthenticatedUser: function () {
-        return sessionStorage.getItem('userName');
+        return JSON.parse(sessionStorage.getItem('user'));
     },
 });
 
 Dispatcher.register(function (action) {
-    //console.log(action);
+
     switch (action.actionType){
         case ActionTypes.AUTHENTICATION:
             sessionStorage.setItem('role', action.role);
@@ -43,7 +47,8 @@ Dispatcher.register(function (action) {
             AuthStore.emitEvent(AuthStore.AUTH_SUCCESS, action.role);
             break;
         case ActionTypes.GET_USER_FROM_TOKEN:
-            sessionStorage.setItem('userName', action.userName);
+
+            sessionStorage.setItem('user', JSON.stringify(action.user));
             AuthStore.emitEvent(AuthStore.GET_USER_FROM_TOKEN_SUCCESS);
             break;
         default:
