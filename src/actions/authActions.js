@@ -39,7 +39,7 @@ var AuthAction = {
     logout: function () {
         sessionStorage.removeItem('role');
         sessionStorage.removeItem('token');
-        sessionStorage.removeItem('userName');
+        sessionStorage.removeItem('user');
 
         browserHistory.push('/');
     },

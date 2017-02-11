@@ -48,7 +48,7 @@ var Nav = React.createClass({
                     <li><a href="#"></a></li>
                     <li className="dropdown">
                         <a href="#" className="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            {authenticatedUser} <span className="caret"></span></a>
+                            {authenticatedUser['name']} <span className="caret"></span></a>
                             {this.getUserRoleMenu(userRole)}
                     </li>
                 </ul>
@@ -100,7 +100,7 @@ var Nav = React.createClass({
                             <NavTab to="/">首页</NavTab>
                             <NavTab to="/studentDashboard">学生首页</NavTab>
                         </ul>
-                        {this.teacherAuthHandler(AuthStore.getAuthenticatedUser()['name'])}
+                        {this.teacherAuthHandler(AuthStore.getAuthenticatedUser())}
                     </div>
                 </div>
             </nav>
