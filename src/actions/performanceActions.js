@@ -6,7 +6,7 @@ var axios = require('axios');
 var env = require('../env.json');
 var AuthStore = require('../stores/authStore');
 
-var PerformanceScoreActions = {
+var PerformanceActions = {
     getPerformanceByStudentNumber: function (studentNumber) {
         getPerformanceByStudentNumber(studentNumber);
     },
@@ -34,4 +34,4 @@ var getPerformanceByStudentNumber = function(studentNumber){
         });
 };
 
-module.exports = PerformanceScoreActions;
+module.exports = PerformanceActions;
