@@ -98,7 +98,7 @@ var Nav = React.createClass({
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
                             <NavTab to="/">首页</NavTab>
-                            <NavTab to="/studentDashboard">学生首页</NavTab>
+                            <NavTab to="/student">学生首页</NavTab>
                         </ul>
                         {this.teacherAuthHandler(AuthStore.getAuthenticatedUser())}
                     </div>
