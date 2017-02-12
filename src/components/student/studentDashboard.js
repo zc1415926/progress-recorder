@@ -41,8 +41,11 @@ var StudentDashboard = React.createClass({
         console.log(performance);
 
         return (
-            <div>{performance.delta_score}---------------
-            {performance.comment}</div>
+            <tr key={performance.id}>
+                <td>{performance.delta_score}</td>
+                <td>{performance.comment}</td>
+                <td>{performance.created_at}</td>
+            </tr>
         );
     },
 
@@ -52,15 +55,26 @@ var StudentDashboard = React.createClass({
         {
             if(sessionStorage.getItem('role') == 'student'){
                 return (
-                    <div>
-                        <h1>StudentDashboard</h1>
-                        {this.state.performances.map(this.createPerformanceRow, this)}
+                    <div className="container">
+                        <div className="jumbotron subPage">
+                            <h1>学生首页</h1>
+                            <p>学生可以查看自己的信息总览。</p>
+                        </div>
+                        <table id="studentListTable" className="table listTable">
+                            <thead>
+                            <tr>
+                                <th>记分</th>
+                                <th>原因</th>
+                                <th>时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>{this.state.performances.map(this.createPerformanceRow, this)}</tbody>
+                        </table>
                     </div>
                 );
             }
             else{
-                //role == 'student'
-                return <h1>假装学生</h1>;
+                return <h1>模拟学生</h1>;
             }
         }
         else{
