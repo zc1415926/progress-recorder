@@ -37,8 +37,8 @@ var StudentDashboard = React.createClass({
     },
 
     createPerformanceRow: function (performance) {
-        console.log('performance');
-        console.log(performance);
+        //console.log('performance');
+        //console.log(performance);
 
         return (
             <tr key={performance.id}>
