@@ -10,6 +10,7 @@ var Route = require('react-router').Route;
 var browserHistory = require('react-router').browserHistory;
 var IndexRoute = require('react-router').IndexRoute;
 var toastr = require('toastr');
+var AuthType = require('./components/auth/auhTypes');
 
 var App = require('./components/app/app');
 var Home = require('./components/app/partials/homePage');
@@ -18,12 +19,26 @@ var onEnterRouter = function (routeType, nextState, replace) {
 
     var token = sessionStorage.getItem('token');
 
-    if(token){
-        if(sessionStorage.getItem('role') == routeType){
+    var roleWeight = 1000;
 
+    if(token){
+        switch (sessionStorage.getItem('role')){
+            case 'admin':
+                roleWeight = 0;
+                break;
+            case 'teacher':
+                roleWeight = 100;
+                break;
+            case 'student':
+                roleWeight = 200;
+                break;
+        }
+
+        if(roleWeight <= routeType){
+            console.log('符合权限');
         }
         else {
-            //权限不相符的情况
+            console.log('不符合权限');
         }
     }
     else {
@@ -38,9 +53,10 @@ ReactDOM.render((
         <Route path="/" component={App}>
             <IndexRoute component={Home}/>
             <Route path="student" component={require('./components/student/studentDashboard')}
-                onEnter={onEnterRouter.bind(null, 'student')}/>
+                onEnter={onEnterRouter.bind(null, AuthType.STUDENT)}/>
 
-            <Route path="admin" component={require('./components/admin/adminPage')}/>
+            <Route path="admin" component={require('./components/admin/adminPage')}
+                   onEnter={onEnterRouter.bind(null, AuthType.ADMIN)}/>
             <Route path="admin/dashboard" component={require('./components/dashboard/dashboardPage')}/>
             <Route path="admin/students" component={require('./components/student/studentManager')}/>
             <Route path="admin/gradeClass" component={require('./components/gradeClass/gradeClassManager')}/>
